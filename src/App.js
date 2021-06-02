@@ -1,9 +1,9 @@
-
+import Nav from "./components/PrimaryNav";
 
 function App() {
   return (
     <div>
-      <button type="button" className="btn btn-warning">Iyubanit carepicha</button>
+      <Nav/>
     </div>
   );
 }
