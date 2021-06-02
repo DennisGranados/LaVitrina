@@ -3,7 +3,7 @@ import Nav from "./components/PrimaryNav";
 function App() {
   return (
     <div>
-      <Nav/>
+      <Nav />
     </div>
   );
 }

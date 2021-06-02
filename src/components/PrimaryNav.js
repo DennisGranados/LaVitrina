@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Register from "./AdminRegister";
 import Login from "./AdminLogin";
-import Home from "./Home"
+import Home from "./Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class PrimaryNav extends Component {
@@ -26,13 +26,13 @@ class PrimaryNav extends Component {
 
         <Switch>
           <Route path="/login">
-              <Login/>
+            <Login />
           </Route>
           <Route path="/register">
-              <Register/>
+            <Register />
           </Route>
           <Route path="/">
-              <Home/>
+            <Home />
           </Route>
         </Switch>
       </Router>
