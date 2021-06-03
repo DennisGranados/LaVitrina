@@ -3,21 +3,35 @@ import React, { Component } from "react";
 class AdminLogin extends Component {
   render() {
     return (
-      <div>
-        <form>
-          <label for="inputEmail" class="form-label">
-            Correo electrónico
-          </label>
-          <input type="email" class="form-control" id="inputEmail" />
-          <label for="inputPassword" class="form-label">
-            Contraseña
-          </label>
-          <input type="password" class="form-control" id="inputPassword" />
-          <button type="submit" className="btn btn-primary">
-            Aceptar
-          </button>
-        </form>
-      </div>
+      <div className="col-12 justify-content-center dflex">
+        <div className="card col-5">
+          <div className="card-body">
+            <form>
+              <label for="inputEmail" className="form-label">
+                Correo electrónico
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="inputEmail"
+                required
+              />
+              <label for="inputPassword" className="form-label topMargin">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="inputPassword"
+                required
+              />
+              <button type="submit" className="btn btn-primary topMargin">
+                Aceptar
+              </button>
+            </form>
+          </div>
+        </div>
+        </div>
     );
   }
 }

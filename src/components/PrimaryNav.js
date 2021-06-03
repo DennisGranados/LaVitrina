@@ -3,22 +3,27 @@ import Register from "./AdminRegister";
 import Login from "./AdminLogin";
 import Home from "./Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
+import "../prueba.css";
 
 class PrimaryNav extends Component {
   render() {
     return (
+      <div>
+        <Header/>
       <Router>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Inicio</Link>
+        <nav className="col-12 navBackground">
+            <ul className="navbar navbar-dark col-3">
+              <li className="btn">
+                <Link to="/" className="noHype">Inicio</Link>
               </li>
-              <li>
-                <Link to="/login">Inicio de sesión</Link>
+              <li className="btn">
+                <Link to="/login" className="noHype">Inicio de sesión</Link>
               </li>
-              <li>
-                <Link to="/register">Registro</Link>
+              <li className="btn">
+                <Link to="/register" className="noHype">Registro</Link>
               </li>
             </ul>
           </nav>
@@ -36,6 +41,8 @@ class PrimaryNav extends Component {
           </Route>
         </Switch>
       </Router>
+      <Footer/>
+      </div>
     );
   }
 }
