@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState, Component } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -31,20 +31,22 @@ class AdminRegister extends Component {
 
   RegisterFunction(event) {
     event.preventDefault();
+    this.RegisterProcess();
   }
 
   RegisterProcess() {
-   // if (this.state.password.localeCompare(this.state.secondPasword)) {
+    if (this.state.password == this.state.secondPasword) {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then((ucredential)=> {
+        .then((ucredential) => {
           var user = ucredential.user;
           console.log(user);
-        }).catch((error)=>{
-          console.log(error.message);
         })
-    //}
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
   }
 
   render() {
@@ -62,6 +64,7 @@ class AdminRegister extends Component {
                 id="inputEmail"
                 value={this.state.email}
                 onChange={this.ChangeEmail}
+                required
               />
               <label for="inputPassword" className="form-label topMargin">
                 Contraseña
@@ -70,6 +73,7 @@ class AdminRegister extends Component {
                 type="password"
                 className="form-control"
                 id="inputPassword"
+                minLength="8"
                 value={this.state.password}
                 onChange={this.ChangePassword}
                 required
@@ -83,12 +87,17 @@ class AdminRegister extends Component {
               <input
                 type="password"
                 className="form-control"
-                id="inputConfirmPassword"
-                //value={this.state.secondPasword}
-                //onChange={this.ChangeSecondPassword}
-                
+                id="inputPassword"
+                minLength="8"
+                value={this.state.secondPassword}
+                onChange={this.ChangeSecondPassword}
+                required
               />
-              <input type="submit" className="btn btn-primary topMargin" value="Registrar"/>
+              <input
+                type="submit"
+                className="btn btn-primary topMargin"
+                value="Registrar"
+              />
             </form>
           </div>
         </div>
