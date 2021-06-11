@@ -55,9 +55,7 @@ class AdminRegister extends Component {
         <div className="card col-5">
           <div className="card-body">
             <form id="registerForm" onSubmit={this.RegisterFunction}>
-              <label for="inputEmail" className="form-label">
-                Correo electrónico
-              </label>
+              <label className="form-label">Correo electrónico</label>
               <input
                 type="email"
                 className="form-control"
@@ -66,9 +64,7 @@ class AdminRegister extends Component {
                 onChange={this.ChangeEmail}
                 required
               />
-              <label for="inputPassword" className="form-label topMargin">
-                Contraseña
-              </label>
+              <label className="form-label topMargin">Contraseña</label>
               <input
                 type="password"
                 className="form-control"

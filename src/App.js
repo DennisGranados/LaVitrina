@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import AboutUs from "./components/AboutUs";
 import Modal from "react-modal";
 
 Modal.setAppElement("#root");
@@ -120,7 +121,7 @@ function App() {
       <Router>
         <div>
           <nav className="col-12 navBackground">
-            <ul className="navbar navbar-dark col-3">
+            <ul className="navbar navbar-dark col-5">
               <li className="btn">
                 <Link to="/" className="noHype">
                   Inicio
@@ -136,6 +137,11 @@ function App() {
                   Registro
                 </Link>
               </li>
+              <li className="btn">
+                <Link to="/about-us" className="noHype">
+                  Acerca de
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -146,6 +152,9 @@ function App() {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/about-us">
+            <AboutUs />
           </Route>
           <Route path="/">
             <Home />
