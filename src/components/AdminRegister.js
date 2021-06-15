@@ -1,105 +1,90 @@
-import React, { useEffect, useState, Component } from "react";
-import firebase from "firebase/app";
+import React, { useEffect, useState } from "react";
 import "firebase/auth";
+import { useAuth } from "reactfire";
 
-class AdminRegister extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      secondPasword: "",
-    };
+function AdminRegister(props) {
+  const auth = useAuth();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    secondPassword: "",
+  });
 
-    this.ChangeEmail = this.ChangeEmail.bind(this);
-    this.ChangePassword = this.ChangePassword.bind(this);
-    this.ChangeSecondPassword = this.ChangeSecondPassword.bind(this);
-    this.RegisterFunction = this.RegisterFunction.bind(this);
-  }
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  ChangeEmail(event) {
-    this.setState({ email: event.target.value });
-  }
+  const registerUser = (e) => {
+    e.preventDefault();
 
-  ChangePassword(event) {
-    this.setState({ password: event.target.value });
-  }
-
-  ChangeSecondPassword(event) {
-    this.setState({ secondPassword: event.target.value });
-  }
-
-  RegisterFunction(event) {
-    event.preventDefault();
-    this.RegisterProcess();
-  }
-
-  RegisterProcess() {
-    if (this.state.password == this.state.secondPasword) {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then((ucredential) => {
-          var user = ucredential.user;
-          console.log(user);
+    if (user.password === user.secondPassword) {
+      auth
+        .createUserWithEmailAndPassword(user.email.trim(), user.password)
+        .then(() => {
+          props.setPopup(
+            "¡Alerta!",
+            "El usuario ha sido registrado con éxito."
+          );
+          props.openPopup();
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log(error);
+          props.setPopup(error.code);
+          props.openPopup();
         });
+    } else {
+      props.setPopup("auth/non-identical-passwords");
+      props.openPopup();
     }
-  }
+  };
 
-  render() {
-    return (
-      <div className="col-12 justify-content-center dflex">
-        <div className="card col-5">
-          <div className="card-body">
-            <form id="registerForm" onSubmit={this.RegisterFunction}>
-              <label className="form-label">Correo electrónico</label>
-              <input
-                type="email"
-                className="form-control"
-                id="inputEmail"
-                value={this.state.email}
-                onChange={this.ChangeEmail}
-                required
-              />
-              <label className="form-label topMargin">Contraseña</label>
-              <input
-                type="password"
-                className="form-control"
-                id="inputPassword"
-                minLength="8"
-                value={this.state.password}
-                onChange={this.ChangePassword}
-                required
-              />
-              <label
-                for="inputConfirmPassword"
-                className="form-label topMargin"
-              >
-                Confirme contraseña
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="inputPassword"
-                minLength="8"
-                value={this.state.secondPassword}
-                onChange={this.ChangeSecondPassword}
-                required
-              />
-              <input
-                type="submit"
-                className="btn btn-primary topMargin"
-                value="Registrar"
-              />
-            </form>
-          </div>
+  return (
+    <div className="col-12 justify-content-center dflex">
+      <div className="card col-5">
+        <div className="card-body">
+          <form id="registerForm" onSubmit={registerUser}>
+            <label className="form-label">Correo electrónico</label>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              id="inputEmail"
+              onChange={handleChange}
+              required
+            />
+            <label className="form-label topMargin">Contraseña</label>
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              id="inputPassword"
+              minLength="8"
+              onChange={handleChange}
+              required
+            />
+            <label className="form-label topMargin">Confirme contraseña</label>
+            <input
+              type="password"
+              name="secondPassword"
+              className="form-control"
+              id="inputPassword"
+              minLength="8"
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="submit"
+              className="btn btn-primary topMargin"
+              value="Registrar"
+            />
+          </form>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default AdminRegister;

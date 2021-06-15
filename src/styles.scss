@@ -1,20 +1,42 @@
-.backgroundHeader{
-    background: #6DB294;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.topMargin{
-    margin: 25px 0 0 0;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
-.noHype{
-    text-decoration: none;
-    color: black;
+.card {
+  width: 18rem;
+}
+
+.row > * {
+  padding-right: 0px !important;
+}
+
+.backgroundHeader {
+  background: #6db294;
+}
+
+.topMargin {
+  margin: 25px 0 0 0;
+}
+
+.noHype {
+  text-decoration: none;
+  color: black;
 }
 
 .navBackground {
-    background: #87AEE6;
+  background: #87aee6;
 }
 
-.dflex{
-    display: flex;
+.dflex {
+  display: flex;
 }

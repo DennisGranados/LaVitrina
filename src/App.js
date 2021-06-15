@@ -1,6 +1,5 @@
-import "./styles.scss";
-import React, { useEffect, useState, Component } from "react";
-import firebase from "firebase/app";
+import "./Styles.scss";
+import React, { useEffect, useState } from "react";
 import Register from "./components/AdminRegister";
 import Login from "./components/AdminLogin";
 import Home from "./components/Home";
@@ -49,16 +48,16 @@ function App() {
           break;
         case "auth/weak-password":
           setPopupTitle("Advertencia");
-          setPopupMessage("La contraseña debe tener al menos 6 caracteres.");
+          setPopupMessage("La contraseña debe tener al menos 8 caracteres.");
           break;
         case "auth/non-identical-passwords":
           setPopupTitle("Error");
-          setPopupMessage("Las contraseñas no son identicas.");
+          setPopupMessage("Las contraseñas no son idénticas.");
           break;
         case "data/bad-data":
           setPopupTitle("Error");
           setPopupMessage(
-            "La información ingresada es identica a la anterior o no es válida."
+            "La información ingresada es idéntica a la anterior o no es válida."
           );
           break;
         case "auth/only-account":
@@ -148,10 +147,10 @@ function App() {
 
         <Switch>
           <Route path="/login">
-            <Login />
+            <Login openPopup={() => openPopup()} setPopup={setPopup} />
           </Route>
           <Route path="/register">
-            <Register />
+            <Register openPopup={() => openPopup()} setPopup={setPopup} />
           </Route>
           <Route path="/about-us">
             <AboutUs />

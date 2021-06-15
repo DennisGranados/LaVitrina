@@ -5,7 +5,7 @@ class Home extends Component {
     return (
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-3 m-auto">
-          <div className="card" style={{ width: "18" + "rem;" }}>
+          <div className="card">
             <img
               src="https://i.pinimg.com/originals/ef/fd/4e/effd4edbc9326c98ae2ad16fb263680e.jpg"
               className="card-img-top"
@@ -19,7 +19,7 @@ class Home extends Component {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card" style={{ width: "18" + "rem;" }}>
+          <div className="card">
             <img
               src="https://i.pinimg.com/originals/ef/fd/4e/effd4edbc9326c98ae2ad16fb263680e.jpg"
               className="card-img-top"
@@ -33,7 +33,7 @@ class Home extends Component {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card" style={{ width: "18" + "rem;" }}>
+          <div className="card">
             <img
               src="https://i.pinimg.com/originals/ef/fd/4e/effd4edbc9326c98ae2ad16fb263680e.jpg"
               className="card-img-top"

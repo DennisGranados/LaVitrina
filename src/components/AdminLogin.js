@@ -1,79 +1,67 @@
-import React, { Component } from "react";
-import firebase from "firebase/app";
+import React, { useState } from "react";
+import firebase from "firebase";
 import "firebase/auth";
+import { useAuth } from "reactfire";
 
-class AdminLogin extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-    };
+function AdminLogin(props) {
+  const auth = useAuth();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
 
-    this.ChangeEmail = this.ChangeEmail.bind(this);
-    this.ChangePassword = this.ChangePassword.bind(this);
-    this.LoginFunction = this.LoginFunction.bind(this);
-  }
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  ChangeEmail(event) {
-    this.setState({ email: event.target.value });
-  }
+  const loginUser = (e) => {
+    e.preventDefault();
 
-  ChangePassword(event) {
-    this.setState({ password: event.target.value });
-  }
+    auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+      auth
+        .signInWithEmailAndPassword(user.email.trim(), user.password)
+        .then()
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+    });
+  };
 
-  LoginFunction(event) {
-    event.preventDefault();
-    this.LoginFunction();
-  }
-
-  LoginFunction(props) {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  }
-
-  render() {
-    return (
-      <div className="col-12 justify-content-center dflex">
-        <div className="card col-5">
-          <div className="card-body">
-            <form id="loginForm" onSubmit={this.LoginFunction}>
-              <label className="form-label">Correo electrónico</label>
-              <input
-                type="email"
-                className="form-control"
-                id="inputEmail"
-                onChange={this.ChangeEmail}
-                required
-              />
-              <label className="form-label topMargin">Contraseña</label>
-              <input
-                type="password"
-                className="form-control"
-                id="inputPassword"
-                minLength="8"
-                onChange={this.ChangePassword}
-                required
-              />
-              <button type="submit" className="btn btn-primary topMargin">
-                Aceptar
-              </button>
-            </form>
-          </div>
+  return (
+    <div className="col-12 justify-content-center dflex">
+      <div className="card col-5">
+        <div className="card-body">
+          <form id="loginForm" onSubmit={loginUser}>
+            <label className="form-label">Correo electrónico</label>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              id="inputEmail"
+              onChange={handleChange}
+              required
+            />
+            <label className="form-label topMargin">Contraseña</label>
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              id="inputPassword"
+              minLength="8"
+              onChange={handleChange}
+              required
+            />
+            <button type="submit" className="btn btn-primary topMargin">
+              Aceptar
+            </button>
+          </form>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
 export default AdminLogin;
