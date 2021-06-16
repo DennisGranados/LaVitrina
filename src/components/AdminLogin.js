@@ -55,9 +55,14 @@ function AdminLogin(props) {
               onChange={handleChange}
               required
             />
-            <button type="submit" className="btn btn-primary topMargin">
+            <div className="text-center">
+            <button type="submit" className="btn btn-primary topMargin mx-2">
               Aceptar
             </button>
+            <button type="reset" className="btn btn-warning topMargin mx-2">
+              Limpiar
+            </button>
+            </div>
           </form>
         </div>
       </div>

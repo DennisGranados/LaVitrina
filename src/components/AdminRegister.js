@@ -75,11 +75,14 @@ function AdminRegister(props) {
               onChange={handleChange}
               required
             />
-            <input
-              type="submit"
-              className="btn btn-primary topMargin"
-              value="Registrar"
-            />
+            <div className="text-center">
+            <button type="submit" className="btn btn-primary topMargin mx-2">
+              Aceptar
+            </button>
+            <button type="reset" className="btn btn-warning topMargin mx-2">
+              Limpiar
+            </button>
+            </div>
           </form>
         </div>
       </div>
