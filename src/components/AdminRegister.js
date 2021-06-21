@@ -22,7 +22,7 @@ function AdminRegister(props) {
 
     if (user.password === user.secondPassword) {
       auth
-        .createUserWithEmailAndPassword(user.email.trim(), user.password)
+        .createUserWithEmailAndPassword(user.email.trim().toLowerCase(), user.password)
         .then(() => {
           props.setPopup(
             "¡Alerta!",

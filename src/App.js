@@ -165,23 +165,23 @@ function App() {
           </Route>
           <Route exact path="/admin/register">
             {user ? (
-              <Dashboard />
-            ) : (
               <Register openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
             )}
           </Route>
           <Route exact path="/admin/delete-account">
             {user ? (
-              <Dashboard />
-            ) : (
               <DeleteAccount openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
             )}
           </Route>
           <Route exact path="/admin/inventory">
             {user ? (
-              <Dashboard />
-            ) : (
               <Inventory openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
             )}
           </Route>
         </Switch>

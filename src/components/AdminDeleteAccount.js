@@ -30,6 +30,7 @@ function AdminDeleteAccount(props) {
         .delete()
         .then(() => {
           props.setPopup("Información", "Usuario eliminado.");
+          props.openPopup();
         })
         .catch((error) => {
           props.setPopup(error.code, error.message);
@@ -46,7 +47,7 @@ function AdminDeleteAccount(props) {
           <form id="loginForm" onSubmit={deleteAccount}>
             <label className="form-label">
               {console.log(actualUser.data)}
-              Está a punto de eliminar la cuenta asignada a
+              Está a punto de eliminar la cuenta asignada a <strong>{actualUser.data.email}</strong>
             </label>
             <label className="form-label topMargin">
               Ingrese su contraseña
