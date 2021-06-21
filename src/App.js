@@ -1,14 +1,25 @@
 import "./styles.scss";
 import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
+import { useUser } from "reactfire";
 import Register from "./components/AdminRegister";
 import Login from "./components/AdminLogin";
 import Home from "./components/Home";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import AboutUs from "./components/AboutUs";
 import Modal from "react-modal";
 import Nav from "./components/Nav";
+import Dashboard from "./components/Dashboard";
+import Catalog from "./components/Catalog";
+import DeleteAccount from "./components/AdminDeleteAccount";
+import Inventory from "./components/InventoryAdmin";
 
 Modal.setAppElement("#root");
 
@@ -26,6 +37,7 @@ const customStyles = {
 };
 
 function App() {
+  const { data: user } = useUser();
   const [popupIsOpen, setIsOpen] = useState(false);
   const [popupTitle, setPopupTitle] = useState("Popup");
   const [popupMessage, setPopupMessage] = useState("Message");
@@ -117,21 +129,60 @@ function App() {
           Aceptar
         </button>
       </Modal>
-      <Header />
       <Router>
-        <Nav/>
+        <Header />
+        <Nav />
         <Switch>
-          <Route path="/login">
-            <Login openPopup={() => openPopup()} setPopup={setPopup} />
+          <Route exact path="/">
+            <Home />
           </Route>
-          <Route path="/register">
-            <Register openPopup={() => openPopup()} setPopup={setPopup} />
+          <Route exact path="/catalog">
+            <Catalog />
           </Route>
-          <Route path="/about-us">
+          <Route exact path="/about-us">
             <AboutUs />
           </Route>
-          <Route path="/">
-            <Home />
+          <Route exact path="/admin">
+            {user ? (
+              <Redirect to="/admin/dashboard" />
+            ) : (
+              <Redirect to="/admin/login" />
+            )}
+          </Route>
+          <Route exact path="/admin/dashboard">
+            {user ? (
+              <Dashboard />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/login">
+            {user ? (
+              <Dashboard />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/register">
+            {user ? (
+              <Dashboard />
+            ) : (
+              <Register openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/delete-account">
+            {user ? (
+              <Dashboard />
+            ) : (
+              <DeleteAccount openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/inventory">
+            {user ? (
+              <Dashboard />
+            ) : (
+              <Inventory openPopup={openPopup} setPopup={setPopup} />
+            )}
           </Route>
         </Switch>
       </Router>

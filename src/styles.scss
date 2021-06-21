@@ -1,20 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;500;700&family=Dancing+Script:wght@400;500;600;700&display=swap");
 
 //Paleta requerida/No aplicada
-$color-rosa: #F9C7F2;
-$color-amarillo: #EEFA86;
-$color-blanco: #FFFFFF;
-$color-celeste: #AFC3FA;
-$color-marron: #B6A777;
-$color-cafe: #EBCAA8;
+$color-rosa: #f9c7f2;
+$color-amarillo: #eefa86;
+$color-blanco: #ffffff;
+$color-celeste: #afc3fa;
+$color-marron: #b6a777;
+$color-cafe: #ebcaa8;
 
 //Paleta actual
 $main-font: "Raleway", Arial, Helvetica, sans-serif;
 $color-ming: #006776;
-$color-keppel: #00BFA5;
-$color-malachite:#00E676;
+$color-keppel: #00bfa5;
+$color-malachite: #00e676;
 $color-cultured: #f2f2f2;
-
 
 body {
   margin: 0;
@@ -41,7 +40,7 @@ code {
 }
 
 .backgroundHeader {
-  background:$color-ming;
+  background: $color-ming;
 }
 
 .topMargin {
@@ -59,4 +58,8 @@ code {
 
 .dflex {
   display: flex;
+}
+
+#home {
+  color: $color-blanco;
 }

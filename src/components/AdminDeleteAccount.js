@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import firebase from "firebase";
 import "firebase/auth";
-import { useAuth } from "reactfire";
+import { useAuth, useUser } from "reactfire";
 
-function AdminLogin(props) {
+function AdminDeleteAccount(props) {
   const auth = useAuth();
+  const actualUser = useUser();
   const [user, setUser] = useState({
-    email: "",
     password: "",
   });
 
@@ -17,17 +17,25 @@ function AdminLogin(props) {
     });
   };
 
-  const loginUser = (e) => {
+  const deleteAccount = (e) => {
     e.preventDefault();
 
-    auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
-      auth
-        .signInWithEmailAndPassword(user.email.trim().toLowerCase(), user.password)
-        .then()
+    let cred = firebase.auth.EmailAuthProvider.credential(
+      actualUser.data.email,
+      user.password
+    );
+
+    auth.currentUser.reauthenticateWithCredential(cred).then(() => {
+      auth.currentUser
+        .delete()
+        .then(() => {
+          props.setPopup("Información", "Usuario eliminado.");
+        })
         .catch((error) => {
-          props.setPopup(error.code);
+          props.setPopup(error.code, error.message);
           props.openPopup();
         });
+      e.target.reset();
     });
   };
 
@@ -35,17 +43,14 @@ function AdminLogin(props) {
     <div className="col-12 justify-content-center dflex">
       <div className="card col-5">
         <div className="card-body">
-          <form id="loginForm" onSubmit={loginUser}>
-            <label className="form-label">Correo electrónico</label>
-            <input
-              type="email"
-              name="email"
-              className="form-control"
-              id="inputEmail"
-              onChange={handleChange}
-              required
-            />
-            <label className="form-label topMargin">Contraseña</label>
+          <form id="loginForm" onSubmit={deleteAccount}>
+            <label className="form-label">
+              {console.log(actualUser.data)}
+              Está a punto de eliminar la cuenta asignada a
+            </label>
+            <label className="form-label topMargin">
+              Ingrese su contraseña
+            </label>
             <input
               type="password"
               name="password"
@@ -69,4 +74,4 @@ function AdminLogin(props) {
     </div>
   );
 }
-export default AdminLogin;
+export default AdminDeleteAccount;
