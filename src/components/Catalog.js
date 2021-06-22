@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 function Catalog() {
   return (
-    <div>
+    <div className="col-12 mb-3 d-flex">
       <div className="col-3 m-auto">
         <div className="card">
           <img

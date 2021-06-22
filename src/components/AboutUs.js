@@ -4,7 +4,7 @@ function AboutUs() {
   return (
     <div>
       <div className="col-12 mb-3 d-flex">
-        <div className="col-6 justify-content-center">
+        <div className="col-6 justify-content-center mx-3">
           <h1>Acerca de La Vitrina </h1>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -20,7 +20,7 @@ function AboutUs() {
       </div>
       <div className="row-cols-12 mb-3 d-flex">
         <div className="col-6"></div>
-        <div className="col-6 justify-content-center">
+        <div className="col-6 justify-content-center mx-3">
           <h1>Información de contacto</h1>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

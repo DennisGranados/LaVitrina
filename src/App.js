@@ -19,7 +19,12 @@ import Nav from "./components/Nav";
 import Dashboard from "./components/Dashboard";
 import Catalog from "./components/Catalog";
 import DeleteAccount from "./components/AdminDeleteAccount";
-import Inventory from "./components/InventoryAdmin";
+import InventoryDashboard from "./components/InventoryDashboard";
+import Styles from "./components/StylesAdmin";
+import Clothes from "./components/ClothesAdmin";
+import Finance from "./components/FinanceAdmin";
+import Orders from "./components/Orders";
+import AdminAboutUs from "./components/AdminAboutUs";
 
 Modal.setAppElement("#root");
 
@@ -179,7 +184,42 @@ function App() {
           </Route>
           <Route exact path="/admin/inventory">
             {user ? (
-              <Inventory openPopup={openPopup} setPopup={setPopup} />
+              <InventoryDashboard openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/inventory/styles">
+            {user ? (
+              <Styles openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/inventory/clothes">
+            {user ? (
+              <Clothes openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/inventory/finance">
+            {user ? (
+              <Finance openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/inventory/orders">
+            {user ? (
+              <Orders openPopup={openPopup} setPopup={setPopup} />
+            ) : (
+              <Login openPopup={openPopup} setPopup={setPopup} />
+            )}
+          </Route>
+          <Route exact path="/admin/inventory/about_us">
+            {user ? (
+              <AdminAboutUs openPopup={openPopup} setPopup={setPopup} />
             ) : (
               <Login openPopup={openPopup} setPopup={setPopup} />
             )}

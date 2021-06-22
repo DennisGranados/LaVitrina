@@ -14,6 +14,12 @@ $color-ming: #006776;
 $color-keppel: #00bfa5;
 $color-malachite: #00e676;
 $color-cultured: #f2f2f2;
+$background-gradient: rgb(168, 37, 99);
+$gradient: linear-gradient(
+  90deg,
+  rgba(168, 37, 99, 1) 0%,
+  rgba(251, 189, 57, 1) 80%
+);
 
 body {
   margin: 0;
@@ -40,7 +46,8 @@ code {
 }
 
 .backgroundHeader {
-  background: $color-ming;
+  background: $background-gradient;
+  background: $gradient;
 }
 
 .topMargin {
@@ -53,7 +60,12 @@ code {
 }
 
 .navBackground {
-  background: $color-keppel;
+  background: rgb(168, 37, 99);
+  background: linear-gradient(
+    90deg,
+    rgba(168, 37, 99, 1) 0%,
+    rgba(251, 189, 57, 1) 80%
+  );
 }
 
 .dflex {
