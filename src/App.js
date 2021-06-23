@@ -25,6 +25,9 @@ import Clothes from "./components/ClothesAdmin";
 import Finance from "./components/FinanceAdmin";
 import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
+import Blouse from "./components/Blouse";
+import Dress from "./components/Dress";
+import Pant from "./components/Pant";
 
 Modal.setAppElement("#root");
 
@@ -148,6 +151,15 @@ function App() {
           </Route>
           <Route exact path="/about-us">
             <AboutUs />
+          </Route>
+          <Route exact path="/blouse">
+            <Blouse />
+          </Route>
+          <Route exact path="/dress">
+            <Dress />
+          </Route>
+          <Route exact path="/pant">
+            <Pant />
           </Route>
           <Route exact path="/admin">
             {user ? (

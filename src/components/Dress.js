@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { remoteConfig } from "reactfire";
 
-function Blouse() {
+function Dress() {
     return (
         <div>
-            <p>Blusas</p>
+            <p>Vestidos</p>
         </div>
     );
 }
 
-export default Blouse
+export default Dress
