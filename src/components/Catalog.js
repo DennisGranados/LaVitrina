@@ -3,6 +3,18 @@ import React, { Component } from "react";
 function Catalog() {
   return (
     <div className="col-12 mb-3 d-flex">
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Categorías
+        </button>
+        <div class="dropdown-menu" aria-labelledby="categories">
+          <button class="dropdown-item" type="button">Vestidos</button>
+          <button class="dropdown-item" type="button">Blusas</button>
+          <button class="dropdown-item" type="button">Pantalones</button>
+        </div>
+      </div>
+
       <div className="col-3 m-auto">
         <div className="card">
           <img
