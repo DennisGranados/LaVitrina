@@ -9,9 +9,9 @@ function Catalog() {
           Categorías
         </button>
         <div class="dropdown-menu" aria-labelledby="categories">
-          <button class="dropdown-item" type="button">Action</button>
-          <button class="dropdown-item" type="button">Another action</button>
-          <button class="dropdown-item" type="button">Something else here</button>
+          <button class="dropdown-item" type="button">Vestidos</button>
+          <button class="dropdown-item" type="button">Blusas</button>
+          <button class="dropdown-item" type="button">Pantalones</button>
         </div>
       </div>
 
