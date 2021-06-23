@@ -7,7 +7,7 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import { useUser } from "reactfire";
+import { useAuth, useUser } from "reactfire";
 import Register from "./components/AdminRegister";
 import Login from "./components/AdminLogin";
 import Home from "./components/Home";
@@ -55,6 +55,8 @@ function App() {
     setIsOpen(false);
   }
 
+   
+  
   function setPopup(codeOrTitle, message) {
     if (codeOrTitle !== undefined && message === undefined) {
       switch (codeOrTitle) {
@@ -136,7 +138,7 @@ function App() {
       </Modal>
       <Router>
         <Header />
-        <Nav />
+        <Nav isLogin={user}/>
         <Switch>
           <Route exact path="/">
             <Home />
