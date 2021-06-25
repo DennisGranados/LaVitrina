@@ -11,7 +11,7 @@ function Footer() {
           <div className="col-6 text-center">
             <div>
               <h4>Métodos de contacto</h4>
-              <p>Número de teléfono</p>
+              <p>+506 2447-7600</p>
               <p>Correo Electrónico</p>
             </div>
           </div>

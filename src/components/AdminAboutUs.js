@@ -29,6 +29,10 @@ function AdminAboutUs() {
             <label className="form-label">Ingresar información acerca de la tienda</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
+          <div class="col mt-3">
+            <label className="form-label">Ingresar detalles acerca de la tienda</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
           <div className="text-center">
             <button type="submit" className="btn btn-primary topMargin mx-2">
               Aceptar
