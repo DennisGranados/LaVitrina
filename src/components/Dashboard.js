@@ -7,6 +7,7 @@ function Dashboard() {
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-3 m-auto">
           <div className="card " style={{ width: 18 + "rem" }}>
+          <img src="https://image.flaticon.com/icons/png/512/748/748137.png" class="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Añadir cuenta de usuario</h5>
               <p className="card-text">Agregar cuentas administrativas.</p>
@@ -18,6 +19,7 @@ function Dashboard() {
         </div>
         <div className="col-3 m-auto">
           <div className="card " style={{ width: 18 + "rem" }}>
+          <img src="https://image.flaticon.com/icons/png/512/748/748138.png" class="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Eliminar cuenta de usuario</h5>
               <p className="card-text">Eliminar cuentas administrativas.</p>
@@ -33,6 +35,7 @@ function Dashboard() {
         </div>
         <div className="col-3 m-auto">
           <div className="card " style={{ width: 18 + "rem" }}>
+          <img src="https://image.flaticon.com/icons/png/512/2942/2942672.png" class="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Gestionar inventario</h5>
               <p className="card-text">
@@ -48,6 +51,7 @@ function Dashboard() {
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-3 m-auto">
           <div className="card " style={{ width: 18 + "rem" }}>
+          <img src="https://image.flaticon.com/icons/png/512/2942/2942259.png" class="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Finanzas</h5>
               <p className="card-text">
@@ -61,6 +65,7 @@ function Dashboard() {
         </div>
         <div className="col-3 m-auto">
           <div className="card " style={{ width: 18 + "rem" }}>
+          <img src="https://image.flaticon.com/icons/png/512/1008/1008010.png" class="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Pedidos</h5>
               <p className="card-text">
@@ -74,6 +79,7 @@ function Dashboard() {
         </div>
         <div className="col-3 m-auto">
           <div className="card " style={{ width: 18 + "rem" }}>
+          <img src="https://image.flaticon.com/icons/png/512/2343/2343723.png" class="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Información de la página</h5>
               <p className="card-text">
