@@ -91,6 +91,9 @@ function AddStyles(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
+            <h4 className="text-center mb-4">
+              Añadir nuevo estilo
+            </h4>
             <form id="addStyle" onSubmit={addStyle} onReset={resetImage}>
               <label className="form-label">Nombre del estilo</label>
               <input
@@ -111,7 +114,11 @@ function AddStyles(props) {
               />
               <div className="text-center my-3">
                 {style.styleImage ? (
-                  <img src={style.styleImage} alt="Imagen de la prenda" width="250" />
+                  <img
+                    src={style.styleImage}
+                    alt="Imagen de la prenda"
+                    width="250"
+                  />
                 ) : (
                   <p>No se ha cargado una imagen.</p>
                 )}

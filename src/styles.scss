@@ -49,6 +49,12 @@ code {
   width: 18rem;
 }
 
+.card-img-top {
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #card-submit {
   width: 36rem;
 }
@@ -84,8 +90,8 @@ code {
   color: $color-blanco;
 }
 
-#card-submit {   
-  width: 36rem; 
+#card-submit {
+  width: 36rem;
 }
 
 .paragraph { 

@@ -45,6 +45,9 @@ function AdminDeleteAccount(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5">
           <div className="card-body">
+            <h4 className="text-center mb-4">
+              Eliminar cuenta administrativa
+            </h4>
             <form id="loginForm" onSubmit={deleteAccount}>
               <label className="form-label">
                 Está a punto de eliminar la cuenta asignada a{" "}

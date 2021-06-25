@@ -102,6 +102,7 @@ function AddItem(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
+            <h4 className="text-center mb-4">Añadir nueva prenda</h4>
             <form id="addItem" onSubmit={addItem} onReset={resetImage}>
               <label className="form-label">Nombre del producto</label>
               <input
