@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { remoteConfig } from "reactfire";
 
-function Pant() {
+function Item() {
   return (
     <div>
       <div className="dropdown">
@@ -53,4 +53,4 @@ function Pant() {
   );
 }
 
-export default Pant;
+export default Item;

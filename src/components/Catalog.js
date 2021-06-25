@@ -11,7 +11,7 @@ function Catalog() {
           ></img>
           <div className="card-body">
             <h5 className="card-title">Blusas</h5>
-            <a href="/blouse" className="btn btn-primary">
+            <a href="/item" className="btn btn-primary">
               Ingresar
             </a>
           </div>
@@ -25,7 +25,7 @@ function Catalog() {
           ></img>
           <div className="card-body">
             <h5 className="card-title">Vestidos</h5>
-            <a href="/dress" className="btn btn-primary">
+            <a href="/item" className="btn btn-primary">
               Ingresar
             </a>
           </div>
@@ -39,7 +39,7 @@ function Catalog() {
           ></img>
           <div className="card-body">
             <h5 className="card-title">Pantalones</h5>
-            <a href="/pant" className="btn btn-primary">
+            <a href="/item" className="btn btn-primary">
               Ingresar
             </a>
           </div>
