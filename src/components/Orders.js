@@ -1,4 +1,4 @@
 function Orders() {
-  return null;
+  return <div></div>;
 }
 export default Orders;

@@ -6,7 +6,7 @@ function Dashboard() {
     <div>
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-3 m-auto">
-          <div className="card " style={{ width: 18 + "rem" }}>
+          <div className="card ">
             <div className="card-body">
               <h5 className="card-title">Añadir cuenta de usuario</h5>
               <p className="card-text">Agregar cuentas administrativas.</p>
@@ -17,7 +17,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card " style={{ width: 18 + "rem" }}>
+          <div className="card ">
             <div className="card-body">
               <h5 className="card-title">Eliminar cuenta de usuario</h5>
               <p className="card-text">Eliminar cuentas administrativas.</p>
@@ -32,7 +32,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card " style={{ width: 18 + "rem" }}>
+          <div className="card ">
             <div className="card-body">
               <h5 className="card-title">Gestionar inventario</h5>
               <p className="card-text">
@@ -47,7 +47,7 @@ function Dashboard() {
       </div>
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-3 m-auto">
-          <div className="card " style={{ width: 18 + "rem" }}>
+          <div className="card ">
             <div className="card-body">
               <h5 className="card-title">Finanzas</h5>
               <p className="card-text">
@@ -60,7 +60,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card " style={{ width: 18 + "rem" }}>
+          <div className="card ">
             <div className="card-body">
               <h5 className="card-title">Pedidos</h5>
               <p className="card-text">
@@ -73,7 +73,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card " style={{ width: 18 + "rem" }}>
+          <div className="card ">
             <div className="card-body">
               <h5 className="card-title">Información de la página</h5>
               <p className="card-text">

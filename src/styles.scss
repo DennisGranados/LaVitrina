@@ -30,6 +30,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: $color-cultured;
   font-family: $main-font;
+  overflow-x: hidden;
 }
 
 code {
@@ -37,12 +38,19 @@ code {
     monospace;
 }
 
+.logo {
+  padding-top: 5px;
+  width: 250px;
+  display: inline-block;
+  overflow: hidden;
+}
+
 .card {
   width: 18rem;
 }
 
-.row > * {
-  padding-right: 0px !important;
+#card-submit {
+  width: 36rem;
 }
 
 .backgroundHeader {

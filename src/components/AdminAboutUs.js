@@ -1,4 +1,4 @@
 function AdminAboutUs() {
-  return (null);
+  return <div></div>;
 }
 export default AdminAboutUs;

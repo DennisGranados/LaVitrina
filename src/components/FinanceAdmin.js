@@ -1,4 +1,4 @@
 function FinanceAdmin() {
-  return null;
+  return <div></div>;
 }
 export default FinanceAdmin;

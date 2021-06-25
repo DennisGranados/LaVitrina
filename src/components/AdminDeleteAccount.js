@@ -41,35 +41,40 @@ function AdminDeleteAccount(props) {
   };
 
   return (
-    <div className="col-12 justify-content-center dflex">
-      <div className="card col-5">
-        <div className="card-body">
-          <form id="loginForm" onSubmit={deleteAccount}>
-            <label className="form-label">
-              {console.log(actualUser.data)}
-              Está a punto de eliminar la cuenta asignada a <strong>{actualUser.data.email}</strong>
-            </label>
-            <label className="form-label topMargin">
-              Ingrese su contraseña
-            </label>
-            <input
-              type="password"
-              name="password"
-              className="form-control"
-              id="inputPassword"
-              minLength="8"
-              onChange={handleChange}
-              required
-            />
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary topMargin mx-2">
-                Aceptar
-              </button>
-              <button type="reset" className="btn btn-warning topMargin mx-2">
-                Limpiar
-              </button>
-            </div>
-          </form>
+    <div>
+      <div className="col-12 justify-content-center dflex">
+        <div className="card col-5">
+          <div className="card-body">
+            <form id="loginForm" onSubmit={deleteAccount}>
+              <label className="form-label">
+                Está a punto de eliminar la cuenta asignada a{" "}
+                <strong>{actualUser.data.email}</strong>
+              </label>
+              <label className="form-label topMargin">
+                Ingrese su contraseña
+              </label>
+              <input
+                type="password"
+                name="password"
+                className="form-control"
+                id="inputPassword"
+                minLength="8"
+                onChange={handleChange}
+                required
+              />
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="btn btn-primary topMargin mx-2"
+                >
+                  Aceptar
+                </button>
+                <button type="reset" className="btn btn-warning topMargin mx-2">
+                  Limpiar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
