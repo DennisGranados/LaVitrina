@@ -39,6 +39,9 @@ function AdminLogin(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5">
           <div className="card-body">
+            <h4 className="text-center mb-4">
+              Iniciar sesión
+            </h4>
             <form id="loginForm" onSubmit={loginUser}>
               <label className="form-label">Correo electrónico</label>
               <input

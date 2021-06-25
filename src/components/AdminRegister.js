@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "firebase/auth";
-import { useAuth } from "reactfire";
+import { useAuth, useFirestore } from "reactfire";
 
 function AdminRegister(props) {
+  const firestore = useFirestore();
+  const adminRef = firestore.collection("admin").doc("admins");
   const auth = useAuth();
   const [user, setUser] = useState({
     email: "",
@@ -19,6 +21,7 @@ function AdminRegister(props) {
 
   const registerUser = (e) => {
     e.preventDefault();
+    let userCounter;
 
     if (user.password === user.secondPassword) {
       auth
@@ -27,7 +30,8 @@ function AdminRegister(props) {
           user.password
         )
         .then(() => {
-          props.setPopup(
+            
+            props.setPopup(
             "¡Alerta!",
             "El usuario ha sido registrado con éxito."
           );
@@ -49,6 +53,9 @@ function AdminRegister(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5">
           <div className="card-body">
+            <h4 className="text-center mb-4">
+              Registrar nueva cuenta administrativa
+            </h4>
             <form id="registerForm" onSubmit={registerUser}>
               <label className="form-label">Correo electrónico</label>
               <input
