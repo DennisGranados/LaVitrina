@@ -5,10 +5,10 @@ function Footer() {
     <div>
       <div className="col-12 backgroundHeader mt-4">
         <div className="row mt-4">
-          <div className="col-6 text-center">
+          <div className="col-6 text-center mt-3">
             <h4>Otros datos</h4>
           </div>
-          <div className="col-6 text-center">
+          <div className="col-6 text-center mt-3">
             <div>
               <h4>Métodos de contacto</h4>
               <p>+506 2447-7600</p>
