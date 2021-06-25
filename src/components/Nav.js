@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useAuth, useUser } from "reactfire";
 
 function Nav() {
-
   const { data: user } = useUser();
   const auth = useAuth();
 
@@ -12,8 +11,8 @@ function Nav() {
 
   const signOut = (e) => {
     auth.signOut();
-  }
-  
+  };
+
   if (!user) {
     logged = (
       <div>

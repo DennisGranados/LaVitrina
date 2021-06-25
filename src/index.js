@@ -9,10 +9,34 @@ import {
   useFirestore,
 } from "reactfire";
 import config from "./config";
+import LoadingSite from "./components/Loading";
+
+function Loading() {
+  // easily access the Firestore library
+  const catalogRef = useFirestore().collection("webpage").doc("contacs");
+
+  // subscribe to a document for realtime updates. just one line!
+  const { data, status } = useFirestoreDocData(catalogRef);
+
+  // easily check the loading status
+  if (status === "loading") {
+    return (
+      <div>
+        <LoadingSite />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <App />
+    </div>
+  );
+}
 
 ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={config}>
-    <App />
+    <Loading />
   </FirebaseAppProvider>,
   document.getElementById("root")
 );

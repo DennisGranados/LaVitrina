@@ -4,10 +4,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
-import { useAuth, useUser } from "reactfire";
+import { useUser } from "reactfire";
+import { useFirestore } from "reactfire";
+import { useFirestoreDocData } from "reactfire";
 import Register from "./components/AdminRegister";
 import Login from "./components/AdminLogin";
 import Home from "./components/Home";
@@ -20,8 +21,10 @@ import Dashboard from "./components/Dashboard";
 import Catalog from "./components/Catalog";
 import DeleteAccount from "./components/AdminDeleteAccount";
 import InventoryDashboard from "./components/InventoryDashboard";
-import Styles from "./components/StylesAdmin";
-import Clothes from "./components/ClothesAdmin";
+import AddStyles from "./components/AddStyles";
+import EditStyles from "./components/EditStyles";
+import AddItem from "./components/AddItem";
+import EditItem from "./components/EditItem";
 import Finance from "./components/FinanceAdmin";
 import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
@@ -43,10 +46,31 @@ const customStyles = {
 };
 
 function App() {
+  const firestore = useFirestore();
+  const contactsRef = firestore.collection("webpage").doc("contacts");
+  let { status, data } = useFirestoreDocData(contactsRef);
   const { data: user } = useUser();
   const [popupIsOpen, setIsOpen] = useState(false);
   const [popupTitle, setPopupTitle] = useState("Popup");
   const [popupMessage, setPopupMessage] = useState("Message");
+
+  const [contacts, setContacts] = useState({
+    phone_numbers: [],
+    email: "",
+    facebook: "",
+    instagram: "",
+  });
+
+  useEffect(() => {
+    if (status === "success") {
+      setContacts({
+        ...contacts,
+        phone_numbers: data.phone_numbers,
+        email: data.email,
+        facebook: data.facebook,
+      });
+    }
+  }, [status, data]);
 
   function openPopup() {
     setIsOpen(true);
@@ -56,8 +80,6 @@ function App() {
     setIsOpen(false);
   }
 
-   
-  
   function setPopup(codeOrTitle, message) {
     if (codeOrTitle !== undefined && message === undefined) {
       switch (codeOrTitle) {
@@ -120,119 +142,135 @@ function App() {
   }
 
   return (
-    <div className="App row">
-      <Modal
-        isOpen={popupIsOpen}
-        onRequestClose={closePopup}
-        style={customStyles}
-        contentLabel="Example Modal"
-        id="popup"
-      >
-        <h2>{popupTitle}</h2>
-        <div>{popupMessage}</div>
-        <button
-          className="d-block mt-3 m-auto btn btn-primary"
-          onClick={closePopup}
+    <div>
+      <div className="App row">
+        <Modal
+          isOpen={popupIsOpen}
+          onRequestClose={closePopup}
+          style={customStyles}
+          contentLabel="Example Modal"
+          id="popup"
         >
-          Aceptar
-        </button>
-      </Modal>
-      <Router>
-        <Header />
-        <Nav isLogin={user}/>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/catalog">
-            <Catalog />
-          </Route>
-          <Route exact path="/about-us">
-            <AboutUs />
-          </Route>
-          <Route exact path="/item">
-            <Item />
-          </Route>
-          <Route exact path="/admin">
-            {user ? (
-              <Redirect to="/admin/dashboard" />
-            ) : (
-              <Redirect to="/admin/login" />
-            )}
-          </Route>
-          <Route exact path="/admin/dashboard">
-            {user ? (
-              <Dashboard />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/login">
-            {user ? (
-              <Dashboard />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/register">
-            {user ? (
-              <Register openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/delete-account">
-            {user ? (
-              <DeleteAccount openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/inventory">
-            {user ? (
-              <InventoryDashboard openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/inventory/styles">
-            {user ? (
-              <Styles openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/inventory/clothes">
-            {user ? (
-              <Clothes openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/inventory/finance">
-            {user ? (
-              <Finance openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/inventory/orders">
-            {user ? (
-              <Orders openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-          <Route exact path="/admin/about_us">
-            {user ? (
-              <AdminAboutUs openPopup={openPopup} setPopup={setPopup} />
-            ) : (
-              <Login openPopup={openPopup} setPopup={setPopup} />
-            )}
-          </Route>
-        </Switch>
-      </Router>
-      <Footer />
+          <h2>{popupTitle}</h2>
+          <div>{popupMessage}</div>
+          <button
+            className="d-block mt-3 m-auto btn btn-primary"
+            onClick={closePopup}
+          >
+            Aceptar
+          </button>
+        </Modal>
+        <Router>
+          <Header />
+          <Nav isLogin={user} />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/catalog">
+              <Catalog />
+            </Route>
+            <Route exact path="/about-us">
+              <AboutUs />
+            </Route>
+            <Route exact path="/item">
+              <Item />
+            </Route>
+            <Route exact path="/admin">
+              {user ? (
+                <Redirect to="/admin/dashboard" />
+              ) : (
+                <Redirect to="/admin/login" />
+              )}
+            </Route>
+            <Route exact path="/admin/dashboard">
+              {user ? (
+                <Dashboard />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/login">
+              {user ? (
+                <Dashboard />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/register">
+              {user ? (
+                <Register openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/delete-account">
+              {user ? (
+                <DeleteAccount openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory">
+              {user ? (
+                <InventoryDashboard openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/add-styles">
+              {user ? (
+                <AddStyles openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/edit-styles">
+              {user ? (
+                <EditStyles openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/add-item">
+              {user ? (
+                <AddItem openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/edit-item">
+              {user ? (
+                <EditItem openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/finance">
+              {user ? (
+                <Finance openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/orders">
+              {user ? (
+                <Orders openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/about_us">
+              {user ? (
+                <AdminAboutUs openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+          </Switch>
+        </Router>
+        <Footer />
+      </div>
     </div>
   );
 }
