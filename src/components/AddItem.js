@@ -7,6 +7,9 @@ function AddItem(props) {
   const [item, setItem] = useState({
     itemName: "",
     itemImage: "",
+    itemColor: "",
+    itemMarca: "",
+    itemPrecio: "",
     itemVisible: "false",
   });
   const [styles, setStyles] = useState([]);
@@ -17,7 +20,6 @@ function AddItem(props) {
       snapshot.forEach((doc) => tempStyles.push({ ...doc.data(), id: doc.id }));
       console.log(tempStyles);
       setStyles(tempStyles);
-
     });
   }, []);*/
 
@@ -72,6 +74,7 @@ function AddItem(props) {
       .set({
         name: item.itemName,
         image: item.itemImage,
+        color: item.itemColor,
         visible: item.itemVisible === "true" ? true : false,
       })
       .then(() => {
@@ -118,6 +121,39 @@ function AddItem(props) {
               <input
                 type="file"
                 accept="image/*"
+                name="itemImage"
+                className="form-control"
+                onChange={handleImage}
+                required
+              />
+              <label className="form-label topMargin">
+                Color del producto
+              </label>
+              <input
+                type="text"
+                accept="color"
+                name="itemImage"
+                className="form-control"
+                onChange={handleImage}
+                required
+              />
+              <label className="form-label topMargin">
+                Marca del producto
+              </label>
+              <input
+                type="text"
+                accept="marca"
+                name="itemImage"
+                className="form-control"
+                onChange={handleImage}
+                required
+              />
+              <label className="form-label topMargin">
+                Precio del producto
+              </label>
+              <input
+                type="number"
+                accept="precio"
                 name="itemImage"
                 className="form-control"
                 onChange={handleImage}
