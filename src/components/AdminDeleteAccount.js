@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import "firebase/auth";
-import { useAuth, useUser } from "reactfire";
+import { useAuth, useFirestore, useUser } from "reactfire";
 
 function AdminDeleteAccount(props) {
   const auth = useAuth();
+  const firestore = useFirestore();
   const actualUser = useUser();
+  const adminRef = firestore.collection("admin").doc("admins");
   const [user, setUser] = useState({
     password: "",
+    secondPassword: "",
+    actualCounter: "",
   });
 
   const handleChange = (e) => {
@@ -17,27 +21,50 @@ function AdminDeleteAccount(props) {
     });
   };
 
+  useEffect(() => {
+    adminRef
+      .get()
+      .then((snapshot) => setUser({ actualCounter: snapshot.data().counter }));
+  }, []);
+
   const deleteAccount = (e) => {
     e.preventDefault();
 
-    let cred = firebase.auth.EmailAuthProvider.credential(
-      actualUser.data.email,
-      user.password
-    );
-
-    auth.currentUser.reauthenticateWithCredential(cred).then(() => {
-      auth.currentUser
-        .delete()
-        .then(() => {
-          props.setPopup("Información", "Usuario eliminado.");
-          props.openPopup();
-        })
-        .catch((error) => {
-          props.setPopup(error.code, error.message);
-          props.openPopup();
+    if (user.password === user.secondPassword) {
+      if (user.actualCounter > 1) {
+        let cred = firebase.auth.EmailAuthProvider.credential(
+          actualUser.data.email,
+          user.password
+        );
+        adminRef.set({ counter: user.actualCounter - 1 }).then(() => {
+          auth.currentUser
+            .reauthenticateWithCredential(cred)
+            .then(() => {
+              auth.currentUser
+                .delete()
+                .then(() => {
+                  props.setPopup("Información", "Usuario eliminado.");
+                  props.openPopup();
+                })
+                .catch((error) => {
+                  props.setPopup(error.code);
+                  props.openPopup();
+                });
+            })
+            .catch((error) => {
+              props.setPopup(error.code, error.message);
+              props.openPopup();
+            });
+          e.target.reset();
         });
-      e.target.reset();
-    });
+      } else {
+        props.setPopup("auth/only-account");
+        props.openPopup();
+      }
+    } else {
+      props.setPopup("auth/non-identical-passwords");
+      props.openPopup();
+    }
   };
 
   return (
@@ -45,13 +72,17 @@ function AdminDeleteAccount(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5">
           <div className="card-body">
-            <h4 className="text-center mb-4">
-              Eliminar cuenta administrativa
-            </h4>
+            <h4 className="text-center mb-4">Eliminar cuenta administrativa</h4>
             <form id="loginForm" onSubmit={deleteAccount}>
               <label className="form-label">
-                Está a punto de eliminar la cuenta asignada a{" "}
-                <strong>{actualUser.data.email}</strong>
+                {actualUser.data.email !== null ? (
+                  <p>
+                    Está a punto de eliminar la cuenta asignada a{" "}
+                    <strong>{actualUser.data.email}</strong>
+                  </p>
+                ) : (
+                  "No hay cuenta registrada."
+                )}
               </label>
               <label className="form-label topMargin">
                 Ingrese su contraseña
@@ -61,6 +92,17 @@ function AdminDeleteAccount(props) {
                 name="password"
                 className="form-control"
                 id="inputPassword"
+                minLength="8"
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Confirme contraseña
+              </label>
+              <input
+                type="password"
+                name="secondPassword"
+                className="form-control"
                 minLength="8"
                 onChange={handleChange}
                 required

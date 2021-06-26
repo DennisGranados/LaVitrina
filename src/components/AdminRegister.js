@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "firebase/auth";
-import { useAuth, useFirestore } from "reactfire";
+import { useFirestore, firestore, useAuth } from "reactfire";
 
 function AdminRegister(props) {
+  const auth = useAuth();
   const firestore = useFirestore();
   const adminRef = firestore.collection("admin").doc("admins");
-  const auth = useAuth();
   const [user, setUser] = useState({
     email: "",
     password: "",
     secondPassword: "",
+    actualCounter: "",
   });
+
+  useEffect(() => {
+    adminRef
+      .get()
+      .then((snapshot) => setUser({ actualCounter: snapshot.data().counter }));
+  }, []);
 
   const handleChange = (e) => {
     setUser({
@@ -21,7 +28,6 @@ function AdminRegister(props) {
 
   const registerUser = (e) => {
     e.preventDefault();
-    let userCounter;
 
     if (user.password === user.secondPassword) {
       auth
@@ -30,15 +36,21 @@ function AdminRegister(props) {
           user.password
         )
         .then(() => {
-            
-            props.setPopup(
-            "¡Alerta!",
-            "El usuario ha sido registrado con éxito."
-          );
-          props.openPopup();
+          adminRef
+            .set({ counter: user.actualCounter + 1 })
+            .then(() => {
+              props.setPopup(
+                "¡Alerta!",
+                "El usuario ha sido registrado con éxito."
+              );
+              props.openPopup();
+            })
+            .catch((error) => {
+              props.setPopup(error.code);
+              props.openPopup();
+            });
         })
         .catch((error) => {
-          console.log(error);
           props.setPopup(error.code);
           props.openPopup();
         });
@@ -53,9 +65,7 @@ function AdminRegister(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5">
           <div className="card-body">
-            <h4 className="text-center mb-4">
-              Registrar nueva cuenta administrativa
-            </h4>
+            <h4 className="text-center mb-4">Añadir cuenta administrativa</h4>
             <form id="registerForm" onSubmit={registerUser}>
               <label className="form-label">Correo electrónico</label>
               <input

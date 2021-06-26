@@ -128,14 +128,17 @@ function App() {
           setPopupMessage("No existe ningún usuario enlazado con este correo.");
           break;
         default:
+          console.log(codeOrTitle);
           setPopupTitle("Error");
           setPopupMessage("No se ha identificado el error.");
           break;
       }
     } else if (codeOrTitle !== undefined && message !== undefined) {
+      console.log(codeOrTitle + ": " + message);
       setPopupTitle(codeOrTitle);
       setPopupMessage(message);
     } else {
+      console.log(codeOrTitle + ": " + message);
       setPopupTitle("Error");
       setPopupMessage("Error desconocido.");
     }
