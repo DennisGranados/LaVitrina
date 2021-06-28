@@ -82,6 +82,7 @@ function AddStyles(props) {
                 "Se ha agregado la categoría con exito."
               );
               props.openPopup();
+              e.target.reset();
             }
           });
       });

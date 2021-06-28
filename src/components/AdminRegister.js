@@ -44,6 +44,7 @@ function AdminRegister(props) {
                 "El usuario ha sido registrado con éxito."
               );
               props.openPopup();
+              e.target.reset();
             })
             .catch((error) => {
               props.setPopup(error.code);

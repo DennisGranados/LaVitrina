@@ -43,6 +43,7 @@ function AddInformation(props) {
                 "Se ha agregado la información con exito."
               );
               props.openPopup();
+              e.target.reset();
           });
       });
   }
