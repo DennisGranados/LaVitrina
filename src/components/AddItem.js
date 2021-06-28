@@ -3,7 +3,7 @@ import { useFirestore } from "reactfire";
 
 function AddItem(props) {
   const firestore = useFirestore();
-  const stylesRef = firestore.collection("catalog").doc("styles");
+  const stylesRef = firestore.collection("catalog").doc("item");
   const [item, setItem] = useState({
     itemName: "",
     itemImage: "",
@@ -12,7 +12,7 @@ function AddItem(props) {
     itemPrecio: "",
     itemVisible: "false",
   });
-  const [styles, setStyles] = useState([]);
+  /*const [styles, setStyles] = useState([]);*/
 
   /*useEffect(() => {
     return stylesRef.onSnapshot((snapshot) => {
@@ -76,6 +76,8 @@ function AddItem(props) {
         name: item.itemName,
         image: item.itemImage,
         color: item.itemColor,
+        marca: item.itemMarca,
+        precio: item.itemPrecio,
         visible: item.itemVisible === "true" ? true : false,
       })
       .then(() => {
