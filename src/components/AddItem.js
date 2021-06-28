@@ -168,7 +168,7 @@ function AddItem(props) {
               <label className="form-label topMargin">
                 Estilo del producto
               </label>
-              <select name="itemStyle" onChange={handleChange} required>
+              <select className="styles ms-2" name="itemStyle" onChange={handleChange} required>
                 <option value="value1"></option>
               </select>
               <div className="text-center my-3">
