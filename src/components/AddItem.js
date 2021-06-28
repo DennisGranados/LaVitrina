@@ -11,6 +11,7 @@ function AddItem(props) {
     itemMarca: "",
     itemPrecio: "",
     itemStyle: "",
+    itemCode: "",
     itemVisible: "false",
   });
   /*const [styles, setStyles] = useState([]);*/
@@ -80,6 +81,7 @@ function AddItem(props) {
         marca: item.itemMarca,
         precio: item.itemPrecio,
         style: item.itemStyle,
+        code: item.itemCode,
         visible: item.itemVisible === "true" ? true : false,
       })
       .then(() => {
@@ -150,6 +152,17 @@ function AddItem(props) {
                 type="text"
                 accept="marca"
                 name="itemMarca"
+                className="form-control"
+                onChange={handleChange}
+                required
+              />
+               <label className="form-label topMargin">
+                Código del producto
+              </label>
+              <input
+                type="text"
+                accept="code"
+                name="itemCode"
                 className="form-control"
                 onChange={handleChange}
                 required
