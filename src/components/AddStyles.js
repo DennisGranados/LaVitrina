@@ -38,8 +38,9 @@ function AddStyles(props) {
     }
   };
 
-  const resetImage = () => {
-    style.styleImage = "";
+  const resetImage = (e) => {
+    setStyle({...style, styleImage: ""});
+    e.target.reset();
   };
 
   const addStyle = (e) => {

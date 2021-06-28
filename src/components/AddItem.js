@@ -51,8 +51,9 @@ function AddItem(props) {
     }
   };
 
-  const resetImage = () => {
-    item.itemImage = "";
+  const resetImage = (e) => {
+    setItem({...item, itemImage: ""});
+    e.target.reset();
   };
 
   const addItem = (e) => {
@@ -132,9 +133,9 @@ function AddItem(props) {
               <input
                 type="text"
                 accept="color"
-                name="itemImage"
+                name="itemColor"
                 className="form-control"
-                onChange={handleImage}
+                onChange={handleChange}
                 required
               />
               <label className="form-label topMargin">
@@ -143,9 +144,9 @@ function AddItem(props) {
               <input
                 type="text"
                 accept="marca"
-                name="itemImage"
+                name="itemMarca"
                 className="form-control"
-                onChange={handleImage}
+                onChange={handleChange}
                 required
               />
               <label className="form-label topMargin">
@@ -154,13 +155,13 @@ function AddItem(props) {
               <input
                 type="number"
                 accept="precio"
-                name="itemImage"
+                name="itemPrecio"
                 className="form-control"
-                onChange={handleImage}
+                onChange={handleChange}
                 required
               />
               <div className="text-center my-3">
-                {item.itemImage ? (
+                {item.itemImage !== "" ? (
                   <img
                     src={item.itemImage}
                     alt="Imagen del producto"
