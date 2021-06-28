@@ -16,11 +16,13 @@ function Home() {
                 Aqui podrá encontrar toda la colección de prendas a su
                 disposición
               </p>
+              <div className= "mt-4">
               <div className="text-center">
                 <Link to="/catalog" id="home" className="noHype">
                   <button className="btn btn-primary px-5">Ver</button>
                 </Link>
               </div>
+            </div>
             </div>
           </div>
           <div className="card mx-2">
@@ -33,10 +35,12 @@ function Home() {
               <p className="card-text text-center">
                 Artículos agregados a tu carrito de compras
               </p>
+              <div className= "mt-5">
               <div className="text-center">
                 <Link to="/catalog" id="home" className="noHype">
                   <button className="btn btn-primary px-5">Revisar</button>
                 </Link>
+              </div>
               </div>
             </div>
           </div>
