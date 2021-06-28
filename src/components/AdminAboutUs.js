@@ -106,8 +106,8 @@ function AddInformation(props) {
             <label className="form-label">Ingresar detalles acerca de la tienda</label>
             <textarea class="form-control" rows="3" name="extraInfo" className="form-control" onChange={handleChange} required />
           </div>
-          <div className="text-center">
-            <button type="submit" className="btn btn-primary topMargin mx-2">
+          <div className="text-center mt-3">
+            <button type="submit" className="btnAccept">
               Aceptar
             </button>
           </div>

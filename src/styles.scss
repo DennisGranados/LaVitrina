@@ -98,3 +98,11 @@ code {
   font-size: 18px;
   text-align: justify;
 }
+
+.btnAccept {
+  background: linear-gradient(
+    100deg,
+    rgba(168, 37, 99, 1) 25%,
+    rgba(251, 189, 57, 1) 80%
+  );
+}
