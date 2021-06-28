@@ -10,6 +10,7 @@ function AddItem(props) {
     itemColor: "",
     itemMarca: "",
     itemPrecio: "",
+    itemStyle: "",
     itemVisible: "false",
   });
   /*const [styles, setStyles] = useState([]);*/
@@ -52,7 +53,7 @@ function AddItem(props) {
   };
 
   const resetImage = (e) => {
-    setItem({...item, itemImage: ""});
+    setItem({ ...item, itemImage: "" });
     e.target.reset();
   };
 
@@ -64,12 +65,12 @@ function AddItem(props) {
     stylesRef
       .collection(
         item.itemName +
-          "_" +
-          date.getDate() +
-          "_" +
-          (date.getMonth() + 1) +
-          "_" +
-          date.getFullYear()
+        "_" +
+        date.getDate() +
+        "_" +
+        (date.getMonth() + 1) +
+        "_" +
+        date.getFullYear()
       )
       .doc("settings")
       .set({
@@ -78,18 +79,19 @@ function AddItem(props) {
         color: item.itemColor,
         marca: item.itemMarca,
         precio: item.itemPrecio,
+        style: item.itemStyle,
         visible: item.itemVisible === "true" ? true : false,
       })
       .then(() => {
         stylesRef
           .get(
             item.itemName +
-              "_" +
-              date.getDate() +
-              "_" +
-              (date.getMonth() + 1) +
-              "_" +
-              date.getFullYear()
+            "_" +
+            date.getDate() +
+            "_" +
+            (date.getMonth() + 1) +
+            "_" +
+            date.getFullYear()
           )
           .then(function (content) {
             if (content.exists) {
@@ -163,6 +165,12 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               />
+              <label className="form-label topMargin">
+                Estilo del producto
+              </label>
+              <select name="itemStyle" onChange={handleChange} required>
+                <option value="value1"></option>
+              </select>
               <div className="text-center my-3">
                 {item.itemImage !== "" ? (
                   <img
