@@ -9,7 +9,7 @@ function Dashboard() {
           <div className="card ">
             <img
               src="https://image.flaticon.com/icons/png/512/748/748137.png"
-              class="card-img-top"
+              className="card-img-top"
               alt="Imagen añadir cuenta de usuario"
             />
             <div className="card-body">
@@ -27,7 +27,7 @@ function Dashboard() {
           <div className="card ">
             <img
               src="https://image.flaticon.com/icons/png/512/748/748138.png"
-              class="card-img-top"
+              className="card-img-top"
               alt="Imagen eliminar cuenta de usuario"
             />
             <div className="card-body justify-content-center">
@@ -49,7 +49,7 @@ function Dashboard() {
           <div className="card ">
             <img
               src="https://image.flaticon.com/icons/png/512/2942/2942672.png"
-              class="card-img-top"
+              className="card-img-top"
               alt="Imagen gestionar inventario"
             />
             <div className="card-body">
@@ -69,7 +69,7 @@ function Dashboard() {
           <div className="card ">
             <img
               src="https://image.flaticon.com/icons/png/512/2942/2942259.png"
-              class="card-img-top"
+              className="card-img-top"
               alt="Imagen finanzas"
             />
             <div className="card-body">
@@ -87,7 +87,7 @@ function Dashboard() {
           <div className="card ">
             <img
               src="https://image.flaticon.com/icons/png/512/1008/1008010.png"
-              class="card-img-top"
+              className="card-img-top"
               alt="Imagen pedidos"
             />
             <div className="card-body">
@@ -105,7 +105,7 @@ function Dashboard() {
           <div className="card ">
             <img
               src="https://image.flaticon.com/icons/png/512/2343/2343723.png"
-              class="card-img-top"
+              className="card-img-top"
               alt="Imagen información de la página"
             />
             <div className="card-body">

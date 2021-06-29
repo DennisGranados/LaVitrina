@@ -1,5 +1,4 @@
-import { map } from "async";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFirestore } from "reactfire";
 
 function AddItem(props) {
@@ -10,33 +9,36 @@ function AddItem(props) {
     itemCode: "",
     itemImage: "",
     itemColor: "",
-    itemMarca: "",
-    itemPrecio: "",
-    itemStyle: "",
-    itemCode: "",
+    itemBrand: "",
+    itemPrice: "",
+    itemStyle: "undefined",
+    itemQuantity: "",
     itemVisible: "false",
   });
   const [styles, setStyles] = useState([]);
 
   function generateStyles() {
-    var styles = [];
+    if (styles.length === 0) {
+      stylesRef.get().then(async function (content) {
+        let stylesID = content.data()["styles"];
 
-    stylesRef.get().then((content) => {
-      let temp = content.data()["styles"];
-
-      for (let style of temp) {
-        stylesRef
-          .collection(style)
-          .doc("settings")
-          .get()
-          .then((styleName) => {
-            styles.push(<p>{style + styleName.data().name}</p>);
-            //styles.push(<option value={style}>{styleName.data().name}</option>);
-          });
-      }
-      console.log(styles);
-      setStyles(styles);
-    });
+        var temp = [];
+        stylesID.forEach(async function (styleID) {
+          await stylesRef
+            .collection(styleID)
+            .doc("settings")
+            .get()
+            .then((styleName) => {
+              temp.push(
+                <option value={styleID}>{styleName.data().name}</option>
+              );
+              if (stylesID.length === temp.length) {
+                setStyles(temp);
+              }
+            });
+        });
+      });
+    }
   }
 
   const handleChange = (e) => {
@@ -44,6 +46,7 @@ function AddItem(props) {
       ...item,
       [e.target.name]: e.target.value,
     });
+    console.log(e.target.value);
   };
 
   const handleImage = (e) => {
@@ -75,51 +78,45 @@ function AddItem(props) {
   const addItem = (e) => {
     e.preventDefault();
 
-    const date = new Date();
-
-    stylesRef
-      .collection(
-        item.itemName +
-          "_" +
-          date.getDate() +
-          "_" +
-          (date.getMonth() + 1) +
-          "_" +
-          date.getFullYear()
-      )
-      .doc("settings")
-      .set({
-        name: item.itemName,
-        code: item.itemCode,
-        image: item.itemImage,
-        color: item.itemColor,
-        brand: item.itemBrand,
-        price: item.itemPrice,
-        quantity: item.itemQuantity,
-        visible: item.itemVisible === "true" ? true : false,
-      })
-      .then(() => {
-        stylesRef
-          .get(
-            item.itemName +
-              "_" +
-              date.getDate() +
-              "_" +
-              (date.getMonth() + 1) +
-              "_" +
-              date.getFullYear()
-          )
-          .then(function (content) {
-            if (content.exists) {
-              props.setPopup(
-                "Confirmación",
-                "Se ha agregado la categoría con exito."
-              );
+    if (item.itemStyle !== "undefined") {
+      stylesRef
+        .collection(item.itemStyle)
+        .doc(item.itemCode)
+        .set({
+          name: item.itemName,
+          image: item.itemImage,
+          color: item.itemColor,
+          brand: item.itemBrand,
+          price: parseFloat(item.itemPrice),
+          quantity: parseInt(item.itemQuantity),
+          visible: item.itemVisible === "true" ? true : false,
+        })
+        .then(() => {
+          stylesRef
+            .get(item.itemName)
+            .then(function (content) {
+              if (content.exists) {
+                props.setPopup(
+                  "Confirmación",
+                  "Se ha agregado la categoría con exito."
+                );
+                props.openPopup();
+                e.target.reset();
+              }
+            })
+            .catch((error) => {
+              props.setPopup(error.code);
               props.openPopup();
-              e.target.reset();
-            }
-          });
-      });
+            });
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+    } else {
+      props.setPopup("Error", "Debe de seleccionar un estilo, mamapichas");
+      props.openPopup();
+    }
   };
 
   return (
@@ -147,17 +144,6 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               />
-              <label className="form-label topMargin">
-                Imagen del producto
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                name="itemImage"
-                className="form-control"
-                onChange={handleImage}
-                required
-              />
               <label className="form-label topMargin">Color del producto</label>
               <input
                 type="text"
@@ -174,17 +160,6 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               />
-               <label className="form-label topMargin">
-                Código del producto
-              </label>
-              <input
-                type="text"
-                accept="code"
-                name="itemCode"
-                className="form-control"
-                onChange={handleChange}
-                required
-              />
               <label className="form-label topMargin">
                 Precio del producto
               </label>
@@ -197,13 +172,27 @@ function AddItem(props) {
                 required
               />
               <label className="form-label topMargin">
-                Estilo del producto
-                {generateStyles()}
-                {styles}
+                Cantidad a ingresar
               </label>
-              <select className="styles ms-2" name="itemStyle" onChange={handleChange} required>
-                <option value="value1"></option>
-              </select>
+              <input
+                type="number"
+                name="itemQuantity"
+                className="form-control"
+                min="1"
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Imagen del producto
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                name="itemImage"
+                className="form-control"
+                onChange={handleImage}
+                required
+              />
               <div className="text-center my-3">
                 {item.itemImage !== "" ? (
                   <img
@@ -215,6 +204,21 @@ function AddItem(props) {
                   <p>No se ha cargado una imagen.</p>
                 )}
               </div>
+              <label className="form-label topMargin">
+                Estilo del producto
+              </label>
+              <select
+                className="styles ms-2"
+                name="itemStyle"
+                onChange={handleChange}
+                required
+              >
+                <option value="undefined" selected>
+                  ---Seleccione una opción---
+                </option>
+                {generateStyles()}
+                {styles}
+              </select>
               <div className="mb-3">
                 <label htmlFor="InputCategoryImage" className="form-label me-3">
                   Visible:

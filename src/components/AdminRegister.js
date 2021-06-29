@@ -13,12 +13,6 @@ function AdminRegister(props) {
     actualCounter: "",
   });
 
-  useEffect(() => {
-    adminRef
-      .get()
-      .then((snapshot) => setUser({ actualCounter: snapshot.data().counter }));
-  }, []);
-
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -36,20 +30,23 @@ function AdminRegister(props) {
           user.password
         )
         .then(() => {
-          adminRef
-            .set({ counter: user.actualCounter + 1 })
-            .then(() => {
-              props.setPopup(
-                "¡Alerta!",
-                "El usuario ha sido registrado con éxito."
-              );
-              props.openPopup();
-              e.target.reset();
-            })
-            .catch((error) => {
-              props.setPopup(error.code);
-              props.openPopup();
-            });
+          adminRef.get().then((snapshot) => {
+            let actualCounter = snapshot.data().counter;
+            adminRef
+              .set({ counter: actualCounter + 1 })
+              .then(() => {
+                props.setPopup(
+                  "¡Alerta!",
+                  "El usuario ha sido registrado con éxito."
+                );
+                props.openPopup();
+                e.target.reset();
+              })
+              .catch((error) => {
+                props.setPopup(error.code);
+                props.openPopup();
+              });
+          });
         })
         .catch((error) => {
           props.setPopup(error.code);

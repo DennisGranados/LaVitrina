@@ -21,46 +21,43 @@ function AdminDeleteAccount(props) {
     });
   };
 
-  useEffect(() => {
-    adminRef
-      .get()
-      .then((snapshot) => setUser({ actualCounter: snapshot.data().counter }));
-  }, []);
-
   const deleteAccount = (e) => {
     e.preventDefault();
 
     if (user.password === user.secondPassword) {
-      if (user.actualCounter > 1) {
-        let cred = firebase.auth.EmailAuthProvider.credential(
-          actualUser.data.email,
-          user.password
-        );
-        adminRef.set({ counter: user.actualCounter - 1 }).then(() => {
-          auth.currentUser
-            .reauthenticateWithCredential(cred)
-            .then(() => {
-              auth.currentUser
-                .delete()
-                .then(() => {
-                  props.setPopup("Información", "Usuario eliminado.");
-                  props.openPopup();
-                })
-                .catch((error) => {
-                  props.setPopup(error.code);
-                  props.openPopup();
-                });
-            })
-            .catch((error) => {
-              props.setPopup(error.code, error.message);
-              props.openPopup();
-            });
-          e.target.reset();
-        });
-      } else {
-        props.setPopup("auth/only-account");
-        props.openPopup();
-      }
+      adminRef.get().then((snapshot) => {
+        let actualCounter = snapshot.data().counter;
+        if (actualCounter > 1) {
+          let cred = firebase.auth.EmailAuthProvider.credential(
+            actualUser.data.email,
+            user.password
+          );
+          adminRef.set({ counter: actualCounter - 1 }).then(() => {
+            auth.currentUser
+              .reauthenticateWithCredential(cred)
+              .then(() => {
+                auth.currentUser
+                  .delete()
+                  .then(() => {
+                    props.setPopup("Información", "Usuario eliminado.");
+                    props.openPopup();
+                  })
+                  .catch((error) => {
+                    props.setPopup(error.code);
+                    props.openPopup();
+                  });
+              })
+              .catch((error) => {
+                props.setPopup(error.code, error.message);
+                props.openPopup();
+              });
+            e.target.reset();
+          });
+        } else {
+          props.setPopup("auth/only-account");
+          props.openPopup();
+        }
+      });
     } else {
       props.setPopup("auth/non-identical-passwords");
       props.openPopup();

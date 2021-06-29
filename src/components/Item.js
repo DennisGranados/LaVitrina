@@ -31,7 +31,7 @@ function Item() {
               Amarillo
             </button>
             <li>
-              <hr class="dropdown-divider"></hr>
+              <hr className="dropdown-divider"></hr>
             </li>
             Tallas
             <button className="dropdown-item" type="button">

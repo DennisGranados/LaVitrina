@@ -54,7 +54,7 @@ function AddInformation(props) {
         <div className="card-body">
           <h4 className="text-center mb-4">Ingresar información de contacto</h4>
           <div className="row">
-            <div class="col">
+            <div className="col">
               <label className="form-label">Correo electrónico</label>
               <input
                 type="email"
@@ -65,7 +65,7 @@ function AddInformation(props) {
                 required
               />
             </div>
-            <div class="col">
+            <div className="col">
               <label className="form-label">Número telefónico</label>
               <input
                 type="number"
@@ -77,7 +77,7 @@ function AddInformation(props) {
               />
             </div>
           </div>
-          <div class="col mt-2">
+          <div className="col mt-2">
             <label className="form-label">Link de página de Facebook</label>
             <input
               type="text"
@@ -88,7 +88,7 @@ function AddInformation(props) {
               required
             />
           </div>
-          <div class="col mt-2">
+          <div className="col mt-2">
             <label className="form-label">Link de página de Instagram</label>
             <input
               type="text"
@@ -99,13 +99,13 @@ function AddInformation(props) {
               required
             />
           </div>
-          <div class="col mt-3">
+          <div className="col mt-3">
             <label className="form-label">Ingresar información acerca de la tienda</label>
-            <textarea class="form-control" rows="3" name="aboutUs" className="form-control" onChange={handleChange} required />
+            <textarea className="form-control" rows="3" name="aboutUs" className="form-control" onChange={handleChange} required />
           </div>
-          <div class="col mt-3">
+          <div className="col mt-3">
             <label className="form-label">Ingresar detalles acerca de la tienda</label>
-            <textarea class="form-control" rows="3" name="extraInfo" className="form-control" onChange={handleChange} required />
+            <textarea className="form-control" rows="3" name="extraInfo" className="form-control" onChange={handleChange} required />
           </div>
           <div className="text-center mt-3">
             <button type="submit" className="btnAccept">
