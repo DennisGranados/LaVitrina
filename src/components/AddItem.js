@@ -1,28 +1,42 @@
-import { useEffect, useState } from "react";
+import { map } from "async";
+import React, { useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 
 function AddItem(props) {
   const firestore = useFirestore();
-  const stylesRef = firestore.collection("catalog").doc("item");
+  const stylesRef = firestore.collection("catalog").doc("styles");
   const [item, setItem] = useState({
     itemName: "",
+    itemCode: "",
     itemImage: "",
     itemColor: "",
-    itemMarca: "",
-    itemPrecio: "",
-    itemStyle: "",
+    itemBrand: "",
+    itemPrice: "",
+    itemQuantity: "",
     itemVisible: "false",
   });
-  /*const [styles, setStyles] = useState([]);*/
+  const [styles, setStyles] = useState([]);
 
-  /*useEffect(() => {
-    return stylesRef.onSnapshot((snapshot) => {
-      let tempStyles = [];
-      snapshot.forEach((doc) => tempStyles.push({ ...doc.data(), id: doc.id }));
-      console.log(tempStyles);
-      setStyles(tempStyles);
+  function generateStyles() {
+    var styles = [];
+
+    stylesRef.get().then((content) => {
+      let temp = content.data()["styles"];
+
+      for (let style of temp) {
+        stylesRef
+          .collection(style)
+          .doc("settings")
+          .get()
+          .then((styleName) => {
+            styles.push(<p>{style + styleName.data().name}</p>);
+            //styles.push(<option value={style}>{styleName.data().name}</option>);
+          });
+      }
+      console.log(styles);
+      setStyles(styles);
     });
-  }, []);*/
+  }
 
   const handleChange = (e) => {
     setItem({
@@ -65,33 +79,34 @@ function AddItem(props) {
     stylesRef
       .collection(
         item.itemName +
-        "_" +
-        date.getDate() +
-        "_" +
-        (date.getMonth() + 1) +
-        "_" +
-        date.getFullYear()
+          "_" +
+          date.getDate() +
+          "_" +
+          (date.getMonth() + 1) +
+          "_" +
+          date.getFullYear()
       )
       .doc("settings")
       .set({
         name: item.itemName,
+        code: item.itemCode,
         image: item.itemImage,
         color: item.itemColor,
-        marca: item.itemMarca,
-        precio: item.itemPrecio,
-        style: item.itemStyle,
+        brand: item.itemBrand,
+        price: item.itemPrice,
+        quantity: item.itemQuantity,
         visible: item.itemVisible === "true" ? true : false,
       })
       .then(() => {
         stylesRef
           .get(
             item.itemName +
-            "_" +
-            date.getDate() +
-            "_" +
-            (date.getMonth() + 1) +
-            "_" +
-            date.getFullYear()
+              "_" +
+              date.getDate() +
+              "_" +
+              (date.getMonth() + 1) +
+              "_" +
+              date.getFullYear()
           )
           .then(function (content) {
             if (content.exists) {
@@ -122,6 +137,16 @@ function AddItem(props) {
                 required
               />
               <label className="form-label topMargin">
+                Código del producto
+              </label>
+              <input
+                type="text"
+                name="itemCode"
+                className="form-control"
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
                 Imagen del producto
               </label>
               <input
@@ -132,24 +157,18 @@ function AddItem(props) {
                 onChange={handleImage}
                 required
               />
-              <label className="form-label topMargin">
-                Color del producto
-              </label>
+              <label className="form-label topMargin">Color del producto</label>
               <input
                 type="text"
-                accept="color"
                 name="itemColor"
                 className="form-control"
                 onChange={handleChange}
                 required
               />
-              <label className="form-label topMargin">
-                Marca del producto
-              </label>
+              <label className="form-label topMargin">Marca del producto</label>
               <input
                 type="text"
-                accept="marca"
-                name="itemMarca"
+                name="itemBrand"
                 className="form-control"
                 onChange={handleChange}
                 required
@@ -159,17 +178,19 @@ function AddItem(props) {
               </label>
               <input
                 type="number"
-                accept="precio"
-                name="itemPrecio"
+                name="itemPrice"
                 className="form-control"
+                min="0"
                 onChange={handleChange}
                 required
               />
               <label className="form-label topMargin">
                 Estilo del producto
+                {generateStyles()}
+                {styles}
               </label>
               <select name="itemStyle" onChange={handleChange} required>
-                <option value="value1"></option>
+                <option>Selecciona un estilo</option>
               </select>
               <div className="text-center my-3">
                 {item.itemImage !== "" ? (

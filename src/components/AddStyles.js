@@ -39,7 +39,7 @@ function AddStyles(props) {
   };
 
   const resetImage = (e) => {
-    setStyle({...style, styleImage: ""});
+    setStyle({ ...style, styleImage: "" });
     e.target.reset();
   };
 
@@ -85,6 +85,10 @@ function AddStyles(props) {
               e.target.reset();
             }
           });
+      })
+      .catch((error) => {
+        props.setPopup(error.code);
+        props.openPopup();
       });
   };
 
@@ -93,9 +97,7 @@ function AddStyles(props) {
       <div className="col-12 justify-content-center dflex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
-            <h4 className="text-center mb-4">
-              Añadir nuevo estilo
-            </h4>
+            <h4 className="text-center mb-4">Añadir nuevo estilo</h4>
             <form id="addStyle" onSubmit={addStyle} onReset={resetImage}>
               <label className="form-label">Nombre del estilo</label>
               <input
