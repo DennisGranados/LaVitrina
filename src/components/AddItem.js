@@ -10,9 +10,10 @@ function AddItem(props) {
     itemCode: "",
     itemImage: "",
     itemColor: "",
-    itemBrand: "",
-    itemPrice: "",
-    itemQuantity: "",
+    itemMarca: "",
+    itemPrecio: "",
+    itemStyle: "",
+    itemCode: "",
     itemVisible: "false",
   });
   const [styles, setStyles] = useState([]);
@@ -173,6 +174,17 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               />
+               <label className="form-label topMargin">
+                Código del producto
+              </label>
+              <input
+                type="text"
+                accept="code"
+                name="itemCode"
+                className="form-control"
+                onChange={handleChange}
+                required
+              />
               <label className="form-label topMargin">
                 Precio del producto
               </label>
@@ -189,8 +201,8 @@ function AddItem(props) {
                 {generateStyles()}
                 {styles}
               </label>
-              <select name="itemStyle" onChange={handleChange} required>
-                <option>Selecciona un estilo</option>
+              <select className="styles ms-2" name="itemStyle" onChange={handleChange} required>
+                <option value="value1"></option>
               </select>
               <div className="text-center my-3">
                 {item.itemImage !== "" ? (
