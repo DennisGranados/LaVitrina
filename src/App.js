@@ -29,6 +29,7 @@ import Finance from "./components/FinanceAdmin";
 import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
 import Item from "./components/Item";
+import ShoppingCart from "./components/ShoppingCart";
 
 Modal.setAppElement("#root");
 
@@ -179,6 +180,9 @@ function App() {
             </Route>
             <Route exact path="/item">
               <Item />
+            </Route>
+            <Route exact path="/shoppingCart">
+              <ShoppingCart />
             </Route>
             <Route exact path="/admin">
               {user ? (
