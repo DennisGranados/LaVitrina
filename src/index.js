@@ -16,7 +16,7 @@ function Loading() {
   const catalogRef = useFirestore().collection("webpage").doc("contacs");
 
   // subscribe to a document for realtime updates. just one line!
-  const { data, status } = useFirestoreDocData(catalogRef);
+  const { status } = useFirestoreDocData(catalogRef);
 
   // easily check the loading status
   if (status === "loading") {

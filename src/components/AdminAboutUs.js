@@ -6,7 +6,7 @@ function AddInformation(props) {
   const firestore = useFirestore();
   const aboutRef = firestore.collection("webpage").doc("about_us");
   const contactsRef = firestore.collection("webpage").doc("contacts");
-  let { status, data } = useFirestoreDocData(contactsRef);
+  let { data } = useFirestoreDocData(contactsRef);
   const [information, setInformation] = useState({
     email: "",
     facebook: "",
@@ -17,21 +17,17 @@ function AddInformation(props) {
   });
 
   useEffect(() => {
-    if (status === "success") {
-      console.log(contacts.phone_number);
+    aboutRef.get().then((snapshot) => {
+      let aboutUs = snapshot.data().about_us;
+      let extraInfo = snapshot.data().extra_info;
 
-      aboutRef.get().then((snapshot) => {
-        let aboutUs = snapshot.data().about_us;
-        let extraInfo = snapshot.data().extra_info;
-
-        setInformation({
-          ...information,
-          aboutUs: aboutUs,
-          extraInfo: extraInfo,
-        });
+      setInformation({
+        ...information,
+        aboutUs: aboutUs,
+        extraInfo: extraInfo,
       });
-    }
-  }, [status, data]);
+    });
+  }, [data, aboutRef]);
 
   const handleChange = (e) => {
     setInformation({
@@ -189,7 +185,7 @@ function AddInformation(props) {
               onSubmit={addFacebook}
             >
               <input
-                type="text"
+                type="url"
                 name="facebook"
                 className="form-control"
                 onChange={handleChange}
@@ -210,7 +206,7 @@ function AddInformation(props) {
               onSubmit={addInstagram}
             >
               <input
-                type="text"
+                type="url"
                 name="instagram"
                 className="form-control"
                 onChange={handleChange}
@@ -236,7 +232,6 @@ function AddInformation(props) {
                 className="form-control"
                 rows="3"
                 name="aboutUs"
-                className="form-control"
                 onChange={handleChange}
                 placeholder={information.aboutUs}
                 required
@@ -260,7 +255,6 @@ function AddInformation(props) {
                 className="form-control"
                 rows="3"
                 name="extraInfo"
-                className="form-control"
                 onChange={handleChange}
                 placeholder={information.extraInfo}
                 required

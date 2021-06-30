@@ -30,7 +30,7 @@ function AddItem(props) {
             .get()
             .then((styleName) => {
               temp.push(
-                <option value={styleID}>{styleName.data().name}</option>
+                <option value={styleID} key={styleID}>{styleName.data().name}</option>
               );
               if (stylesID.length === temp.length) {
                 setStyles(temp);
@@ -212,7 +212,7 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               >
-                <option value="" selected>
+                <option value="">
                   ---Seleccione una opción---
                 </option>
                 {generateStyles()}

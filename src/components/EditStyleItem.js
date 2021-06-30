@@ -1,7 +1,7 @@
 function EditStyleItem(props) {
   return (
     <div className="card">
-      <img src={props.image} className="card-img-top" alt="Image" />
+      <img src={props.image} className="card-img-top" alt="" />
       <div className="card-body">
         <h5
           className="card-title text-center"
@@ -40,7 +40,7 @@ function EditStyleItem(props) {
             <button
               type="button"
               onClick={() => props.edit(props.id)}
-              class="btn btn-primary"
+              className="btn btn-primary"
             >
               Editar
             </button>

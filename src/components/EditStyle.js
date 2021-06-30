@@ -27,7 +27,7 @@ function EditStyle(props) {
           }
         });
       });
-  }, [props]);
+  }, [props, stylesRef]);
 
   const handleCancelEdit = () => {
     props.actionCancel();
