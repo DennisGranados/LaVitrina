@@ -244,7 +244,7 @@ function AddInformation(props) {
                 Actualizar
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
   );
