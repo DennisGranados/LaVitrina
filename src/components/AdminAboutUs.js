@@ -21,41 +21,110 @@ function AddInformation(props) {
     });
   };
 
-  const addInformation= (e) => {
+  const addEmail = (e) => {
     e.preventDefault();
+    contactRef
+      .update({
+        email: information.email,
+      })
+      .then(function () {
+        props.setPopup(
+          "Confirmación",
+          "Se ha agregado la información con exito."
+        );
+        props.openPopup();
+        e.target.reset();
+      });
+  }
 
+  const addPhoneNumber = (e) => {
+    e.preventDefault();
+    contactRef
+      .update({
+        phone_numbers: information.phoneNumber,
+      })
+      .then(function () {
+        props.setPopup(
+          "Confirmación",
+          "Se ha agregado la información con exito."
+        );
+        props.openPopup();
+        e.target.reset();
+      });
+  }
+
+  const addFacebook = (e) => {
+    e.preventDefault();
+    contactRef
+      .update({
+        facebook: information.facebook,
+      })
+      .then(function () {
+        props.setPopup(
+          "Confirmación",
+          "Se ha agregado la información con exito."
+        );
+        props.openPopup();
+        e.target.reset();
+      });
+  }
+
+  const addInstagram = (e) => {
+    e.preventDefault();
+    contactRef
+      .update({
+        instagram: information.instagram,
+      })
+      .then(function () {
+        props.setPopup(
+          "Confirmación",
+          "Se ha agregado la información con exito."
+        );
+        props.openPopup();
+        e.target.reset();
+      });
+  }
+
+  const addAboutUs = (e) => {
+    e.preventDefault();
     aboutRef
-      .set({
+      .update({
         about_us: information.aboutUs,
+      })
+      .then(function () {
+        props.setPopup(
+          "Confirmación",
+          "Se ha agregado la información con exito."
+        );
+        props.openPopup();
+        e.target.reset();
+      });
+  }
+
+  const addDetails = (e) => {
+    e.preventDefault();
+    aboutRef
+      .update({
         extra_info: information.extraInfo,
       })
-      .then(() => {
-        contactRef
-          .set({
-            email: information.email,
-            phone_numbers: information.phoneNumber,
-            facebook: information.facebook,
-            instagram: information.instagram,
-          })
-          .then(function () {
-              props.setPopup(
-                "Confirmación",
-                "Se ha agregado la información con exito."
-              );
-              props.openPopup();
-              e.target.reset();
-          });
+      .then(function () {
+        props.setPopup(
+          "Confirmación",
+          "Se ha agregado la información con exito."
+        );
+        props.openPopup();
+        e.target.reset();
       });
   }
 
   return (
-    <form className="col-12 justify-content-center dflex" onSubmit={addInformation}>
-      <div className="card" id="card-submit">
-        <div className="card-body">
-          <h4 className="text-center mb-4">Ingresar información de contacto</h4>
-          <div className="row">
-            <div className="col">
-              <label className="form-label">Correo electrónico</label>
+    <div className="card" id="card-submit">
+      <div className="card-body">
+        <h4 className="text-center mb-4">Ingresar información de contacto</h4>
+        <div className="row">
+          <div className="col">
+            <label className="form-label">Correo electrónico</label>
+            <form className="col-12 justify-content-center dflex" onSubmit={addEmail}>
               <input
                 type="email"
                 name="email"
@@ -64,9 +133,16 @@ function AddInformation(props) {
                 placeholder="text@gmail.com"
                 required
               />
-            </div>
-            <div className="col">
-              <label className="form-label">Número telefónico</label>
+              <div className="text-center mt-3">
+                <button type="submit" className="btn raisePrimary btnAccept">
+                  Actualizar
+                </button>
+              </div>
+            </form>
+          </div>
+          <div className="col">
+            <label className="form-label">Número telefónico</label>
+            <form className="col-12 justify-content-center dflex" onSubmit={addPhoneNumber}>
               <input
                 type="number"
                 name="phoneNumber"
@@ -75,10 +151,17 @@ function AddInformation(props) {
                 placeholder="88888888"
                 required
               />
-            </div>
+              <div className="text-center mt-3">
+                <button type="submit" className="btn raisePrimary btnAccept">
+                  Actualizar
+                </button>
+              </div>
+            </form>
           </div>
-          <div className="col mt-2">
-            <label className="form-label">Link de página de Facebook</label>
+        </div>
+        <div className="col mt-2">
+          <label className="form-label">Link de página de Facebook</label>
+          <form className="col-12 justify-content-center dflex" onSubmit={addFacebook}>
             <input
               type="text"
               name="facebook"
@@ -87,9 +170,16 @@ function AddInformation(props) {
               placeholder="https://www.facebook.com/example"
               required
             />
-          </div>
-          <div className="col mt-2">
-            <label className="form-label">Link de página de Instagram</label>
+            <div className="text-center mt-3">
+              <button type="submit" className="btn raisePrimary btnAccept">
+                Actualizar
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="col mt-2">
+          <label className="form-label">Link de página de Instagram</label>
+          <form className="col-12 justify-content-center dflex" onSubmit={addInstagram}>
             <input
               type="text"
               name="instagram"
@@ -98,23 +188,37 @@ function AddInformation(props) {
               placeholder="https://www.instagram.com/example/?hl=es-la"
               required
             />
-          </div>
-          <div className="col mt-3">
-            <label className="form-label">Ingresar información acerca de la tienda</label>
+            <div className="text-center mt-3">
+              <button type="submit" className="btn raisePrimary btnAccept">
+                Actualizar
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="col mt-3">
+          <label className="form-label">Ingresar información acerca de la tienda</label>
+          <form className="col-12 justify-content-center dflex" onSubmit={addAboutUs}>
             <textarea className="form-control" rows="3" name="aboutUs" className="form-control" onChange={handleChange} required />
-          </div>
-          <div className="col mt-3">
-            <label className="form-label">Ingresar detalles acerca de la tienda</label>
+            <div className="text-center mt-3">
+              <button type="submit" className="btn raisePrimary btnAccept">
+                Actualizar
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="col mt-3">
+          <label className="form-label">Ingresar detalles acerca de la tienda</label>
+          <form className="col-12 justify-content-center dflex" onSubmit={addDetails}>
             <textarea className="form-control" rows="3" name="extraInfo" className="form-control" onChange={handleChange} required />
-          </div>
-          <div className="text-center mt-3">
-            <button type="submit" className="btn raisePrimary btnAccept">
-              Aceptar
-            </button>
-          </div>
+            <div className="text-center mt-3">
+              <button type="submit" className="btn raisePrimary btnAccept">
+                Actualizar
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 export default AddInformation;
