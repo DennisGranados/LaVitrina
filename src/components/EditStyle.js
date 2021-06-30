@@ -54,6 +54,7 @@ function EditStyle(props) {
         } else {
           props.setPopup("image-not-found");
           props.openPopup();
+          e.target.reset();
         }
       };
     } catch (error) {
