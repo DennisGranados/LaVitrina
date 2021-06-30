@@ -19,17 +19,17 @@ function Nav() {
         <nav className="col-12 navBackground">
           <ul className="navbar navbar-dark col-5">
             <li className="btn">
-              <Link to="/" className="noHype">
+              <Link to="/" className="btn noHype navHover">
                 Inicio
               </Link>
             </li>
             <li className="btn">
-              <Link to="/admin" className="noHype">
+              <Link to="/admin" className="btn noHype navHover">
                 Sitio administrativo
               </Link>
             </li>
             <li className="btn">
-              <Link to="/about-us" className="noHype">
+              <Link to="/about-us" className="btn noHype navHover">
                 Acerca de
               </Link>
             </li>
