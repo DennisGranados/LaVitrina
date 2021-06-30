@@ -19,7 +19,7 @@ function Home() {
               <div className= "mt-4">
               <div className="text-center">
                 <Link to="/catalog" id="home" className="noHype">
-                  <button className="btn btn-primary px-5">Ver</button>
+                  <button className="btn btnAccept px-5">Ver</button>
                 </Link>
               </div>
             </div>
@@ -38,7 +38,7 @@ function Home() {
               <div className= "mt-5">
               <div className="text-center">
                 <Link to="/catalog" id="home" className="noHype">
-                  <button className="btn btn-primary px-5">Revisar</button>
+                  <button className="btn btnAccept px-5">Revisar</button>
                 </Link>
               </div>
               </div>

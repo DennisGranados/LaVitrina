@@ -17,9 +17,11 @@ function Dashboard() {
                 Añadir cuenta de usuario
               </h5>
               <p className="card-text">Agregar cuentas administrativas.</p>
-              <Link className="btn btn-primary" to="/admin/register" href="#">
+              <div className="text-center">
+              <Link className="btn btnAccept raisePrimary" to="/admin/register" href="#">
                 Ir a la sección
               </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -35,13 +37,15 @@ function Dashboard() {
                 Eliminar cuenta de usuario
               </h5>
               <p className="card-text">Eliminar cuentas administrativas.</p>
+              <div className="text-center">
               <Link
-                className="btn btn-primary"
+                className="btn btnAccept raisePrimary"
                 to="/admin/delete-account"
                 href="#"
               >
                 Ir a la sección
               </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -57,9 +61,11 @@ function Dashboard() {
               <p className="card-text">
                 Permite agregar, editar y eliminar prendas y estilos.
               </p>
-              <Link className="btn btn-primary" to="/admin/inventory" href="#">
+              <div className="text-center">
+              <Link className="btn btnAccept raisePrimary" to="/admin/inventory" href="#">
                 Ir a la sección
               </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -77,9 +83,11 @@ function Dashboard() {
               <p className="card-text">
                 Permite ver las ventas por mes, entre otras cosas.
               </p>
-              <Link className="btn btn-primary" to="/admin/finance" href="#">
+              <div className="text-center">
+              <Link className="btn btnAccept raisePrimary" to="/admin/finance" href="#">
                 Ir a la sección
               </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -95,9 +103,11 @@ function Dashboard() {
               <p className="card-text">
                 Gestiona pedidos pendientes y el histórico de estos.
               </p>
-              <Link className="btn btn-primary" to="/admin/orders" href="#">
+              <div className="text-center">
+              <Link className="btn btnAccept raisePrimary" to="/admin/orders" href="#">
                 Ir a la sección
               </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -116,9 +126,11 @@ function Dashboard() {
                 Permite gestionar los métodos de contacto, así como información
                 de la página (acerca de nosotras).
               </p>
-              <Link className="btn btn-primary" to="/admin/about_us" href="#">
+              <div className="text-center">
+              <Link className="btn btnAccept raisePrimary" to="/admin/about_us" href="#">
                 Ir a la sección
               </Link>
+              </div>
             </div>
           </div>
         </div>

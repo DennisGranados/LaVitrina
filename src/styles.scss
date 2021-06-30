@@ -1,12 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;500;700&family=Dancing+Script:wght@400;500;600;700&display=swap");
 
 //Paleta requerida/No aplicada
-$color-rosa: #f9c7f2;
-$color-amarillo: #eefa86;
+$color-rosa: #99245b;
+$color-amarillo: #fecb01;
 $color-blanco: #ffffff;
-$color-celeste: #afc3fa;
-$color-marron: #b6a777;
-$color-cafe: #ebcaa8;
+$color-rosa-alter: #be4d58;
 
 //Paleta actual
 $main-font: "Raleway", Arial, Helvetica, sans-serif;
@@ -70,7 +68,14 @@ code {
 
 .noHype {
   text-decoration: none;
-  color: black;
+  color: $color-blanco;
+  font-weight: bold;
+}
+
+.navHover:hover {
+  color: $color-amarillo;
+  transition-duration: 500ms;
+  transform: scale(1.2);
 }
 
 .navBackground {
@@ -94,15 +99,39 @@ code {
   width: 36rem;
 }
 
-.paragraph { 
+.paragraph {
   font-size: 18px;
   text-align: justify;
 }
 
 .btnAccept {
-  background: linear-gradient(
-    100deg,
-    rgba(168, 37, 99, 1) 25%,
-    rgba(251, 189, 57, 1) 80%
-  );
+  background: $color-rosa;
+  color: $color-blanco;
+}
+
+.btnClear {
+  background: #E89B43;
+  color: $color-blanco;
+}
+
+.btnAccept:hover,
+.btnAccept:focus {
+  box-shadow: 2px 2px 0px #000000;
+  transform: translateY(-0.2em);
+  color: $color-amarillo;
+  transition-duration: 500ms;
+  transition-delay: 500ms;
+}
+
+.btnClear:hover,
+.btnClear:focus {
+  box-shadow: 2px 2px 0px #000000;
+  transform: translateY(-0.2em);
+  color: $color-rosa;
+  transition-duration: 500ms;
+  transition-delay: 500ms;
+}
+
+.card .card-body h4 {
+  border-bottom: 2px solid #FBBD39;
 }

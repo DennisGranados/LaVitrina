@@ -108,7 +108,7 @@ function AddInformation(props) {
             <textarea className="form-control" rows="3" name="extraInfo" className="form-control" onChange={handleChange} required />
           </div>
           <div className="text-center mt-3">
-            <button type="submit" className="btnAccept">
+            <button type="submit" className="btn raisePrimary btnAccept">
               Aceptar
             </button>
           </div>

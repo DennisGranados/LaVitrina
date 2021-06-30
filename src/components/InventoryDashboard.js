@@ -18,13 +18,15 @@ function InventoryDashboard() {
               <div className="card-body">
                 <h5 className="card-title">Añadir estilo</h5>
                 <p className="card-text">Añade un nuevo estilo de prendas.</p>
-                <Link
-                  className="btn btn-primary"
-                  to="/admin/inventory/add-styles"
-                  href="#"
-                >
-                  Ir a la sección
-                </Link>
+                <div className="text-center">
+                  <Link
+                    className="btn btnAccept"
+                    to="/admin/inventory/add-styles"
+                    href="#"
+                  >
+                    Ir a la sección
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -36,13 +38,15 @@ function InventoryDashboard() {
                   Modifica y elimina los estilos existentes de prendas
                   disponibles (vestidos, blusas, etc).
                 </p>
-                <Link
-                  className="btn btn-primary"
-                  to="/admin/inventory/edit-styles"
-                  href="#"
-                >
-                  Ir a la sección
-                </Link>
+                <div className="text-center">
+                  <Link
+                    className="btn btnAccept"
+                    to="/admin/inventory/edit-styles"
+                    href="#"
+                  >
+                    Ir a la sección
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -55,13 +59,15 @@ function InventoryDashboard() {
                 <p className="card-text">
                   Añade nuevas prendas, correspondientes a un estilo existente.
                 </p>
-                <Link
-                  className="btn btn-primary"
-                  to="/admin/inventory/add-item"
-                  href="#"
-                >
-                  Ir a la sección
-                </Link>
+                <div className="text-center">
+                  <Link
+                    className="btn btnAccept"
+                    to="/admin/inventory/add-item"
+                    href="#"
+                  >
+                    Ir a la sección
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -72,13 +78,15 @@ function InventoryDashboard() {
                 <p className="card-text">
                   Modifica y elimina las prendas existentes.
                 </p>
-                <Link
-                  className="btn btn-primary"
-                  to="/admin/inventory/edit-item"
-                  href="#"
-                >
-                  Ir a la sección
-                </Link>
+                <div className="text-center">
+                  <Link
+                    className="btn btnAccept"
+                    to="/admin/inventory/edit-item"
+                    href="#"
+                  >
+                    Ir a la sección
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

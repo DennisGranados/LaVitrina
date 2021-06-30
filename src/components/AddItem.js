@@ -219,7 +219,7 @@ function AddItem(props) {
                 {generateStyles()}
                 {styles}
               </select>
-              <div className="mb-3">
+              <div className="mb-2 mt-4">
                 <label htmlFor="InputCategoryImage" className="form-label me-3">
                   Visible:
                 </label>
@@ -254,11 +254,11 @@ function AddItem(props) {
               <div className="text-center">
                 <button
                   type="submit"
-                  className="btn btn-primary topMargin mx-2"
+                  className="btn btnAccept topMargin mx-2"
                 >
                   Aceptar
                 </button>
-                <button type="reset" className="btn btn-warning topMargin mx-2">
+                <button type="reset" className="btn btnClear topMargin mx-2">
                   Limpiar
                 </button>
               </div>
