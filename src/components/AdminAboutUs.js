@@ -247,6 +247,7 @@ function AddInformation(props) {
           </form>
         </div>
       </div>
+    </div>
   );
 }
 export default AddInformation;
