@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useFirestore } from "reactfire";
 
 function AddItem(props) {
@@ -46,7 +46,6 @@ function AddItem(props) {
       ...item,
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.value);
   };
 
   const handleImage = (e) => {
@@ -114,7 +113,7 @@ function AddItem(props) {
           props.openPopup();
         });
     } else {
-      props.setPopup("Error", "Debe de seleccionar un estilo, mamapichas");
+      props.setPopup("Error", "Debe de seleccionar un estilo.");
       props.openPopup();
     }
   };
@@ -213,7 +212,7 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               >
-                <option value="undefined" selected>
+                <option value="" selected>
                   ---Seleccione una opción---
                 </option>
                 {generateStyles()}
