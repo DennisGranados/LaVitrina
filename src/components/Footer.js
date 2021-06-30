@@ -16,7 +16,7 @@ function Footer() {
       let email = snapshot.data().email;
       let phoneNumber = snapshot.data().phone_numbers;
       let facebook = snapshot.data().facebook;
-      let instagram = snapshot.data().facebook;
+      let instagram = snapshot.data().instagram;
 
       setContacts({
         ...contacts,
