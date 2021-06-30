@@ -25,7 +25,7 @@ function Footer(props) {
               className="nav-link d-inline-block"
             >
               <img
-                src="https://image.flaticon.com/icons/png/512/220/220364.png"
+                src="https://image.flaticon.com/icons/png/512/1077/1077042.png"
                 width="30px"
               />
             </a>
@@ -33,8 +33,14 @@ function Footer(props) {
           <div className="col-6 text-center mt-3">
             <div>
               <h4>Métodos de contacto</h4>
-              <p>{contacts.email}</p>
-              <p>{contacts.phone_number}</p>
+              <div className="justify-content-center align-items-center  d-flex">
+              <img src="https://image.flaticon.com/icons/png/512/2991/2991151.png" width="30px" />
+              <p className="ms-2 pt-3">{contacts.email}</p>
+              </div>
+              <div className="justify-content-center align-items-center  d-flex">
+              <img src="https://image.flaticon.com/icons/png/512/73/73552.png" width="30px" />
+              <p className="ms-2 pt-3">{contacts.phone_number}</p>
+              </div>
             </div>
           </div>
         </div>
