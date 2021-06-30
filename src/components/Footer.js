@@ -35,8 +35,8 @@ function Footer() {
         <div className="row mt-4">
           <div className="col-6 text-center mt-3">
             <h4>Otros datos</h4>
-            <p>{contacts.facebook}</p>
-            <p>{contacts.instagram}</p>
+            <a href={contacts.facebook} target="_blank" className="nav-link d-inline-block" ><img src="https://image.flaticon.com/icons/png/512/20/20673.png" width="30px" /></a>
+            <a href={contacts.instagram} target="_blank" className="nav-link d-inline-block" ><img src="https://image.flaticon.com/icons/png/512/1419/1419647.png" width="30px" /></a>
           </div>
           <div className="col-6 text-center mt-3">
             <div>
