@@ -11,7 +11,7 @@ function Loading() {
           <strong className="sr-only">Cargando...</strong>
         </div>
         <div className="d-flex justify-content-center">
-          <div className="spinner-grow text-primary" role="status"></div>
+          <div className="spinner-grow text-warning" role="status"></div>
         </div>
       </div>
     </div>

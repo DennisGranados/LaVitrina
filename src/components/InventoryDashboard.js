@@ -81,7 +81,7 @@ function InventoryDashboard() {
                 <div className="text-center">
                   <Link
                     className="btn btnAccept"
-                    to="/admin/inventory/edit-item"
+                    to="/admin/inventory/edit-items"
                     href="#"
                   >
                     Ir a la sección
