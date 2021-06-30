@@ -12,21 +12,25 @@ function Footer(props) {
             <a
               href={contacts.facebook}
               target="_blank"
+              rel="noreferrer"
               className="nav-link d-inline-block"
             >
               <img
                 src="https://image.flaticon.com/icons/png/512/1077/1077041.png"
                 width="30px"
+                alt=""
               />
             </a>
             <a
               href={contacts.instagram}
               target="_blank"
+              rel="noreferrer"
               className="nav-link d-inline-block"
             >
               <img
                 src="https://image.flaticon.com/icons/png/512/1077/1077042.png"
                 width="30px"
+                alt=""
               />
             </a>
           </div>

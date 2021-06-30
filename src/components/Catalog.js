@@ -9,6 +9,7 @@ function Catalog() {
             <img
               src="https://i.pinimg.com/originals/ef/fd/4e/effd4edbc9326c98ae2ad16fb263680e.jpg"
               className="card-img-top"
+              alt=""
             ></img>
             <div className="card-body">
               <h5 className="card-title">Blusas</h5>
@@ -23,6 +24,7 @@ function Catalog() {
             <img
               src="https://i.pinimg.com/originals/ef/fd/4e/effd4edbc9326c98ae2ad16fb263680e.jpg"
               className="card-img-top"
+              alt=""
             ></img>
             <div className="card-body">
               <h5 className="card-title">Vestidos</h5>
@@ -37,6 +39,7 @@ function Catalog() {
             <img
               src="https://i.pinimg.com/originals/ef/fd/4e/effd4edbc9326c98ae2ad16fb263680e.jpg"
               className="card-img-top"
+              alt=""
             ></img>
             <div className="card-body">
               <h5 className="card-title">Pantalones</h5>

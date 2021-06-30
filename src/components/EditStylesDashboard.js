@@ -13,7 +13,7 @@ function EditStylesDashboard(props) {
     });
   };
 
-  const actionEdit = (id, gender) => {
+  const actionEdit = (id) => {
     setMode("edit");
 
     setContent({
@@ -30,7 +30,7 @@ function EditStylesDashboard(props) {
     });
   };
 
-  /*const actionDelete = (id, title, gender) => {
+  /*const actionDelete = (id, title) => {
     setMode("delete");
 
     setContent({

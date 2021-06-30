@@ -1,6 +1,5 @@
-import { render } from "@testing-library/react";
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { useAuth, useUser } from "reactfire";
 
 function Nav() {
