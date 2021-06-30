@@ -1,4 +1,5 @@
-function EditClothes() {
+function EditItem() {
   return <div></div>;
 }
-export default EditClothes;
+
+export default EditItem;

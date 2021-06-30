@@ -27,7 +27,7 @@ function AddInformation(props) {
     aboutRef
       .set({
         about_us: information.aboutUs,
-        extra_Info: information.extraInfo,
+        extra_info: information.extraInfo,
       })
       .then(() => {
         contactRef

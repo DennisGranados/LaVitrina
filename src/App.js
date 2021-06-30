@@ -22,9 +22,9 @@ import Catalog from "./components/Catalog";
 import DeleteAccount from "./components/AdminDeleteAccount";
 import InventoryDashboard from "./components/InventoryDashboard";
 import AddStyles from "./components/AddStyles";
-import EditStyles from "./components/EditStyles";
+import EditStylesDashboard from "./components/EditStylesDashboard";
 import AddItem from "./components/AddItem";
-import EditItem from "./components/EditItem";
+import EditItemsDashboard from "./components/EditItemsDashboard";
 import Finance from "./components/FinanceAdmin";
 import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
@@ -235,7 +235,10 @@ function App() {
             </Route>
             <Route exact path="/admin/inventory/edit-styles">
               {user ? (
-                <EditStyles openPopup={openPopup} setPopup={setPopup} />
+                <EditStylesDashboard
+                  openPopup={openPopup}
+                  setPopup={setPopup}
+                />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}
@@ -247,9 +250,9 @@ function App() {
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}
             </Route>
-            <Route exact path="/admin/inventory/edit-item">
+            <Route exact path="/admin/inventory/edit-items">
               {user ? (
-                <EditItem openPopup={openPopup} setPopup={setPopup} />
+                <EditItemsDashboard openPopup={openPopup} setPopup={setPopup} />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}
