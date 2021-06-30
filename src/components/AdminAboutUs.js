@@ -35,7 +35,7 @@ function AddInformation(props) {
         props.openPopup();
         e.target.reset();
       });
-  }
+  };
 
   const addPhoneNumber = (e) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ function AddInformation(props) {
         props.openPopup();
         e.target.reset();
       });
-  }
+  };
 
   const addFacebook = (e) => {
     e.preventDefault();
@@ -67,7 +67,7 @@ function AddInformation(props) {
         props.openPopup();
         e.target.reset();
       });
-  }
+  };
 
   const addInstagram = (e) => {
     e.preventDefault();
@@ -83,7 +83,7 @@ function AddInformation(props) {
         props.openPopup();
         e.target.reset();
       });
-  }
+  };
 
   const addAboutUs = (e) => {
     e.preventDefault();
@@ -99,7 +99,7 @@ function AddInformation(props) {
         props.openPopup();
         e.target.reset();
       });
-  }
+  };
 
   const addDetails = (e) => {
     e.preventDefault();
@@ -115,7 +115,7 @@ function AddInformation(props) {
         props.openPopup();
         e.target.reset();
       });
-  }
+  };
 
   function generateInformation() {
     contactRef.get().then((snapshot) => {
@@ -244,10 +244,9 @@ function AddInformation(props) {
                 Actualizar
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
   );
 }
 export default AddInformation;

@@ -124,7 +124,7 @@ code {
   transform: translateY(-0.2em);
   color: $color-amarillo;
   transition-duration: 500ms;
-  transition-delay: 500ms;
+  transition-delay: 250ms;
 }
 
 .btnClear:hover,
@@ -133,7 +133,7 @@ code {
   transform: translateY(-0.2em);
   color: $color-rosa;
   transition-duration: 500ms;
-  transition-delay: 500ms;
+  transition-delay: 250ms;
 }
 
 .card .card-body h4 {
