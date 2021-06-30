@@ -36,7 +36,7 @@ function Footer() {
           <div className="col-6 text-center mt-3">
             <h4>Redes Sociales</h4>
             <a href={contacts.facebook} target="_blank" className="nav-link d-inline-block" ><img src="https://image.flaticon.com/icons/png/512/1077/1077041.png" width="30px" /></a>
-            <a href={contacts.instagram} target="_blank" className="nav-link d-inline-block" ><img src="https://image.flaticon.com/icons/png/512/725/725339.png" width="30px" /></a>
+            <a href={contacts.instagram} target="_blank" className="nav-link d-inline-block" ><img src="https://image.flaticon.com/icons/png/512/220/220364.png" width="30px" /></a>
           </div>
           <div className="col-6 text-center mt-3">
             <div>
