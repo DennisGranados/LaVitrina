@@ -117,8 +117,37 @@ function AddInformation(props) {
       });
   }
 
+  function generateInformation() {
+    contactRef.get().then((snapshot) => {
+      let email = snapshot.data().email;
+      let phoneNumber = snapshot.data().phone_numbers;
+      let facebook = snapshot.data().facebook;
+      let instagram = snapshot.data().instagram;
+
+      setInformation({
+        ...information,
+        phoneNumber: phoneNumber,
+        email: email,
+        facebook: facebook,
+        instagram: instagram,
+      });
+    });
+
+    aboutRef.get().then((snapshot) => {
+      let aboutUs = snapshot.data().about_us;
+      let extraInfo = snapshot.data().extra_Info;
+
+      setInformation({
+        ...information,
+        aboutUs: aboutUs,
+        extraInfo: extraInfo,
+      });
+    });
+  }
+
   return (
     <div className="card" id="card-submit">
+      {generateInformation()}
       <div className="card-body">
         <h4 className="text-center mb-4">Ingresar información de contacto</h4>
         <div className="row">
@@ -130,7 +159,7 @@ function AddInformation(props) {
                 name="email"
                 className="form-control"
                 onChange={handleChange}
-                placeholder="text@gmail.com"
+                placeholder={information.email}
                 required
               />
               <div className="text-center mt-3">
@@ -148,7 +177,7 @@ function AddInformation(props) {
                 name="phoneNumber"
                 className="form-control"
                 onChange={handleChange}
-                placeholder="88888888"
+                placeholder={information.phoneNumber}
                 required
               />
               <div className="text-center mt-3">
@@ -167,7 +196,7 @@ function AddInformation(props) {
               name="facebook"
               className="form-control"
               onChange={handleChange}
-              placeholder="https://www.facebook.com/example"
+              placeholder={information.facebook}
               required
             />
             <div className="text-center mt-3">
@@ -185,7 +214,7 @@ function AddInformation(props) {
               name="instagram"
               className="form-control"
               onChange={handleChange}
-              placeholder="https://www.instagram.com/example/?hl=es-la"
+              placeholder={information.instagram}
               required
             />
             <div className="text-center mt-3">
@@ -198,7 +227,7 @@ function AddInformation(props) {
         <div className="col mt-3">
           <label className="form-label">Ingresar información acerca de la tienda</label>
           <form className="col-12 justify-content-center dflex" onSubmit={addAboutUs}>
-            <textarea className="form-control" rows="3" name="aboutUs" className="form-control" onChange={handleChange} required />
+            <textarea className="form-control" rows="3" name="aboutUs" className="form-control" onChange={handleChange} placeholder={information.aboutUs} required />
             <div className="text-center mt-3">
               <button type="submit" className="btn raisePrimary btnAccept">
                 Actualizar
@@ -209,7 +238,7 @@ function AddInformation(props) {
         <div className="col mt-3">
           <label className="form-label">Ingresar detalles acerca de la tienda</label>
           <form className="col-12 justify-content-center dflex" onSubmit={addDetails}>
-            <textarea className="form-control" rows="3" name="extraInfo" className="form-control" onChange={handleChange} required />
+            <textarea className="form-control" rows="3" name="extraInfo" className="form-control" onChange={handleChange} placeholder={information.extraInfo} required />
             <div className="text-center mt-3">
               <button type="submit" className="btn raisePrimary btnAccept">
                 Actualizar
