@@ -68,6 +68,7 @@ function App() {
         phone_numbers: data.phone_numbers,
         email: data.email,
         facebook: data.facebook,
+        instagram: data.instagram,
       });
     }
   }, [status, data]);
