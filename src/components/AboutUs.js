@@ -12,7 +12,7 @@ function AboutUs() {
   function generateInformation() {
     aboutUsRef.get().then((snapshot) => {
       let aboutUs = snapshot.data().about_us;
-      let extraInfo = snapshot.data().extra_Info;
+      let extraInfo = snapshot.data().extra_info;
 
       setInformation({
         ...information,

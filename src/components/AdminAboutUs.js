@@ -1,18 +1,37 @@
-import React, { useState } from "react";
-import { useFirestore } from "reactfire";
+import React, { useEffect, useState } from "react";
+import { useFirestore, useFirestoreDocData } from "reactfire";
 
 function AddInformation(props) {
+  const contacts = props.data;
   const firestore = useFirestore();
   const aboutRef = firestore.collection("webpage").doc("about_us");
-  const contactRef = firestore.collection("webpage").doc("contacts");
+  const contactsRef = firestore.collection("webpage").doc("contacts");
+  let { status, data } = useFirestoreDocData(contactsRef);
   const [information, setInformation] = useState({
     email: "",
     facebook: "",
     instagram: "",
-    phoneNumber: "",
+    phone_number: "",
     aboutUs: "",
     extraInfo: "",
   });
+
+  useEffect(() => {
+    if (status === "success") {
+      console.log(contacts.phone_number);
+
+      aboutRef.get().then((snapshot) => {
+        let aboutUs = snapshot.data().about_us;
+        let extraInfo = snapshot.data().extra_info;
+
+        setInformation({
+          ...information,
+          aboutUs: aboutUs,
+          extraInfo: extraInfo,
+        });
+      });
+    }
+  }, [status, data]);
 
   const handleChange = (e) => {
     setInformation({
@@ -23,7 +42,7 @@ function AddInformation(props) {
 
   const addEmail = (e) => {
     e.preventDefault();
-    contactRef
+    contactsRef
       .update({
         email: information.email,
       })
@@ -37,11 +56,11 @@ function AddInformation(props) {
       });
   };
 
-  const addPhoneNumber = (e) => {
+  const addphone_number = (e) => {
     e.preventDefault();
-    contactRef
+    contactsRef
       .update({
-        phone_numbers: information.phoneNumber,
+        phone_number: information.phone_number,
       })
       .then(function () {
         props.setPopup(
@@ -55,7 +74,7 @@ function AddInformation(props) {
 
   const addFacebook = (e) => {
     e.preventDefault();
-    contactRef
+    contactsRef
       .update({
         facebook: information.facebook,
       })
@@ -71,7 +90,7 @@ function AddInformation(props) {
 
   const addInstagram = (e) => {
     e.preventDefault();
-    contactRef
+    contactsRef
       .update({
         instagram: information.instagram,
       })
@@ -117,53 +136,21 @@ function AddInformation(props) {
       });
   };
 
-  function generateInformation() {
-    contactRef.get().then((snapshot) => {
-      let email = snapshot.data().email;
-      let phoneNumber = snapshot.data().phone_numbers;
-      let facebook = snapshot.data().facebook;
-      let instagram = snapshot.data().instagram;
-
-      setInformation({
-        ...information,
-        phoneNumber: phoneNumber,
-        email: email,
-        facebook: facebook,
-        instagram: instagram,
-      });
-    });
-
-    aboutRef.get().then((snapshot) => {
-      let aboutUs = snapshot.data().about_us;
-      let extraInfo = snapshot.data().extra_Info;
-
-      setInformation({
-        ...information,
-        aboutUs: aboutUs,
-        extraInfo: extraInfo,
-      });
-    });
-  }
-
   return (
     <div className="col-12 d-flex justify-content-center">
       <div className="card" id="card-submit">
-        {generateInformation()}
         <div className="card-body">
           <h4 className="text-center mb-4">Ingresar información de contacto</h4>
           <div className="row">
             <div className="col">
               <label className="form-label">Correo electrónico</label>
-              <form
-                className="col-12 d-flex"
-                onSubmit={addEmail}
-              >
+              <form className="col-12 d-flex" onSubmit={addEmail}>
                 <input
                   type="email"
                   name="email"
                   className="form-control"
                   onChange={handleChange}
-                  placeholder={information.email}
+                  placeholder={contacts.email}
                   required
                 />
                 <div className="text-center mt-3">
@@ -177,14 +164,14 @@ function AddInformation(props) {
               <label className="form-label">Número telefónico</label>
               <form
                 className="col-12 justify-content-center dflex"
-                onSubmit={addPhoneNumber}
+                onSubmit={addphone_number}
               >
                 <input
                   type="number"
-                  name="phoneNumber"
+                  name="phone_number"
                   className="form-control"
                   onChange={handleChange}
-                  placeholder={information.phoneNumber}
+                  placeholder={contacts.phone_number}
                   required
                 />
                 <div className="text-center mt-3">
@@ -206,7 +193,7 @@ function AddInformation(props) {
                 name="facebook"
                 className="form-control"
                 onChange={handleChange}
-                placeholder={information.facebook}
+                placeholder={contacts.facebook}
                 required
               />
               <div className="text-center mt-3">
@@ -227,7 +214,7 @@ function AddInformation(props) {
                 name="instagram"
                 className="form-control"
                 onChange={handleChange}
-                placeholder={information.instagram}
+                placeholder={contacts.instagram}
                 required
               />
               <div className="text-center mt-3">

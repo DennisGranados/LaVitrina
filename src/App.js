@@ -56,7 +56,7 @@ function App() {
   const [popupMessage, setPopupMessage] = useState("Message");
 
   const [contacts, setContacts] = useState({
-    phone_numbers: [],
+    phone_number: "",
     email: "",
     facebook: "",
     instagram: "",
@@ -66,7 +66,7 @@ function App() {
     if (status === "success") {
       setContacts({
         ...contacts,
-        phone_numbers: data.phone_numbers,
+        phone_number: data.phone_number,
         email: data.email,
         facebook: data.facebook,
         instagram: data.instagram,
@@ -273,14 +273,18 @@ function App() {
             </Route>
             <Route exact path="/admin/about_us">
               {user ? (
-                <AdminAboutUs openPopup={openPopup} setPopup={setPopup} />
+                <AdminAboutUs
+                  openPopup={openPopup}
+                  setPopup={setPopup}
+                  data={contacts}
+                />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}
             </Route>
           </Switch>
         </Router>
-        <Footer />
+        <Footer data={contacts} />
       </div>
     </div>
   );
