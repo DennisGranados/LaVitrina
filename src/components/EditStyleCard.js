@@ -1,4 +1,4 @@
-function EditStyleItem(props) {
+function EditStyleCard(props) {
   return (
     <div className="card">
       <img src={props.image} className="card-img-top" alt="" />
@@ -7,7 +7,7 @@ function EditStyleItem(props) {
           className="card-title text-center"
           style={{ textTransform: "capitalize" }}
         >
-          {props.title}
+          {props.name}
         </h5>
         <div className="d-flex justify-content-center my-3 form-check form-switch">
           <input
@@ -30,13 +30,13 @@ function EditStyleItem(props) {
             role="group"
             aria-label="Basic mixed styles example"
           >
-            {/*<button
+            <button
               type="button"
-              onClick={() => props.delete(props.id, props.title, props.gender)}
+              onClick={() => props.delete(props.id, props.name)}
               className="btn btn-danger"
             >
               Borrar
-            </button>*/}
+            </button>
             <button
               type="button"
               onClick={() => props.edit(props.id)}
@@ -51,4 +51,4 @@ function EditStyleItem(props) {
   );
 }
 
-export default EditStyleItem;
+export default EditStyleCard;

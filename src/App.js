@@ -103,6 +103,12 @@ function App() {
           setPopupTitle("Error");
           setPopupMessage("Las contraseñas no son idénticas.");
           break;
+        case "data/non-identical-names":
+          setPopupTitle("Error");
+          setPopupMessage(
+            "Para eliminar, debe de ingresar el nombre correspondiente al estilo."
+          );
+          break;
         case "data/bad-data":
           setPopupTitle("Error");
           setPopupMessage(
@@ -144,7 +150,7 @@ function App() {
       setPopupTitle(codeOrTitle);
       setPopupMessage(message);
     } else {
-      console.log(codeOrTitle + ": " + message);
+      console.log(message);
       setPopupTitle("Error");
       setPopupMessage("Error desconocido.");
     }

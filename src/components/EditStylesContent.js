@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
-import EditStyleItem from "./EditStyleItem";
+import EditStyleCard from "./EditStyleCard";
 
 function EditStylesContent(props) {
   const firestore = useFirestore();
@@ -34,11 +34,11 @@ function EditStylesContent(props) {
               .get()
               .then((content) => {
                 tempContent.push(
-                  <EditStyleItem
+                  <EditStyleCard
                     edit={props.actionEdit}
-                    //delete={props.actionDelete}
+                    delete={props.actionDelete}
                     id={stylesItem}
-                    title={content.data()["name"]}
+                    name={content.data()["name"]}
                     image={content.data()["image"]}
                     visible={content.data()["visible"]}
                     key={stylesItem}

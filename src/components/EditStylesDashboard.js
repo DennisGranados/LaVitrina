@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DeleteStyle from "./DeleteStyle";
 import EditStyle from "./EditStyle";
 import EditStylesContent from "./EditStylesContent";
 
@@ -30,7 +31,7 @@ function EditStylesDashboard(props) {
     });
   };
 
-  /*const actionDelete = (id, title) => {
+  const actionDelete = (id, name) => {
     setMode("delete");
 
     setContent({
@@ -38,24 +39,23 @@ function EditStylesDashboard(props) {
       edit: "",
       add: "",
       delete: (
-        <CatalogCategoryDelete
+        <DeleteStyle
           id={id}
-          title={title}
-          gender={gender}
+          name={name}
           actionCancel={actionCancel}
           setPopup={props.setPopup}
           openPopup={props.openPopup}
         />
       ),
     });
-  };*/
+  };
 
   const [mode, setMode] = useState("content");
   const [content, setContent] = useState({
     content: (
       <EditStylesContent
         actionEdit={actionEdit}
-        //actionDelete={actionDelete}
+        actionDelete={actionDelete}
         setPopup={props.setPopup}
         openPopup={props.openPopup}
       />
