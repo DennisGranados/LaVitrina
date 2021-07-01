@@ -27,7 +27,7 @@ function EditStyle(props) {
           }
         });
       });
-  }, [props, stylesRef]);
+  }, [props]);
 
   const handleCancelEdit = () => {
     props.actionCancel();
@@ -69,7 +69,7 @@ function EditStyle(props) {
     stylesRef
       .collection(style.styleID)
       .doc("settings")
-      .set({
+      .update({
         name: style.styleName,
         image: style.styleImage,
         visible: style.styleVisible === "true" ? true : false,

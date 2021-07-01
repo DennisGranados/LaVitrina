@@ -48,28 +48,32 @@ const customStyles = {
 
 function App() {
   const firestore = useFirestore();
-  const contactsRef = firestore.collection("webpage").doc("contacts");
-  let { status, data } = useFirestoreDocData(contactsRef);
+  const informationRef = firestore.collection("webpage").doc("information");
+  let { status, data } = useFirestoreDocData(informationRef);
   const { data: user } = useUser();
   const [popupIsOpen, setIsOpen] = useState(false);
   const [popupTitle, setPopupTitle] = useState("Popup");
   const [popupMessage, setPopupMessage] = useState("Message");
 
-  const [contacts, setContacts] = useState({
-    phone_number: "",
+  const [information, setInformation] = useState({
+    phoneNumber: "",
     email: "",
     facebook: "",
     instagram: "",
+    aboutUs: "",
+    extraInfo: "",
   });
 
   useEffect(() => {
     if (status === "success") {
-      setContacts({
-        ...contacts,
-        phone_number: data.phone_number,
+      setInformation({
+        ...information,
+        phoneNumber: data.phoneNumber,
         email: data.email,
         facebook: data.facebook,
         instagram: data.instagram,
+        aboutUs: data.aboutUs,
+        extraInfo: data.extraInfo,
       });
     }
   }, [status, data]);
@@ -176,7 +180,7 @@ function App() {
               <Catalog />
             </Route>
             <Route exact path="/about-us">
-              <AboutUs />
+              <AboutUs data={information} />
             </Route>
             <Route exact path="/item">
               <Item />
@@ -276,7 +280,7 @@ function App() {
                 <AdminAboutUs
                   openPopup={openPopup}
                   setPopup={setPopup}
-                  data={contacts}
+                  data={information}
                 />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
@@ -284,7 +288,7 @@ function App() {
             </Route>
           </Switch>
         </Router>
-        <Footer data={contacts} />
+        <Footer data={information} />
       </div>
     </div>
   );

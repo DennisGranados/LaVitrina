@@ -1,46 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useFirestore, useFirestoreDocData } from "reactfire";
+import React, { useState } from "react";
+import { useFirestore } from "reactfire";
 
 function AddInformation(props) {
-  const contacts = props.data;
+  const information = props.data;
   const firestore = useFirestore();
-  const aboutRef = firestore.collection("webpage").doc("about_us");
-  const contactsRef = firestore.collection("webpage").doc("contacts");
-  let { data } = useFirestoreDocData(contactsRef);
-  const [information, setInformation] = useState({
+  const informationRef = firestore.collection("webpage").doc("information");
+  const [newInformation, setNewInformation] = useState({
     email: "",
     facebook: "",
     instagram: "",
-    phone_number: "",
+    phoneNumber: "",
     aboutUs: "",
     extraInfo: "",
   });
 
-  useEffect(() => {
-    aboutRef.get().then((snapshot) => {
-      let aboutUs = snapshot.data().about_us;
-      let extraInfo = snapshot.data().extra_info;
-
-      setInformation({
-        ...information,
-        aboutUs: aboutUs,
-        extraInfo: extraInfo,
-      });
-    });
-  }, [data, aboutRef]);
-
   const handleChange = (e) => {
-    setInformation({
-      ...information,
+    setNewInformation({
+      ...newInformation,
       [e.target.name]: e.target.value,
     });
   };
 
   const addEmail = (e) => {
     e.preventDefault();
-    contactsRef
+    informationRef
       .update({
-        email: information.email,
+        email: newInformation.email,
       })
       .then(function () {
         props.setPopup(
@@ -52,11 +37,11 @@ function AddInformation(props) {
       });
   };
 
-  const addphone_number = (e) => {
+  const addphoneNumber = (e) => {
     e.preventDefault();
-    contactsRef
+    informationRef
       .update({
-        phone_number: information.phone_number,
+        phoneNumber: newInformation.phoneNumber,
       })
       .then(function () {
         props.setPopup(
@@ -70,9 +55,9 @@ function AddInformation(props) {
 
   const addFacebook = (e) => {
     e.preventDefault();
-    contactsRef
+    informationRef
       .update({
-        facebook: information.facebook,
+        facebook: newInformation.facebook,
       })
       .then(function () {
         props.setPopup(
@@ -86,9 +71,9 @@ function AddInformation(props) {
 
   const addInstagram = (e) => {
     e.preventDefault();
-    contactsRef
+    informationRef
       .update({
-        instagram: information.instagram,
+        instagram: newInformation.instagram,
       })
       .then(function () {
         props.setPopup(
@@ -102,9 +87,9 @@ function AddInformation(props) {
 
   const addAboutUs = (e) => {
     e.preventDefault();
-    aboutRef
+    informationRef
       .update({
-        about_us: information.aboutUs,
+        aboutUs: newInformation.aboutUs,
       })
       .then(function () {
         props.setPopup(
@@ -118,9 +103,9 @@ function AddInformation(props) {
 
   const addDetails = (e) => {
     e.preventDefault();
-    aboutRef
+    informationRef
       .update({
-        extra_info: information.extraInfo,
+        extraInfo: newInformation.extraInfo,
       })
       .then(function () {
         props.setPopup(
@@ -146,7 +131,7 @@ function AddInformation(props) {
                   name="email"
                   className="form-control"
                   onChange={handleChange}
-                  placeholder={contacts.email}
+                  placeholder={information.email}
                   required
                 />
                 <div className="text-center mt-3">
@@ -160,14 +145,14 @@ function AddInformation(props) {
               <label className="form-label">Número telefónico</label>
               <form
                 className="col-12 justify-content-center dflex"
-                onSubmit={addphone_number}
+                onSubmit={addphoneNumber}
               >
                 <input
                   type="number"
-                  name="phone_number"
+                  name="phoneNumber"
                   className="form-control"
                   onChange={handleChange}
-                  placeholder={contacts.phone_number}
+                  placeholder={information.phoneNumber}
                   required
                 />
                 <div className="text-center mt-3">
@@ -189,7 +174,7 @@ function AddInformation(props) {
                 name="facebook"
                 className="form-control"
                 onChange={handleChange}
-                placeholder={contacts.facebook}
+                placeholder={information.facebook}
                 required
               />
               <div className="text-center mt-3">
@@ -210,7 +195,7 @@ function AddInformation(props) {
                 name="instagram"
                 className="form-control"
                 onChange={handleChange}
-                placeholder={contacts.instagram}
+                placeholder={information.instagram}
                 required
               />
               <div className="text-center mt-3">

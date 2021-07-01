@@ -1,30 +1,10 @@
-import React, { useState } from "react";
-import { useFirestore } from "reactfire";
+import React from "react";
 
-function AboutUs() {
-  const firestore = useFirestore();
-  const aboutUsRef = firestore.collection("webpage").doc("about_us");
-  const [information, setInformation] = useState({
-    aboutUs: "",
-    extraInfo: "",
-  });
-
-  function generateInformation() {
-    aboutUsRef.get().then((snapshot) => {
-      let aboutUs = snapshot.data().about_us;
-      let extraInfo = snapshot.data().extra_info;
-
-      setInformation({
-        ...information,
-        aboutUs: aboutUs,
-        extraInfo: extraInfo,
-      });
-    });
-  }
+function AboutUs(props) {
+  const information = props.data;
 
   return (
     <div>
-      {generateInformation()}
       <div className="col-12 mb-3 d-flex">
         <div className="col-6 justify-content-center mx-3">
           <h1>Acerca de La Vitrina </h1>

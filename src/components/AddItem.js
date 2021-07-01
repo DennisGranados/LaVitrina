@@ -19,18 +19,20 @@ function AddItem(props) {
 
   function generateStyles() {
     if (styles.length === 0) {
-      stylesRef.get().then(async function (content) {
+      stylesRef.get().then((content) => {
         let stylesID = content.data()["styles"];
 
         var temp = [];
-        stylesID.forEach(async function (styleID) {
-          await stylesRef
+        stylesID.forEach((styleID) => {
+          stylesRef
             .collection(styleID)
             .doc("settings")
             .get()
             .then((styleName) => {
               temp.push(
-                <option value={styleID} key={styleID}>{styleName.data().name}</option>
+                <option value={styleID} key={styleID}>
+                  {styleName.data().name}
+                </option>
               );
               if (stylesID.length === temp.length) {
                 setStyles(temp);
@@ -212,9 +214,7 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               >
-                <option value="">
-                  ---Seleccione una opción---
-                </option>
+                <option value="">---Seleccione una opción---</option>
                 {generateStyles()}
                 {styles}
               </select>
@@ -251,10 +251,7 @@ function AddItem(props) {
                 </div>
               </div>
               <div className="text-center">
-                <button
-                  type="submit"
-                  className="btn btnAccept topMargin mx-2"
-                >
+                <button type="submit" className="btn btnAccept topMargin mx-2">
                   Aceptar
                 </button>
                 <button type="reset" className="btn btnClear topMargin mx-2">

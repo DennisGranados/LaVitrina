@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useFirestore, useFirestoreDocData } from "reactfire";
+import { useFirestore } from "reactfire";
 import EditStyleItem from "./EditStyleItem";
 
 function EditStylesContent(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
-  let { data } = useFirestoreDocData(stylesRef);
   const [pageData, setPageData] = useState([]);
 
   useEffect(() => {
@@ -53,7 +52,7 @@ function EditStylesContent(props) {
         }
       });
     }
-  }, [data, pageData.length, props.actionEdit, stylesRef]);
+  }, [pageData.length]);
 
   return (
     <div className="text-center">

@@ -12,6 +12,8 @@ $color-ming: #006776;
 $color-keppel: #00bfa5;
 $color-malachite: #00e676;
 $color-cultured: #f2f2f2;
+$btnClear: #e89b43;
+$line-card: #fbbd39;
 $background-gradient: rgb(168, 37, 99);
 $gradient: linear-gradient(
   90deg,
@@ -83,12 +85,8 @@ code {
 }
 
 .navBackground {
-  background: rgb(168, 37, 99);
-  background: linear-gradient(
-    90deg,
-    rgba(168, 37, 99, 1) 0%,
-    rgba(251, 189, 57, 1) 80%
-  );
+  background: $background-gradient;
+  background: $gradient;
 }
 
 .dflex {
@@ -114,7 +112,7 @@ code {
 }
 
 .btnClear {
-  background: #E89B43;
+  background: $btnClear;
   color: $color-blanco;
 }
 
@@ -137,6 +135,6 @@ code {
 }
 
 .card .card-body h4 {
-  border-bottom: 2px solid #FBBD39;
-  
+  border-bottom: 2px solid $line-card;
 }
+

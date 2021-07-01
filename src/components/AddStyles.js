@@ -46,18 +46,18 @@ function AddStyles(props) {
   const addStyle = (e) => {
     e.preventDefault();
 
-    const date = new Date();
+    let date = new Date();
+    const collectionName =
+      style.styleName +
+      "_" +
+      date.getDate() +
+      "_" +
+      (date.getMonth() + 1) +
+      "_" +
+      date.getFullYear();
 
     stylesRef
-      .collection(
-        style.styleName +
-          "_" +
-          date.getDate() +
-          "_" +
-          (date.getMonth() + 1) +
-          "_" +
-          date.getFullYear()
-      )
+      .collection(collectionName)
       .doc("settings")
       .set({
         name: style.styleName,
@@ -65,26 +65,20 @@ function AddStyles(props) {
         visible: style.styleVisible === "true" ? true : false,
       })
       .then(() => {
-        stylesRef
-          .get(
-            style.styleName +
-              "_" +
-              date.getDate() +
-              "_" +
-              (date.getMonth() + 1) +
-              "_" +
-              date.getFullYear()
-          )
-          .then(function (content) {
-            if (content.exists) {
-              props.setPopup(
-                "Confirmación",
-                "Se ha agregado la categoría con exito."
-              );
-              props.openPopup();
-              e.target.reset();
-            }
-          });
+        stylesRef.get(collectionName).then(function (content) {
+          if (content.exists) {
+            let newStyles = content.data()["styles"];
+            newStyles.push(collectionName);
+            stylesRef.update({ styles: newStyles });
+
+            props.setPopup(
+              "Confirmación",
+              "Se ha agregado la categoría con exito."
+            );
+            props.openPopup();
+            e.target.reset();
+          }
+        });
       })
       .catch((error) => {
         props.setPopup(error.code);
@@ -160,10 +154,7 @@ function AddStyles(props) {
                 </div>
               </div>
               <div className="text-center">
-                <button
-                  type="submit"
-                  className="btn btnAccept topMargin mx-2"
-                >
+                <button type="submit" className="btn btnAccept topMargin mx-2">
                   Aceptar
                 </button>
                 <button type="reset" className="btn btnClear topMargin mx-2">
