@@ -43,7 +43,7 @@ function Footer(props) {
                   width="30px"
                 />
                 <p className="ms-2 pt-3">
-                  <a href={"mailTo:" + information.email}>
+                  <a href={"mailTo:" + information.email} className="noLinks">
                     {information.email}
                   </a>
                 </p>
@@ -54,7 +54,7 @@ function Footer(props) {
                   width="30px"
                 />
                 <p className="ms-2 pt-3">
-                  <a href={"tel:" + information.phoneNumber}>
+                  <a href={"tel:" + information.phoneNumber} className="noLinks">
                     {information.phoneNumber}
                   </a>
                 </p>

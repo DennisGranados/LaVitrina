@@ -138,3 +138,14 @@ code {
   border-bottom: 2px solid $line-card;
 }
 
+.noLinks {
+  text-decoration: none;
+  color: #000000;
+}
+
+.noLinks:hover{
+  text-decoration: underline;
+  color: #000000;
+  font-weight: bold;
+}
+
