@@ -267,7 +267,7 @@ function App() {
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}
             </Route>
-            <Route exact path="/admin/inventory/finance">
+            <Route exact path="/admin/finance">
               {user ? (
                 <Finance openPopup={openPopup} setPopup={setPopup} />
               ) : (
