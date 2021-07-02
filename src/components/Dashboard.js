@@ -18,7 +18,7 @@ function Dashboard() {
               </h5>
               <p className="card-text">Agregar cuentas administrativas.</p>
               <div className="text-center">
-              <Link className="btn btnAccept raisePrimary" to="/admin/register" href="#">
+              <Link className="btn btnAccept" to="/admin/register" href="#">
                 Ir a la sección
               </Link>
               </div>
@@ -39,7 +39,7 @@ function Dashboard() {
               <p className="card-text">Eliminar cuentas administrativas.</p>
               <div className="text-center">
               <Link
-                className="btn btnAccept raisePrimary"
+                className="btn btnAccept"
                 to="/admin/delete-account"
                 href="#"
               >
@@ -62,7 +62,7 @@ function Dashboard() {
                 Permite agregar, editar y eliminar prendas y estilos.
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept raisePrimary" to="/admin/inventory" href="#">
+              <Link className="btn btnAccept" to="/admin/inventory" href="#">
                 Ir a la sección
               </Link>
               </div>
@@ -84,7 +84,7 @@ function Dashboard() {
                 Permite ver las ventas por mes, entre otras cosas.
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept raisePrimary" to="/admin/finance" href="#">
+              <Link className="btn btnAccept" to="/admin/finance" href="#">
                 Ir a la sección
               </Link>
               </div>
@@ -104,7 +104,7 @@ function Dashboard() {
                 Gestiona pedidos pendientes y el histórico de estos.
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept raisePrimary" to="/admin/orders" href="#">
+              <Link className="btn btnAccept" to="/admin/orders" href="#">
                 Ir a la sección
               </Link>
               </div>
@@ -127,7 +127,7 @@ function Dashboard() {
                 de la página (acerca de nosotras).
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept raisePrimary" to="/admin/about_us" href="#">
+              <Link className="btn btnAccept" to="/admin/about_us" href="#">
                 Ir a la sección
               </Link>
               </div>

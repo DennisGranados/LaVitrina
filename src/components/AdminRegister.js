@@ -96,11 +96,11 @@ function AdminRegister(props) {
               <div className="text-center">
                 <button
                   type="submit"
-                  className="btn btnAccept raisePrimary topMargin mx-2"
+                  className="btn btnAccept topMargin mx-2"
                 >
                   Aceptar
                 </button>
-                <button type="reset" className="btn btnClear raiseClear topMargin mx-2">
+                <button type="reset" className="btn btnClear topMargin mx-2">
                   Limpiar
                 </button>
               </div>

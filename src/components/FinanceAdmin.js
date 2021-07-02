@@ -11,13 +11,17 @@ function FinanceAdmin() {
           <h1>Estadísticas</h1>
         </div>
       </div>
-      <div className="col-12 justify-content-center d-flex mb-3">
+      <div className="col-12 d-flex mb-3 mx-2">
         <div className="col-6 m-auto d-flex">
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Añadir método de pago</h5>
-                <p className="card-text">Añade un nuevo método de pago.</p>
+                <h5 className="card-title text-center">
+                  Añadir método de pago
+                </h5>
+                <p className="card-text text-justify">
+                  Añade un nuevo método de pago.
+                </p>
                 <div className="text-center">
                   <Link
                     className="btn btnAccept"
@@ -30,11 +34,13 @@ function FinanceAdmin() {
               </div>
             </div>
           </div>
-          <div className="col-6 m-auto">
+          <div className="col-6 m-auto d-flex">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Editar Métodos de pago</h5>
-                <p className="card-text">
+                <h5 className="card-title text-center">
+                  Editar Métodos de pago
+                </h5>
+                <p className="card-text text-justify">
                   Modifica y elimina los métodos de pago existentes.
                 </p>
                 <div className="text-center">
@@ -50,12 +56,17 @@ function FinanceAdmin() {
             </div>
           </div>
         </div>
-        <div className="col-6 m-auto d-flex">
-          <div className="col-6 m-auto text-center">
+        <div className="row">
+          <div className="vl text-center me-1"></div>
+        </div>
+        <div className="col-6 d-flex">
+          <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Ver finanzas de la tienda</h5>
-                <p className="card-text">
+                <h5 className="card-title text-center">
+                  Ver finanzas de la tienda
+                </h5>
+                <p className="card-text text-justify">
                   Añade nuevas prendas, correspondientes a un estilo existente.
                 </p>
                 <div className="text-center">
