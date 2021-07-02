@@ -17,36 +17,15 @@ function FinanceAdmin() {
             <div className="card shadowCards">
               <div className="card-body">
                 <h5 className="card-title text-center">
-                  Añadir método de pago
+                  Gestionar métodos de pago
                 </h5>
                 <p className="card-text text-justify">
-                  Añade un nuevo método de pago.
+                  Añade o elimina métodos de pago.
                 </p>
                 <div className="text-center">
                   <Link
                     className="btn btnAccept"
                     to="/admin/finance/addPayment"
-                    href="#"
-                  >
-                    Ir a la sección
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-6 m-auto d-flex">
-            <div className="card shadowCards">
-              <div className="card-body">
-                <h5 className="card-title text-center">
-                  Editar Métodos de pago
-                </h5>
-                <p className="card-text text-justify">
-                  Modifica y elimina los métodos de pago existentes.
-                </p>
-                <div className="text-center">
-                  <Link
-                    className="btn btnAccept"
-                    to="/admin/inventory/edit-styles"
                     href="#"
                   >
                     Ir a la sección

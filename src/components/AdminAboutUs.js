@@ -121,7 +121,7 @@ function AddInformation(props) {
     <div className="col-12 d-flex justify-content-center">
       <div className="card" id="card-submit">
         <div className="card-body">
-          <h4 className="text-center mb-4">Ingresar información de contacto</h4>
+          <h4 className="text-center mb-4">Editar información de contacto</h4>
           <div className="row">
             <div className="col">
               <label className="form-label">Correo electrónico</label>

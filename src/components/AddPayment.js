@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useFirestore } from "reactfire";
-import { isMethodSignature } from "typescript";
 
 function AddPayment(props) {
     const firestore = useFirestore();
@@ -10,6 +9,8 @@ function AddPayment(props) {
         bankingEntity: "",
         sinpeNumber: "",
         sinpeOwner: "",
+        bankingList: [],
+        sinpeList: [],
     });
 
     const handleChange = (e) => {
@@ -19,6 +20,124 @@ function AddPayment(props) {
         });
     };
 
+    const handleDeleteBanking = (key) => {
+        paymentMethodRef.get().then((content) => {
+            let banking = content.data()["banking"];
+            if (banking) {
+                delete banking[key]
+                paymentMethodRef
+                    .update({
+                        banking: banking,
+                    })
+                    .then(() => {
+                        props.setPopup(
+                            "Confirmación",
+                            "Se ha eliminado la cuenta bancaria con éxito."
+                        );
+                        props.openPopup();
+                        generateBanking(true);
+                    })
+                    .catch((error) => {
+                        props.setPopup(error.code);
+                        props.openPopup();
+                    });
+            }
+        });
+    }
+
+    const handleDeleteSinpe = (key) => {
+        paymentMethodRef.get().then((content) => {
+            let sinpe = content.data()["sinpe"];
+            if (sinpe) {
+                delete sinpe[key]
+                paymentMethodRef
+                    .update({
+                        sinpe: sinpe,
+                    })
+                    .then(() => {
+                        props.setPopup(
+                            "Confirmación",
+                            "Se ha eliminado la cuenta bancaria con éxito."
+                        );
+                        props.openPopup();
+                        generateSinpe(true);
+                    })
+                    .catch((error) => {
+                        props.setPopup(error.code);
+                        props.openPopup();
+                    });
+            }
+        });
+    }
+
+    function generateBanking(isUpdated) {
+        if (method.bankingList.length === 0 || isUpdated) {
+            console.log(isUpdated);
+            paymentMethodRef.get().then((content) => {
+                let banking = content.data()["banking"];
+
+                var temp = [];
+                if (Object.keys(banking).length > 0 || isUpdated) {
+                    console.log(banking);
+                    for (const key in banking) {
+                        if (Object.hasOwnProperty.call(banking, key)) {
+                            const element = banking[key];
+                            temp.push(<div className="phone-number input-group ml-1 mr-1">
+                                <button
+                                    className="input-group-text"
+                                    onClick={() => { handleDeleteBanking(key) }}
+                                    id="btnGroupAddon"
+                                >
+                                    <i className="bi bi-trash-fill"></i>
+                                </button>
+                                <input type="text" className="form-control" value={element + ": " + key} readOnly />
+                            </div>
+                            );
+                        }
+                    }
+                    setPaymentMethod({
+                        ...method,
+                        bankingList: temp,
+                    });
+                }
+            });
+        }
+    }
+
+    function generateSinpe(isUpdated) {
+        if (method.sinpeList.length === 0 || isUpdated) {
+            console.log(isUpdated);
+            paymentMethodRef.get().then((content) => {
+                let sinpe = content.data()["sinpe"];
+
+                var temp = [];
+                if (Object.keys(sinpe).length > 0 || isUpdated) {
+                    for (const key in sinpe) {
+                        if (Object.hasOwnProperty.call(sinpe, key)) {
+                            const element = sinpe[key];
+                            temp.push(<div className="phone-number input-group ml-1 mr-1">
+                                <button
+                                    className="input-group-text"
+                                    onClick={() => { handleDeleteSinpe(key) }}
+                                    id="btnGroupAddon"
+                                >
+                                    <i className="bi bi-trash-fill"></i>
+                                </button>
+                                <input type="text" className="form-control" value={element + ": " + key} readOnly />
+                            </div>
+                            );
+                            console.log(temp);
+                        }
+                    }
+                    setPaymentMethod({
+                        ...method,
+                        sinpeList: temp,
+                    });
+                }
+            });
+        }
+    }
+
     const addBankingAccount = (e) => {
         e.preventDefault();
 
@@ -27,18 +146,18 @@ function AddPayment(props) {
             let flag = false;
             if (!banking) {
                 banking = {};
-                banking[method.bankingEntity] = method.accountNumber;
+                banking[method.accountNumber] = method.bankingEntity;
                 flag = true;
             } else {
-                if (banking[method.bankingEntity]) {
+                if (banking[method.accountNumber]) {
                     props.setPopup(
                         "Error",
-                        "Ya existe una cuenta con esta entidad."
+                        "Ya existe este número de cuenta."
                     );
                     props.openPopup();
                     e.target.reset();
                 } else {
-                    banking[method.bankingEntity] = method.accountNumber;
+                    banking[method.accountNumber] = method.bankingEntity;
                     flag = true;
                 }
             }
@@ -54,6 +173,7 @@ function AddPayment(props) {
                         );
                         props.openPopup();
                         e.target.reset();
+                        generateBanking(true);
                     })
                     .catch((error) => {
                         props.setPopup(error.code);
@@ -97,6 +217,7 @@ function AddPayment(props) {
                         );
                         props.openPopup();
                         e.target.reset();
+                        generateSinpe(true);
                     })
                     .catch((error) => {
                         props.setPopup(error.code);
@@ -110,7 +231,12 @@ function AddPayment(props) {
         <div className="row justify-content-center">
             <div className="card col-6 me-3" id="card-submit">
                 <div className="card-body">
-                    <h4 className="text-center mb-4">Ingresar cuenta bancaria</h4>
+                    <h4 className="text-center mb-4">Cuentas bancarias actuales</h4>
+                    <div className="d-flex justify-content-around flex-wrap">
+                        {generateBanking(false)}
+                        {method.bankingList}
+                    </div>
+                    <h4 className="text-center mb-4 mt-3">Ingresar cuenta bancaria</h4>
                     <form className="col-12" onSubmit={addBankingAccount}>
                         <div className="mb-3">
                             <label className="form-label">Número de cuenta bancaria</label>
@@ -144,7 +270,12 @@ function AddPayment(props) {
             </div>
             <div className="card col-6 ms-3" id="card-submit">
                 <div className="card-body">
-                    <h4 className="text-center mb-4">Ingresar SINPE móvil</h4>
+                    <h4 className="text-center mb-4">SINPE móvil actuales</h4>
+                    <div className="d-flex justify-content-around flex-wrap">
+                        {generateSinpe(false)}
+                        {method.sinpeList}
+                    </div>
+                    <h4 className="text-center mb-4 mt-3">Ingresar SINPE móvil</h4>
                     <form className="col-12" onSubmit={addSinpeMobile}>
                         <div className="mb-3">
                             <label className="form-label">Número telefónico</label>
