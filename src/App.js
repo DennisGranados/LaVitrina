@@ -30,6 +30,7 @@ import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
 import Item from "./components/Item";
 import ShoppingCart from "./components/ShoppingCart";
+import AddPayment from "./components/AddPayment";
 
 Modal.setAppElement("#root");
 
@@ -288,6 +289,16 @@ function App() {
                   setPopup={setPopup}
                   data={information}
                 />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/finance/addPayment">
+              {user ? (
+                <AddPayment
+                openPopup={openPopup}
+                setPopup={setPopup}
+              />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}

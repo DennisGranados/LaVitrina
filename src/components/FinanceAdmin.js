@@ -21,7 +21,7 @@ function FinanceAdmin() {
                 <div className="text-center">
                   <Link
                     className="btn btnAccept"
-                    to="/admin/inventory/add-styles"
+                    to="/admin/finance/addPayment"
                     href="#"
                   >
                     Ir a la sección
@@ -33,7 +33,7 @@ function FinanceAdmin() {
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Editar Métodos de pago</h5>
+                <h5 className="card-title">Editar métodos de pago</h5>
                 <p className="card-text">
                   Modifica y elimina los métodos de pago existentes.
                 </p>
@@ -51,12 +51,12 @@ function FinanceAdmin() {
           </div>
         </div>
         <div className="col-6 m-auto d-flex">
-          <div className="col-6 m-auto text-center">
+          <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
                 <h5 className="card-title">Ver finanzas de la tienda</h5>
                 <p className="card-text">
-                  Añade nuevas prendas, correspondientes a un estilo existente.
+                  Visualice las finanzas de la tienda.
                 </p>
                 <div className="text-center">
                   <Link
