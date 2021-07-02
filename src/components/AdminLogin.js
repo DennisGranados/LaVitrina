@@ -36,7 +36,7 @@ function AdminLogin(props) {
 
   return (
     <div>
-      <div className="col-12 justify-content-center dflex">
+      <div className="col-12 justify-content-center d-flex">
         <div className="card col-5">
           <div className="card-body">
             <h4 className="text-center mb-4">

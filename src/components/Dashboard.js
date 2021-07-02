@@ -6,7 +6,7 @@ function Dashboard() {
     <div>
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-3 m-auto">
-          <div className="card ">
+          <div className="card shadowCards">
             <img
               src="https://image.flaticon.com/icons/png/512/748/748137.png"
               className="card-img-top"
@@ -26,7 +26,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card ">
+          <div className="card shadowCards">
             <img
               src="https://image.flaticon.com/icons/png/512/748/748138.png"
               className="card-img-top"
@@ -50,7 +50,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card ">
+          <div className="card shadowCards">
             <img
               src="https://image.flaticon.com/icons/png/512/2942/2942672.png"
               className="card-img-top"
@@ -72,7 +72,7 @@ function Dashboard() {
       </div>
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-3 m-auto">
-          <div className="card ">
+          <div className="card shadowCards">
             <img
               src="https://image.flaticon.com/icons/png/512/2942/2942259.png"
               className="card-img-top"
@@ -92,7 +92,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card ">
+          <div className="card shadowCards">
             <img
               src="https://image.flaticon.com/icons/png/512/1008/1008010.png"
               className="card-img-top"
@@ -112,7 +112,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-3 m-auto">
-          <div className="card ">
+          <div className="card shadowCards">
             <img
               src="https://image.flaticon.com/icons/png/512/2343/2343723.png"
               className="card-img-top"

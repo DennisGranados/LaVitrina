@@ -89,10 +89,6 @@ code {
   background: $gradient;
 }
 
-.dflex {
-  display: flex;
-}
-
 #home {
   color: $color-blanco;
 }
@@ -147,5 +143,9 @@ code {
   text-decoration: underline;
   color: #000000;
   font-weight: bold;
+}
+
+.shadowCards {
+  box-shadow: 4px 4px 0px #000000;
 }
 

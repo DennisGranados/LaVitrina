@@ -5,7 +5,7 @@ function Home() {
     <div>
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="mt-2 row">
-          <div className="card mx-2">
+          <div className="card shadowCards mx-2">
             <img
               src="https://www.ago2.com/wp-content/uploads/2017/07/INTERSPORT_06.jpg"
               className="card-img-top"
@@ -26,7 +26,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="card mx-2">
+          <div className="card shadowCards mx-2">
             <img
               src="https://www.ago2.com/wp-content/uploads/2017/07/INTERSPORT_06.jpg"
               className="card-img-top"

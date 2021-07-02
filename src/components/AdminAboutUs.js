@@ -144,7 +144,7 @@ function AddInformation(props) {
             <div className="col">
               <label className="form-label">Número telefónico</label>
               <form
-                className="col-12 justify-content-center dflex"
+                className="col-12 justify-content-center d-flex"
                 onSubmit={addphoneNumber}
               >
                 <input
@@ -166,7 +166,7 @@ function AddInformation(props) {
           <div className="col mt-2">
             <label className="form-label">Link de página de Facebook</label>
             <form
-              className="col-12 justify-content-center dflex"
+              className="col-12 justify-content-center d-flex"
               onSubmit={addFacebook}
             >
               <input
@@ -187,7 +187,7 @@ function AddInformation(props) {
           <div className="col mt-2">
             <label className="form-label">Link de página de Instagram</label>
             <form
-              className="col-12 justify-content-center dflex"
+              className="col-12 justify-content-center d-flex"
               onSubmit={addInstagram}
             >
               <input
@@ -210,7 +210,7 @@ function AddInformation(props) {
               Ingresar información acerca de la tienda
             </label>
             <form
-              className="col-12 justify-content-center dflex"
+              className="col-12 justify-content-center d-flex"
               onSubmit={addAboutUs}
             >
               <textarea
@@ -233,7 +233,7 @@ function AddInformation(props) {
               Ingresar detalles acerca de la tienda
             </label>
             <form
-              className="col-12 justify-content-center dflex"
+              className="col-12 justify-content-center d-flex"
               onSubmit={addDetails}
             >
               <textarea

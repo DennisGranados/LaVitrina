@@ -14,7 +14,7 @@ function InventoryDashboard() {
       <div className="col-12 justify-content-center d-flex mb-3">
         <div className="col-6 m-auto d-flex">
           <div className="col-6 m-auto">
-            <div className="card ">
+            <div className="card shadowCards">
               <div className="card-body">
                 <h5 className="card-title">Añadir estilo</h5>
                 <p className="card-text">Añade un nuevo estilo de prendas.</p>
@@ -31,7 +31,7 @@ function InventoryDashboard() {
             </div>
           </div>
           <div className="col-6 m-auto">
-            <div className="card ">
+            <div className="card shadowCards">
               <div className="card-body">
                 <h5 className="card-title">Editar estilos</h5>
                 <p className="card-text">
@@ -53,7 +53,7 @@ function InventoryDashboard() {
         </div>
         <div className="col-6 m-auto d-flex">
           <div className="col-6 m-auto">
-            <div className="card ">
+            <div className="card shadowCards">
               <div className="card-body">
                 <h5 className="card-title">Añadir prenda</h5>
                 <p className="card-text">
@@ -72,7 +72,7 @@ function InventoryDashboard() {
             </div>
           </div>
           <div className="col-6 m-auto">
-            <div className="card ">
+            <div className="card shadowCards">
               <div className="card-body">
                 <h5 className="card-title">Editar prendas</h5>
                 <p className="card-text">
