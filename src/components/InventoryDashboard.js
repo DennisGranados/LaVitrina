@@ -11,13 +11,15 @@ function InventoryDashboard() {
           <h1>Prendas</h1>
         </div>
       </div>
-      <div className="col-12 justify-content-center d-flex mb-3">
+      <div className="col-12 justify-content-center d-flex mb-3 mx-3">
         <div className="col-6 m-auto d-flex">
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Añadir estilo</h5>
-                <p className="card-text">Añade un nuevo estilo de prendas.</p>
+                <h5 className="card-title text-center">Añadir estilo</h5>
+                <p className="card-text text-justify">
+                  Añade un nuevo estilo de prendas.
+                </p>
                 <div className="text-center">
                   <Link
                     className="btn btnAccept"
@@ -33,8 +35,8 @@ function InventoryDashboard() {
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Editar estilos</h5>
-                <p className="card-text">
+                <h5 className="card-title text-center">Editar estilos</h5>
+                <p className="card-text text-justify">
                   Modifica y elimina los estilos existentes de prendas
                   disponibles (vestidos, blusas, etc).
                 </p>
@@ -51,12 +53,15 @@ function InventoryDashboard() {
             </div>
           </div>
         </div>
-        <div className="col-6 m-auto d-flex">
+        <div className="row">
+        <div className="vl text-center me-1"></div>
+        </div>
+        <div className="col-6 m-auto d-flex ms-2">
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Añadir prenda</h5>
-                <p className="card-text">
+                <h5 className="card-title text-center">Añadir prenda</h5>
+                <p className="card-text -text-justify">
                   Añade nuevas prendas, correspondientes a un estilo existente.
                 </p>
                 <div className="text-center">
@@ -74,8 +79,8 @@ function InventoryDashboard() {
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title">Editar prendas</h5>
-                <p className="card-text">
+                <h5 className="card-title text-center">Editar prendas</h5>
+                <p className="card-text text-justify">
                   Modifica y elimina las prendas existentes.
                 </p>
                 <div className="text-center">
