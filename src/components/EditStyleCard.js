@@ -1,7 +1,11 @@
 function EditStyleCard(props) {
   return (
     <div className="card shadowCards">
-      <img src={props.image} className="card-img-top" alt="" />
+      <img
+        src={props.image}
+        className="card-img-top"
+        alt={"Imagen " + props.name}
+      />
       <div className="card-body">
         <h5
           className="card-title text-center"

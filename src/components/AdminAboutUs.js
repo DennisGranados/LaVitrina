@@ -150,6 +150,8 @@ function AddInformation(props) {
                 <input
                   type="number"
                   name="phoneNumber"
+                  min="11111111"
+                  max="99999999"
                   className="form-control"
                   onChange={handleChange}
                   placeholder={information.phoneNumber}

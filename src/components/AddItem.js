@@ -4,6 +4,7 @@ import { useFirestore } from "reactfire";
 function AddItem(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
+  const colorsRef = firestore.collection("config").doc("colors");
   const [item, setItem] = useState({
     itemName: "",
     itemCode: "",
@@ -16,6 +17,7 @@ function AddItem(props) {
     itemVisible: "false",
   });
   const [styles, setStyles] = useState([]);
+  const [colors, setColors] = useState([]);
 
   function generateStyles() {
     if (styles.length === 0) {
@@ -38,6 +40,26 @@ function AddItem(props) {
                 setStyles(temp);
               }
             });
+        });
+      });
+    }
+  }
+
+  function generateColors() {
+    if (colors.length === 0) {
+      colorsRef.get().then((content) => {
+        let colorsDB = content.data()["availableColors"];
+
+        var temp = [];
+        colorsDB.forEach((color) => {
+          temp.push(
+            <option value={color} key={color}>
+              {color}
+            </option>
+          );
+          if (colorsDB.length === temp.length) {
+            setColors(temp);
+          }
         });
       });
     }
@@ -146,13 +168,17 @@ function AddItem(props) {
                 required
               />
               <label className="form-label topMargin">Color del producto</label>
-              <input
-                type="text"
+              <select
+                className="styles ms-2"
                 name="itemColor"
-                className="form-control"
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="">---Seleccione una opción---</option>
+                {generateColors()}
+                {colors}
+              </select>
+              <br></br>
               <label className="form-label topMargin">Marca del producto</label>
               <input
                 type="text"
@@ -162,7 +188,7 @@ function AddItem(props) {
                 required
               />
               <label className="form-label topMargin">
-                Precio del producto
+                Precio del producto en colones
               </label>
               <input
                 type="number"

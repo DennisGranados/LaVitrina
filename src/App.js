@@ -30,7 +30,8 @@ import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
 import Item from "./components/Item";
 import ShoppingCart from "./components/ShoppingCart";
-import AddPayment from "./components/AddPayment";
+import AdminPayment from "./components/AdminPayment";
+import AdminColors from "./components/AdminColors";
 
 Modal.setAppElement("#root");
 
@@ -96,50 +97,65 @@ function App() {
             "La contraseña no es válida o el usuario no tiene contraseña."
           );
           break;
+
         case "auth/weak-password":
           setPopupTitle("Advertencia");
           setPopupMessage("La contraseña debe tener al menos 8 caracteres.");
           break;
+
         case "auth/non-identical-passwords":
           setPopupTitle("Error");
           setPopupMessage("Las contraseñas no son idénticas.");
           break;
+
         case "data/non-identical-names":
           setPopupTitle("Error");
           setPopupMessage(
             "Para eliminar, debe de ingresar el nombre correspondiente al estilo."
           );
           break;
+
         case "data/bad-data":
           setPopupTitle("Error");
           setPopupMessage(
             "La información ingresada es idéntica a la anterior o no es válida."
           );
           break;
+
         case "auth/only-account":
           setPopupTitle("Error");
           setPopupMessage("No puedes eliminar la única cuenta del sistema.");
           break;
+
         case "auth/email-already-in-use":
           setPopupTitle("Error");
           setPopupMessage("Este correo ya se encuentra registrado.");
           break;
+
         case "auth/bad-username":
           setPopupTitle("Error");
           setPopupMessage(
             "El nombre es igual al anterior o no se ha ingresado ningún valor."
           );
           break;
+
         case "auth/bad-email":
           setPopupTitle("Error");
           setPopupMessage(
             "El e-mail es igual al anterior o no se ha ingresado ningún valor."
           );
           break;
+
         case "auth/user-not-found":
           setPopupTitle("Error");
           setPopupMessage("No existe ningún usuario enlazado con este correo.");
           break;
+
+        case "auth/network-request-failed":
+          setPopupTitle("Error");
+          setPopupMessage("Ha ocurrido un error de conexión.");
+          break;
+
         default:
           console.log(codeOrTitle);
           setPopupTitle("Error");
@@ -293,12 +309,16 @@ function App() {
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}
             </Route>
-            <Route exact path="/admin/finance/addPayment">
+            <Route exact path="/admin/finance/adminPayment">
               {user ? (
-                <AddPayment
-                openPopup={openPopup}
-                setPopup={setPopup}
-              />
+                <AdminPayment openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/adminColors">
+              {user ? (
+                <AdminColors openPopup={openPopup} setPopup={setPopup} />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}

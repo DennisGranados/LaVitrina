@@ -15,7 +15,6 @@ $color-malachite: #00e676;
 $color-cultured: #f2f2f2;
 $btnClear: #e89b43;
 $line-card: #fbbd39;
-$background-gradient: rgb(168, 37, 99);
 $gradient: linear-gradient(
   90deg,
   rgba(168, 37, 99, 1) 0%,
@@ -65,7 +64,6 @@ code {
 }
 
 .backgroundHeader {
-  background: $background-gradient;
   background: $gradient;
 }
 
@@ -86,7 +84,6 @@ code {
 }
 
 .navBackground {
-  background: $background-gradient;
   background: $gradient;
 }
 

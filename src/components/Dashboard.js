@@ -18,9 +18,9 @@ function Dashboard() {
               </h5>
               <p className="card-text">Agregar cuentas administrativas.</p>
               <div className="text-center">
-              <Link className="btn btnAccept" to="/admin/register" href="#">
-                Ir a la sección
-              </Link>
+                <Link className="btn btnAccept" to="/admin/register">
+                  Ir a la sección
+                </Link>
               </div>
             </div>
           </div>
@@ -38,13 +38,9 @@ function Dashboard() {
               </h5>
               <p className="card-text">Eliminar cuentas administrativas.</p>
               <div className="text-center">
-              <Link
-                className="btn btnAccept"
-                to="/admin/delete-account"
-                href="#"
-              >
-                Ir a la sección
-              </Link>
+                <Link className="btn btnAccept" to="/admin/delete-account">
+                  Ir a la sección
+                </Link>
               </div>
             </div>
           </div>
@@ -62,9 +58,9 @@ function Dashboard() {
                 Permite agregar, editar y eliminar prendas y estilos.
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept" to="/admin/inventory" href="#">
-                Ir a la sección
-              </Link>
+                <Link className="btn btnAccept" to="/admin/inventory">
+                  Ir a la sección
+                </Link>
               </div>
             </div>
           </div>
@@ -84,9 +80,9 @@ function Dashboard() {
                 Permite ver las ventas por mes, entre otras cosas.
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept" to="/admin/finance" href="#">
-                Ir a la sección
-              </Link>
+                <Link className="btn btnAccept" to="/admin/finance">
+                  Ir a la sección
+                </Link>
               </div>
             </div>
           </div>
@@ -104,9 +100,9 @@ function Dashboard() {
                 Gestiona pedidos pendientes y el histórico de estos.
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept" to="/admin/orders" href="#">
-                Ir a la sección
-              </Link>
+                <Link className="btn btnAccept" to="/admin/orders">
+                  Ir a la sección
+                </Link>
               </div>
             </div>
           </div>
@@ -127,9 +123,9 @@ function Dashboard() {
                 de la página (acerca de nosotras).
               </p>
               <div className="text-center">
-              <Link className="btn btnAccept" to="/admin/about_us" href="#">
-                Ir a la sección
-              </Link>
+                <Link className="btn btnAccept" to="/admin/about_us">
+                  Ir a la sección
+                </Link>
               </div>
             </div>
           </div>

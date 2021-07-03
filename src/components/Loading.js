@@ -1,4 +1,4 @@
-import logo from "../Logo.png";
+import logo from "../Logo1.png";
 
 function Loading() {
   return (

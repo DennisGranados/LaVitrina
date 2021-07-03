@@ -25,8 +25,7 @@ function FinanceAdmin() {
                 <div className="text-center">
                   <Link
                     className="btn btnAccept"
-                    to="/admin/finance/addPayment"
-                    href="#"
+                    to="/admin/finance/adminPayment"
                   >
                     Ir a la sección
                   </Link>
@@ -52,7 +51,6 @@ function FinanceAdmin() {
                   <Link
                     className="btn btnAccept"
                     to="/admin/inventory/add-item"
-                    href="#"
                   >
                     Ir a la sección
                   </Link>

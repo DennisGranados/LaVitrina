@@ -24,7 +24,6 @@ function InventoryDashboard() {
                   <Link
                     className="btn btnAccept"
                     to="/admin/inventory/add-styles"
-                    href="#"
                   >
                     Ir a la sección
                   </Link>
@@ -44,7 +43,6 @@ function InventoryDashboard() {
                   <Link
                     className="btn btnAccept"
                     to="/admin/inventory/edit-styles"
-                    href="#"
                   >
                     Ir a la sección
                   </Link>
@@ -54,7 +52,7 @@ function InventoryDashboard() {
           </div>
         </div>
         <div className="row">
-        <div className="vl text-center me-1"></div>
+          <div className="vl text-center me-1"></div>
         </div>
         <div className="col-6 m-auto d-flex ms-2">
           <div className="col-6 m-auto">
@@ -68,7 +66,6 @@ function InventoryDashboard() {
                   <Link
                     className="btn btnAccept"
                     to="/admin/inventory/add-item"
-                    href="#"
                   >
                     Ir a la sección
                   </Link>
@@ -87,12 +84,29 @@ function InventoryDashboard() {
                   <Link
                     className="btn btnAccept"
                     to="/admin/inventory/edit-items"
-                    href="#"
                   >
                     Ir a la sección
                   </Link>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-12 justify-content-center d-flex mb-3">
+        <h1>Colores</h1>
+      </div>
+      <div className="col-12 justify-content-center d-flex mb-3 mx-3">
+        <div className="card shadowCards">
+          <div className="card-body">
+            <h5 className="card-title text-center">Gestionar colores</h5>
+            <p className="card-text text-justify">
+              Añade y elimina los colores disponibles para las prendas.
+            </p>
+            <div className="text-center">
+              <Link className="btn btnAccept" to="/admin/inventory/adminColors">
+                Ir a la sección
+              </Link>
             </div>
           </div>
         </div>

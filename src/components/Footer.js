@@ -18,7 +18,7 @@ function Footer(props) {
               <img
                 src="https://image.flaticon.com/icons/png/512/1077/1077041.png"
                 width="30px"
-                alt=""
+                alt="Facebook logo"
               />
             </a>
             <a
@@ -30,7 +30,7 @@ function Footer(props) {
               <img
                 src="https://image.flaticon.com/icons/png/512/1077/1077042.png"
                 width="30px"
-                alt=""
+                alt="Instagram logo"
               />
             </a>
           </div>
@@ -41,6 +41,7 @@ function Footer(props) {
                 <img
                   src="https://image.flaticon.com/icons/png/512/2991/2991151.png"
                   width="30px"
+                  alt="email"
                 />
                 <p className="ms-2 pt-3">
                   <a href={"mailTo:" + information.email} className="noLinks">
@@ -52,9 +53,13 @@ function Footer(props) {
                 <img
                   src="https://image.flaticon.com/icons/png/512/73/73552.png"
                   width="30px"
+                  alt="Teléfono"
                 />
                 <p className="ms-2 pt-3">
-                  <a href={"tel:" + information.phoneNumber} className="noLinks">
+                  <a
+                    href={"tel:" + information.phoneNumber}
+                    className="noLinks"
+                  >
                     {information.phoneNumber}
                   </a>
                 </p>

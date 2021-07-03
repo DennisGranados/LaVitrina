@@ -9,7 +9,7 @@ function Home() {
             <img
               src="https://www.ago2.com/wp-content/uploads/2017/07/INTERSPORT_06.jpg"
               className="card-img-top"
-              alt=""
+              alt="Imagen catálogo"
             />
             <div className="card-body">
               <h5 className="card-title text-center">Catálogo</h5>
@@ -30,7 +30,7 @@ function Home() {
             <img
               src="https://www.ago2.com/wp-content/uploads/2017/07/INTERSPORT_06.jpg"
               className="card-img-top"
-              alt=""
+              alt="Imagen carrito"
             />
             <div className="card-body">
               <h5 className="card-title text-center">Carrito</h5>
