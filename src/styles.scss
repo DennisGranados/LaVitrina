@@ -152,3 +152,10 @@ code {
   height: 300px;
 }
 
+.orderCards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
