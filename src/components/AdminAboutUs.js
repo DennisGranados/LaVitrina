@@ -30,7 +30,7 @@ function AddInformation(props) {
       .then(function () {
         props.setPopup(
           "Confirmación",
-          "Se ha agregado la información con exito."
+          "Se ha agregado la información con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -46,7 +46,7 @@ function AddInformation(props) {
       .then(function () {
         props.setPopup(
           "Confirmación",
-          "Se ha agregado la información con exito."
+          "Se ha agregado la información con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -62,7 +62,7 @@ function AddInformation(props) {
       .then(function () {
         props.setPopup(
           "Confirmación",
-          "Se ha agregado la información con exito."
+          "Se ha agregado la información con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -78,7 +78,7 @@ function AddInformation(props) {
       .then(function () {
         props.setPopup(
           "Confirmación",
-          "Se ha agregado la información con exito."
+          "Se ha agregado la información con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -94,7 +94,7 @@ function AddInformation(props) {
       .then(function () {
         props.setPopup(
           "Confirmación",
-          "Se ha agregado la información con exito."
+          "Se ha agregado la información con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -110,7 +110,7 @@ function AddInformation(props) {
       .then(function () {
         props.setPopup(
           "Confirmación",
-          "Se ha agregado la información con exito."
+          "Se ha agregado la información con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -165,7 +165,7 @@ function AddInformation(props) {
               </form>
             </div>
           </div>
-          <div className="col mt-2">
+          <div className="col mt-3">
             <label className="form-label">Link de página de Facebook</label>
             <form
               className="col-12 justify-content-center d-flex"
@@ -186,7 +186,7 @@ function AddInformation(props) {
               </div>
             </form>
           </div>
-          <div className="col mt-2">
+          <div className="col mt-3">
             <label className="form-label">Link de página de Instagram</label>
             <form
               className="col-12 justify-content-center d-flex"

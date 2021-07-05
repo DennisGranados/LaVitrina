@@ -10,13 +10,7 @@ function EditStylesContent(props) {
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(
-        <div
-          className="spinner-border"
-          style={{ width: 3 + "rem", height: 3 + "rem" }}
-          role="status"
-        >
-          <span className="visually-hidden">Loading...</span>
-        </div>
+        <div className="spinner-border text-warning" role="status"></div>
       );
     } else {
       let tempContent = [];
@@ -35,8 +29,10 @@ function EditStylesContent(props) {
               .then((content) => {
                 tempContent.push(
                   <EditStyleCard
-                    edit={props.actionEdit}
-                    delete={props.actionDelete}
+                    type={props.type}
+                    actionItems={props.actionItems}
+                    actionEdit={props.actionEdit}
+                    actionDelete={props.actionDelete}
                     id={stylesItem}
                     name={content.data()["name"]}
                     image={content.data()["image"]}
@@ -56,8 +52,14 @@ function EditStylesContent(props) {
 
   return (
     <div className="text-center">
-      <h1>Editar estilos</h1>
-      <div className="col-12 d-flex justify-content-around">{pageData}</div>
+      {props.type === "style" ? (
+        <h1>Editar estilos</h1>
+      ) : (
+        <h1>Seleccione un estilo</h1>
+      )}
+      <div className="col-12 d-flex mt-3 justify-content-around">
+        {pageData}
+      </div>
     </div>
   );
 }

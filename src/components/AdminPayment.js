@@ -74,13 +74,11 @@ function AdminPayment(props) {
 
   function generateBanking(isUpdated) {
     if (method.bankingList.length === 0 || isUpdated) {
-      console.log(isUpdated);
       paymentMethodRef.get().then((content) => {
         let banking = content.data()["banking"];
 
         var temp = [];
         if (Object.keys(banking).length > 0 || isUpdated) {
-          console.log(banking);
           for (const key in banking) {
             if (Object.hasOwnProperty.call(banking, key)) {
               const element = banking[key];
@@ -121,7 +119,6 @@ function AdminPayment(props) {
 
   function generateSinpe(isUpdated) {
     if (method.sinpeList.length === 0 || isUpdated) {
-      console.log(isUpdated);
       paymentMethodRef.get().then((content) => {
         let sinpe = content.data()["sinpe"];
 

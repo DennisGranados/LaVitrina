@@ -22,9 +22,8 @@ import Catalog from "./components/Catalog";
 import DeleteAccount from "./components/AdminDeleteAccount";
 import InventoryDashboard from "./components/InventoryDashboard";
 import AddStyles from "./components/AddStyles";
-import EditStylesDashboard from "./components/EditStylesDashboard";
 import AddItem from "./components/AddItem";
-import EditItemsDashboard from "./components/EditItemsDashboard";
+import EditDashboard from "./components/EditDashboard";
 import Finance from "./components/FinanceAdmin";
 import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
@@ -262,9 +261,10 @@ function App() {
             </Route>
             <Route exact path="/admin/inventory/edit-styles">
               {user ? (
-                <EditStylesDashboard
+                <EditDashboard
                   openPopup={openPopup}
                   setPopup={setPopup}
+                  type="style"
                 />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
@@ -279,7 +279,11 @@ function App() {
             </Route>
             <Route exact path="/admin/inventory/edit-items">
               {user ? (
-                <EditItemsDashboard openPopup={openPopup} setPopup={setPopup} />
+                <EditDashboard
+                  openPopup={openPopup}
+                  setPopup={setPopup}
+                  type="item"
+                />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}

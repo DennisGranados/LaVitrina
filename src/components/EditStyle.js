@@ -34,7 +34,6 @@ function EditStyle(props) {
   };
 
   const handleChange = (e) => {
-    console.log(style);
     setStyle({
       ...style,
       [e.target.name]: e.target.value,
@@ -77,7 +76,7 @@ function EditStyle(props) {
       .then(() => {
         props.setPopup(
           "Confirmación",
-          "Se ha agregado la categoría con exito."
+          "Se ha agregado la categoría con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -93,7 +92,9 @@ function EditStyle(props) {
       <div className="col-12 justify-content-center d-flex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
-            <h4 className="text-center mb-4">Añadir nuevo estilo</h4>
+            <h4 className="text-center mb-4">
+              Editando <strong>{props.styleName}</strong>
+            </h4>
             <form id="addStyle" onSubmit={addStyle}>
               <label className="form-label">Nombre del estilo</label>
               <input

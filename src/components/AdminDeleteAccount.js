@@ -105,10 +105,7 @@ function AdminDeleteAccount(props) {
                 required
               />
               <div className="text-center">
-                <button
-                  type="submit"
-                  className="btn btnAccept topMargin mx-2"
-                >
+                <button type="submit" className="btn btnAccept topMargin mx-2">
                   Aceptar
                 </button>
                 <button type="reset" className="btn btnClear topMargin mx-2">
