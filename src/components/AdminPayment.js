@@ -246,8 +246,8 @@ function AdminPayment(props) {
   };
 
   return (
-    <div className="row justify-content-center">
-      <div className="card col-6 me-3" id="card-submit">
+    <div className="orderCards">
+      <div className="card my-3" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Cuentas bancarias actuales</h4>
           <div className="d-flex justify-content-around flex-wrap">
@@ -280,13 +280,13 @@ function AdminPayment(props) {
             </div>
             <div className="text-center mt-3">
               <button type="submit" className="btn btnAccept ms-2">
-                Añadir
+                Añadir 
               </button>
             </div>
           </form>
         </div>
       </div>
-      <div className="card col-6 ms-3" id="card-submit">
+      <div className="card my-3" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">SINPE móvil actuales</h4>
           <div className="d-flex justify-content-around flex-wrap">
