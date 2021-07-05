@@ -37,7 +37,7 @@ function Catalog(props) {
                 } else {
                   counter++;
                 }
-                if ((styleId.length - counter) === tempContent.length) {
+                if (styleId.length - counter === tempContent.length) {
                   setStyle(tempContent);
                 }
               });
@@ -54,11 +54,7 @@ function Catalog(props) {
     });
   };
 
-  return (
-    <div>
-      {style}
-    </div>
-  );
+  return <div className="orderCards">{style}</div>;
 }
 
 export default Catalog;
