@@ -32,7 +32,7 @@ function DeleteStyle(props) {
                     stylesRef.update("styles", styles).then(() => {
                       props.setPopup(
                         "Confirmación",
-                        "Se ha eliminado la categoría con exito."
+                        "Se ha eliminado la categoría con éxito."
                       );
                       props.openPopup();
                       props.actionCancel();
@@ -54,7 +54,9 @@ function DeleteStyle(props) {
       <div className="col-12 justify-content-center d-flex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
-            <h4 className="text-center mb-4">Borrando estilo: {props.name}</h4>
+            <h4 className="text-center mb-4">
+              Borrando estilo <strong>{props.name}</strong>{" "}
+            </h4>
             <h5 className="text-center mb-4">
               Al realizar esta acción, eliminará <strong>TODOS</strong> los
               artículos asociados a dicho estilo.

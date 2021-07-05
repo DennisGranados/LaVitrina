@@ -73,7 +73,7 @@ function AddStyles(props) {
 
             props.setPopup(
               "Confirmación",
-              "Se ha agregado la categoría con exito."
+              "Se ha agregado la categoría con éxito."
             );
             props.openPopup();
             e.target.reset();

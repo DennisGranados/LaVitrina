@@ -8,7 +8,7 @@ function InventoryDashboard() {
           <h1>Estilos</h1>
         </div>
         <div className="col-6 text-center">
-          <h1>Prendas</h1>
+          <h1>Productos</h1>
         </div>
       </div>
       <div className="col-12 justify-content-center d-flex mb-3 mx-3">
@@ -58,9 +58,10 @@ function InventoryDashboard() {
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title text-center">Añadir prenda</h5>
+                <h5 className="card-title text-center">Añadir producto</h5>
                 <p className="card-text -text-justify">
-                  Añade nuevas prendas, correspondientes a un estilo existente.
+                  Añade nuevos productos, correspondientes a un estilo
+                  existente.
                 </p>
                 <div className="text-center">
                   <Link
@@ -76,9 +77,9 @@ function InventoryDashboard() {
           <div className="col-6 m-auto">
             <div className="card shadowCards">
               <div className="card-body">
-                <h5 className="card-title text-center">Editar prendas</h5>
+                <h5 className="card-title text-center">Editar productos</h5>
                 <p className="card-text text-justify">
-                  Modifica y elimina las prendas existentes.
+                  Modifica y elimina los productos existentes.
                 </p>
                 <div className="text-center">
                   <Link

@@ -18,8 +18,6 @@ function AdminColors(props) {
 
   function generateColors(isUpdated) {
     if (colors.colorsList.length === 0 || isUpdated) {
-      console.log(isUpdated);
-
       colorsRef.get().then((content) => {
         let colorsDB = content.data()["availableColors"];
 

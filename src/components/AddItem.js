@@ -12,7 +12,7 @@ function AddItem(props) {
     itemColor: "",
     itemBrand: "",
     itemPrice: "",
-    itemStyle: "undefined",
+    itemStyle: "",
     itemQuantity: "",
     itemVisible: "false",
   });
@@ -101,45 +101,41 @@ function AddItem(props) {
   const addItem = (e) => {
     e.preventDefault();
 
-    if (item.itemStyle !== "undefined") {
-      stylesRef
-        .collection(item.itemStyle)
-        .doc(item.itemCode)
-        .set({
-          name: item.itemName,
-          image: item.itemImage,
-          color: item.itemColor,
-          brand: item.itemBrand,
-          price: parseFloat(item.itemPrice),
-          quantity: parseInt(item.itemQuantity),
-          visible: item.itemVisible === "true" ? true : false,
-        })
-        .then(() => {
-          stylesRef
-            .get(item.itemName)
-            .then(function (content) {
-              if (content.exists) {
-                props.setPopup(
-                  "Confirmación",
-                  "Se ha agregado la categoría con exito."
-                );
-                props.openPopup();
-                e.target.reset();
-              }
-            })
-            .catch((error) => {
-              props.setPopup(error.code);
+    stylesRef
+      .collection(item.itemStyle)
+      .doc()
+      .set({
+        name: item.itemName,
+        image: item.itemImage,
+        color: item.itemColor,
+        code: item.itemCode,
+        brand: item.itemBrand,
+        price: parseFloat(item.itemPrice),
+        quantity: parseInt(item.itemQuantity),
+        visible: item.itemVisible === "true" ? true : false,
+      })
+      .then(() => {
+        stylesRef
+          .get(item.itemName)
+          .then(function (content) {
+            if (content.exists) {
+              props.setPopup(
+                "Confirmación",
+                "Se ha agregado la categoría con éxito."
+              );
               props.openPopup();
-            });
-        })
-        .catch((error) => {
-          props.setPopup(error.code);
-          props.openPopup();
-        });
-    } else {
-      props.setPopup("Error", "Debe de seleccionar un estilo.");
-      props.openPopup();
-    }
+              e.target.reset();
+            }
+          })
+          .catch((error) => {
+            props.setPopup(error.code);
+            props.openPopup();
+          });
+      })
+      .catch((error) => {
+        props.setPopup(error.code);
+        props.openPopup();
+      });
   };
 
   return (
@@ -147,7 +143,7 @@ function AddItem(props) {
       <div className="col-12 justify-content-center d-flex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
-            <h4 className="text-center mb-4">Añadir nueva prenda</h4>
+            <h4 className="text-center mb-4">Añadir nuevo producto</h4>
             <form id="addItem" onSubmit={addItem} onReset={resetImage}>
               <label className="form-label">Nombre del producto</label>
               <input
@@ -169,7 +165,7 @@ function AddItem(props) {
               />
               <label className="form-label topMargin">Color del producto</label>
               <select
-                className="styles ms-2"
+                className="form-select"
                 name="itemColor"
                 onChange={handleChange}
                 required
@@ -178,7 +174,6 @@ function AddItem(props) {
                 {generateColors()}
                 {colors}
               </select>
-              <br></br>
               <label className="form-label topMargin">Marca del producto</label>
               <input
                 type="text"
@@ -188,16 +183,19 @@ function AddItem(props) {
                 required
               />
               <label className="form-label topMargin">
-                Precio del producto en colones
+                Precio del producto
               </label>
-              <input
-                type="number"
-                name="itemPrice"
-                className="form-control"
-                min="0"
-                onChange={handleChange}
-                required
-              />
+              <div className="input-group mb-3">
+                <span className="input-group-text">₡</span>
+                <input
+                  type="number"
+                  name="itemPrice"
+                  className="form-control"
+                  min="0"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
               <label className="form-label topMargin">
                 Cantidad a ingresar
               </label>
@@ -235,7 +233,7 @@ function AddItem(props) {
                 Estilo del producto
               </label>
               <select
-                className="styles ms-2"
+                className="form-select"
                 name="itemStyle"
                 onChange={handleChange}
                 required

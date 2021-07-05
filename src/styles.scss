@@ -59,6 +59,10 @@ code {
   margin-right: auto;
 }
 
+.card-title {
+  text-transform: capitalize;
+}
+
 #card-submit {
   width: 36rem;
 }
@@ -137,7 +141,7 @@ code {
   color: #000000;
 }
 
-.noLinks:hover{
+.noLinks:hover {
   text-decoration: underline;
   color: #000000;
   font-weight: bold;
@@ -158,4 +162,8 @@ code {
   justify-content: space-around;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
 }
