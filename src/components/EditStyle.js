@@ -159,14 +159,14 @@ function EditStyle(props) {
               <div className="text-center">
                 <button
                   type="submit"
-                  className="btn btn-primary topMargin mx-2"
+                  className="btn btnAccept topMargin mx-2"
                 >
                   Aceptar
                 </button>
                 <button
                   onClick={handleCancelEdit}
                   type="cancel"
-                  className="btn btn-warning topMargin mx-2"
+                  className="btn btnClear topMargin mx-2"
                 >
                   Cancelar
                 </button>

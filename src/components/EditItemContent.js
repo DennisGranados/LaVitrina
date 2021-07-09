@@ -53,13 +53,13 @@ function EditItemContent(props) {
 
   return (
     <div>
-      <div className="col-12 text-center d-flex">
+      <div className="orderCards">
         <div className="col-2">
           <div className="btn-group" aria-label="Basic mixed styles example">
             <button
               type="button"
               onClick={() => props.actionCancel()}
-              className="btn btn-primary"
+              className="btn btnAccept"
             >
               Regresar a la selección de estilos
             </button>

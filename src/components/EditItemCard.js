@@ -42,7 +42,7 @@ function EditItemCard(props) {
                   props.styleID
                 )
               }
-              className="btn btn-danger"
+              className="btn btnAccept"
             >
               Borrar
             </button>
@@ -56,7 +56,7 @@ function EditItemCard(props) {
                   props.styleID
                 )
               }
-              className="btn btn-primary"
+              className="btn btnClear"
             >
               Editar
             </button>

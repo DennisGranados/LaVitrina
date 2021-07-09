@@ -1,6 +1,6 @@
 function EditStyleCard(props) {
   return (
-    <div className="card shadowCards">
+    <div className="card shadowCards mx-2 my-2">
       <img
         src={props.image}
         className="card-img-top"
@@ -33,14 +33,14 @@ function EditStyleCard(props) {
               <button
                 type="button"
                 onClick={() => props.actionDelete(props.id, props.name, "")}
-                className="btn btn-danger"
+                className="btn btnAccept"
               >
                 Borrar
               </button>
               <button
                 type="button"
                 onClick={() => props.actionEdit(props.id, props.name, "")}
-                className="btn btn-primary"
+                className="btn btnClear"
               >
                 Editar
               </button>
@@ -54,7 +54,7 @@ function EditStyleCard(props) {
               <button
                 type="button"
                 onClick={() => props.actionItems(props.id, props.name)}
-                className="btn btn-primary"
+                className="btn btnAccept"
               >
                 Acceder al estilo
               </button>

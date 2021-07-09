@@ -57,7 +57,7 @@ function EditStylesContent(props) {
       ) : (
         <h1>Seleccione un estilo</h1>
       )}
-      <div className="col-12 d-flex mt-3 justify-content-around">
+      <div className="orderCards">
         {pageData}
       </div>
     </div>

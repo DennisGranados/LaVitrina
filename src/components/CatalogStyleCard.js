@@ -17,7 +17,7 @@ function CatalogStyleCard(props) {
             <button
               type="button"
               //onClick={() => props.actionItems(props.id, props.name)}
-              className="btn btn-primary"
+              className="btn btnAccept"
             >
               Acceder al catálogo del estilo
             </button>
