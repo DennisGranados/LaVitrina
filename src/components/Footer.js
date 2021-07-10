@@ -5,15 +5,14 @@ function Footer(props) {
 
   return (
     <div>
-      <div className="col-12 backgroundHeader mt-4">
-        <div className="row mt-4">
-          <div className="col-6 text-center mt-3">
-            <h4>Redes Sociales</h4>
+      <div className="orderCards backgroundHeader mt-4">
+          <div className="card footerContent">
+            <h4 className="text-center">Redes Sociales</h4>
             <a
               href={information.facebook}
               target="_blank"
               rel="noreferrer"
-              className="nav-link d-inline-block"
+              className="nav-link d-inline-block text-center"
             >
               <img
                 src="https://image.flaticon.com/icons/png/512/1077/1077041.png"
@@ -25,7 +24,7 @@ function Footer(props) {
               href={information.instagram}
               target="_blank"
               rel="noreferrer"
-              className="nav-link d-inline-block"
+              className="nav-link d-inline-block text-center"
             >
               <img
                 src="https://image.flaticon.com/icons/png/512/1077/1077042.png"
@@ -34,9 +33,9 @@ function Footer(props) {
               />
             </a>
           </div>
-          <div className="col-6 text-center mt-3">
+          <div className="card footerContent">
             <div>
-              <h4>Métodos de contacto</h4>
+              <h4 className="text-center">Métodos de contacto</h4>
               <div className="justify-content-center align-items-center  d-flex">
                 <img
                   src="https://image.flaticon.com/icons/png/512/2991/2991151.png"
@@ -66,7 +65,6 @@ function Footer(props) {
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   );

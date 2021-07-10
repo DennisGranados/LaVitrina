@@ -156,7 +156,7 @@ code {
   height: 300px;
 }
 
-.orderCards{
+.orderCards {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -166,4 +166,11 @@ code {
 .spinner-border {
   width: 3rem;
   height: 3rem;
+}
+
+.footerContent {
+  background: none;
+  border: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
