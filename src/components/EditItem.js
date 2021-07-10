@@ -5,11 +5,13 @@ function EditItem(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
   const colorsRef = firestore.collection("config").doc("colors");
+  const sizesRef = firestore.collection("config").doc("sizes");
   const [oldItem, setOldItem] = useState({
     itemName: "",
     itemCode: "",
     itemImage: "",
-    itemColor: "",
+    itemColor: [],
+    itemSize: [],
     itemBrand: "",
     itemPrice: "",
     itemStyle: "",
@@ -20,7 +22,8 @@ function EditItem(props) {
     itemName: "",
     itemCode: "",
     itemImage: "",
-    itemColor: "",
+    itemColor: [],
+    itemSize: [],
     itemBrand: "",
     itemPrice: "",
     itemStyle: "",
@@ -28,6 +31,7 @@ function EditItem(props) {
     itemVisible: "false",
   });
   const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [visible, setVisible] = useState([]);
   const [temp, setTemp] = useState([]);
 
@@ -37,11 +41,15 @@ function EditItem(props) {
       .doc(props.id)
       .get()
       .then((element) => {
+        let colorsDB = element.data()["color"];
+        let sizesDB = element.data()["size"];
+
         setOldItem({
           itemName: element.data().name,
           itemCode: element.data().code,
           itemImage: element.data().image,
-          itemColor: element.data().color,
+          itemColor: colorsDB,
+          itemSize: sizesDB,
           itemBrand: element.data().brand,
           itemPrice: element.data().price,
           itemQuantity: element.data().quantity,
@@ -58,9 +66,16 @@ function EditItem(props) {
         var temp = [];
         colorsDB.forEach((color) => {
           temp.push(
-            <option value={color} key={color}>
-              {color}
-            </option>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value={color}
+                onChange={handleColor}
+                key={color}
+              />
+              <label className="form-check-label">{color}</label>
+            </div>
           );
 
           if (colorsDB.length === temp.length) {
@@ -70,6 +85,70 @@ function EditItem(props) {
       });
     }
   }
+
+  function generateSizes() {
+    if (sizes.length === 0) {
+      sizesRef.get().then((content) => {
+        let sizesDB = content.data()["availableSizes"];
+
+        var temp = [];
+        sizesDB.forEach((size) => {
+          temp.push(
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value={size}
+                onChange={handleSize}
+                key={size}
+              />
+              <label className="form-check-label">{size}</label>
+            </div>
+          );
+
+          if (sizesDB.length === temp.length) {
+            setSizes(temp);
+          }
+        });
+      });
+    }
+  }
+
+  const handleColor = (e) => {
+    let tempContent = newItem.itemColor;
+
+    if (e.target.checked) {
+      tempContent.push(e.target.value);
+
+      setItem({ ...newItem, itemColor: tempContent });
+    } else {
+      for (var i = 0; i < tempContent.length; i++) {
+        if (tempContent[i] === e.target.value) {
+          tempContent.splice(i, 1);
+        }
+      }
+
+      setItem({ ...newItem, itemColor: tempContent });
+    }
+  };
+
+  const handleSize = (e) => {
+    let tempContent = newItem.itemSize;
+
+    if (e.target.checked) {
+      tempContent.push(e.target.value);
+
+      setItem({ ...newItem, itemSize: tempContent });
+    } else {
+      for (var i = 0; i < tempContent.length; i++) {
+        if (tempContent[i] === e.target.value) {
+          tempContent.splice(i, 1);
+        }
+      }
+
+      setItem({ ...newItem, itemSize: tempContent });
+    }
+  };
 
   function isVisible() {
     if (visible.length === 0) {
@@ -222,34 +301,49 @@ function EditItem(props) {
   const updateColor = (e) => {
     e.preventDefault();
 
-    if (newItem.itemColor === oldItem.color) {
-      props.setPopup(
-        "Error",
-        "No puede seleccionar el mismo color que ya posee el producto."
-      );
-      props.openPopup();
-      setTemp([]);
-    } else {
-      stylesRef
-        .collection(props.styleID)
-        .doc(props.id)
-        .update({
-          color: newItem.itemColor,
-        })
-        .then(() => {
-          props.setPopup(
-            "Confirmación",
-            "Se ha modificado el color con éxito."
-          );
-          props.openPopup();
-          e.target.reset();
-          setTemp([]);
-        })
-        .catch((error) => {
-          props.setPopup(error.code);
-          props.openPopup();
-        });
-    }
+    stylesRef
+      .collection(props.styleID)
+      .doc(props.id)
+      .update({
+        color: newItem.itemColor,
+      })
+      .then(() => {
+        props.setPopup(
+          "Confirmación",
+          "Se han modificado los colores con éxito."
+        );
+        props.openPopup();
+        e.target.reset();
+        setTemp([]);
+      })
+      .catch((error) => {
+        props.setPopup(error.code);
+        props.openPopup();
+      });
+  };
+
+  const updateSize = (e) => {
+    e.preventDefault();
+
+    stylesRef
+      .collection(props.styleID)
+      .doc(props.id)
+      .update({
+        size: newItem.itemSize,
+      })
+      .then(() => {
+        props.setPopup(
+          "Confirmación",
+          "Se han modificado las tallas con éxito."
+        );
+        props.openPopup();
+        e.target.reset();
+        setTemp([]);
+      })
+      .catch((error) => {
+        props.setPopup(error.code);
+        props.openPopup();
+      });
   };
 
   const updateBrand = (e) => {
@@ -415,23 +509,47 @@ function EditItem(props) {
             </div>
             <div className="col mt-3">
               <label className="form-label">
-                Color del producto{" "}
-                <strong> (actualmente es {oldItem.itemColor})</strong>
+                Colores disponibles del producto (puede seleccionar varios)
+                <br></br>
+                <br></br>
+                Los colores actuales son:{" "}
+                {oldItem.itemColor.map((color) => (
+                  <strong>
+                    <p>{color}</p>
+                  </strong>
+                ))}
               </label>
               <form
                 className="col-12 justify-content-center d-flex"
                 onSubmit={updateColor}
               >
-                <select
-                  className="form-select"
-                  name="itemColor"
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">---Seleccione una opción---</option>
-                  {generateColors()}
-                  {colors}
-                </select>
+                {generateColors()}
+                {colors}
+                <div className="text-center mt-3">
+                  <button type="submit" className="btn btnAccept ms-2">
+                    Actualizar
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div className="col mt-3">
+              <label className="form-label">
+                Tallas disponibles del producto (puede seleccionar varias)
+                <br></br>
+                <br></br>
+                Las tallas actuales son:{" "}
+                {oldItem.itemSize.map((size) => (
+                  <strong>
+                    <p>{size}</p>
+                  </strong>
+                ))}
+              </label>
+              <form
+                className="col-12 justify-content-center d-flex"
+                onSubmit={updateSize}
+              >
+                {generateSizes()}
+                {sizes}
                 <div className="text-center mt-3">
                   <button type="submit" className="btn btnAccept ms-2">
                     Actualizar

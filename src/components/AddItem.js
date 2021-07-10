@@ -5,11 +5,13 @@ function AddItem(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
   const colorsRef = firestore.collection("config").doc("colors");
+  const sizesRef = firestore.collection("config").doc("sizes");
   const [item, setItem] = useState({
     itemName: "",
     itemCode: "",
     itemImage: "",
-    itemColor: "",
+    itemColor: [],
+    itemSize: [],
     itemBrand: "",
     itemPrice: "",
     itemStyle: "",
@@ -18,6 +20,8 @@ function AddItem(props) {
   });
   const [styles, setStyles] = useState([]);
   const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const flag = false;
 
   function generateStyles() {
     if (styles.length === 0) {
@@ -53,12 +57,48 @@ function AddItem(props) {
         var temp = [];
         colorsDB.forEach((color) => {
           temp.push(
-            <option value={color} key={color}>
-              {color}
-            </option>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value={color}
+                onChange={handleColor}
+                key={color}
+              />
+              <label className="form-check-label">{color}</label>
+            </div>
           );
+
           if (colorsDB.length === temp.length) {
             setColors(temp);
+          }
+        });
+      });
+    }
+  }
+
+  function generateSizes() {
+    if (sizes.length === 0) {
+      sizesRef.get().then((content) => {
+        let sizesDB = content.data()["availableSizes"];
+
+        var temp = [];
+        sizesDB.forEach((size) => {
+          temp.push(
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value={size}
+                onChange={handleSize}
+                key={size}
+              />
+              <label className="form-check-label">{size}</label>
+            </div>
+          );
+
+          if (sizesDB.length === temp.length) {
+            setSizes(temp);
           }
         });
       });
@@ -70,6 +110,49 @@ function AddItem(props) {
       ...item,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleColor = (e) => {
+    let tempContent = item.itemColor;
+
+    if (e.target.checked) {
+      tempContent.push(e.target.value);
+
+      if (flag) {
+        setItem({ ...item, itemColor: tempContent });
+      }
+    } else {
+      for (var i = 0; i < tempContent.length; i++) {
+        if (tempContent[i] === e.target.value) {
+          tempContent.splice(i, 1);
+        }
+      }
+
+      if (flag) {
+        setItem({ ...item, itemColor: tempContent });
+      }
+    }
+  };
+
+  const handleSize = (e) => {
+    let tempContent = item.itemSize;
+
+    if (e.target.checked) {
+      tempContent.push(e.target.value);
+      if (flag) {
+        setItem({ ...item, itemSize: tempContent });
+      }
+    } else {
+      for (var i = 0; i < tempContent.length; i++) {
+        if (tempContent[i] === e.target.value) {
+          tempContent.splice(i, 1);
+        }
+      }
+
+      if (flag) {
+        setItem({ ...item, itemSize: tempContent });
+      }
+    }
   };
 
   const handleImage = (e) => {
@@ -94,48 +177,69 @@ function AddItem(props) {
   };
 
   const resetImage = (e) => {
-    setItem({ ...item, itemImage: "" });
+    setItem({ ...item, itemImage: "", itemColor: [], itemSize: [] });
     e.target.reset();
   };
 
   const addItem = (e) => {
     e.preventDefault();
+    let color = false;
+    let size = false;
 
-    stylesRef
-      .collection(item.itemStyle)
-      .doc()
-      .set({
-        name: item.itemName,
-        image: item.itemImage,
-        color: item.itemColor,
-        code: item.itemCode,
-        brand: item.itemBrand,
-        price: parseFloat(item.itemPrice),
-        quantity: parseInt(item.itemQuantity),
-        visible: item.itemVisible === "true" ? true : false,
-      })
-      .then(() => {
-        stylesRef
-          .get(item.itemName)
-          .then(function (content) {
-            if (content.exists) {
-              props.setPopup(
-                "Confirmación",
-                "Se ha agregado la categoría con éxito."
-              );
+    if (item.itemColor.length === 0) {
+      props.setPopup("Error", "Debe de seleccionar al menos un color.");
+      props.openPopup();
+    } else {
+      color = true;
+    }
+
+    if (item.itemSize.length === 0) {
+      props.setPopup("Error", "Debe de seleccionar al menos una talla.");
+      props.openPopup();
+    } else {
+      size = true;
+    }
+
+    if (color && size) {
+      stylesRef
+        .collection(item.itemStyle)
+        .doc()
+        .set({
+          name: item.itemName,
+          image: item.itemImage,
+          color: item.itemColor,
+          size: item.itemSize,
+          code: item.itemCode,
+          brand: item.itemBrand,
+          price: parseFloat(item.itemPrice),
+          quantity: parseInt(item.itemQuantity),
+          visible: item.itemVisible === "true" ? true : false,
+        })
+        .then(() => {
+          stylesRef
+            .get(item.itemName)
+            .then(function (content) {
+              if (content.exists) {
+                props.setPopup(
+                  "Confirmación",
+                  "Se ha agregado el producto con éxito."
+                );
+                props.openPopup();
+                e.target.reset();
+                flag = true;
+                setItem({ ...item, itemColor: [], itemSize: [] });
+              }
+            })
+            .catch((error) => {
+              props.setPopup(error.code);
               props.openPopup();
-              e.target.reset();
-            }
-          })
-          .catch((error) => {
-            props.setPopup(error.code);
-            props.openPopup();
-          });
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
+            });
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+    }
   };
 
   return (
@@ -163,17 +267,16 @@ function AddItem(props) {
                 onChange={handleChange}
                 required
               />
-              <label className="form-label topMargin">Color del producto</label>
-              <select
-                className="form-select"
-                name="itemColor"
-                onChange={handleChange}
-                required
-              >
-                <option value="">---Seleccione una opción---</option>
-                {generateColors()}
-                {colors}
-              </select>
+              <label className="form-label topMargin">
+                Colores disponibles del producto (puede seleccionar varios)
+              </label>
+              {generateColors()}
+              {colors}
+              <label className="form-form-label topMargin">
+                Tallas disponibles del producto (puede seleccionar varias)
+              </label>
+              {generateSizes()}
+              {sizes}
               <label className="form-label topMargin">Marca del producto</label>
               <input
                 type="text"

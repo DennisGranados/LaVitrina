@@ -75,7 +75,7 @@ function AdminColors(props) {
       }
 
       if (duplicate) {
-        props.setPopup("Error", "Ya existe este número de cuenta.");
+        props.setPopup("Error", "Ya existe este color.");
         props.openPopup();
         e.target.reset();
       } else {
@@ -88,7 +88,7 @@ function AdminColors(props) {
           .then(() => {
             props.setPopup(
               "Confirmación",
-              "Se ha agregado la cuenta bancaria con éxito."
+              "Se ha agregado el color con éxito."
             );
             props.openPopup();
             e.target.reset();

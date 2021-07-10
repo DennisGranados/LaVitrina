@@ -109,9 +109,7 @@ function App() {
 
         case "data/non-identical-names":
           setPopupTitle("Error");
-          setPopupMessage(
-            "Para eliminar, debe de ingresar el nombre correspondiente al estilo."
-          );
+          setPopupMessage("El nombre no coincide con el solicitado.");
           break;
 
         case "data/bad-data":
@@ -166,11 +164,13 @@ function App() {
       setPopupTitle(codeOrTitle);
       setPopupMessage(message);
     } else {
-      console.log(message);
+      console.log(codeOrTitle + ": " + message);
       setPopupTitle("Error");
       setPopupMessage("Error desconocido.");
     }
   }
+
+  //auth/wrong-password
 
   return (
     <div>

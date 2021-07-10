@@ -40,31 +40,28 @@ function Nav() {
     logged = (
       <div>
         <nav className="col-12 navbar navbar-expand-lg navBackground">
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link to="/" className="btn noHype navHover">
-                    Inicio
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/admin" className="btn noHype navHover">
-                    Sitio administrativo
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/about-us" className="btn noHype navHover">
-                    Acerca de
-                  </Link>
-                </li>
-                <button
-                  className="btn navHover noHype"
-                  onClick={signOut}
-                >
-                  Desconectar
-                </button>
-              </ul>
-            </div>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link to="/" className="btn noHype navHover">
+                  Inicio
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/admin" className="btn noHype navHover">
+                  Sitio administrativo
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/about-us" className="btn noHype navHover">
+                  Acerca de
+                </Link>
+              </li>
+              <button className="btn navHover noHype" onClick={signOut}>
+                Desconectar
+              </button>
+            </ul>
+          </div>
         </nav>
       </div>
     );
