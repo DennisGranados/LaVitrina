@@ -7,7 +7,7 @@ function Footer(props) {
     <div>
       <div className="orderCards backgroundHeader mt-4">
           <div className="card footerContent">
-            <h4 className="text-center">Redes Sociales</h4>
+            <h4 className="text-center fw-bold">Redes Sociales</h4>
             <a
               href={information.facebook}
               target="_blank"
@@ -35,7 +35,7 @@ function Footer(props) {
           </div>
           <div className="card footerContent">
             <div>
-              <h4 className="text-center">Métodos de contacto</h4>
+              <h4 className="text-center fw-bold">Métodos de contacto</h4>
               <div className="justify-content-center align-items-center  d-flex">
                 <img
                   src="https://image.flaticon.com/icons/png/512/2991/2991151.png"
