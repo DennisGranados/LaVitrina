@@ -10,7 +10,16 @@ function EditItemContent(props) {
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(
-        <div className="spinner-border text-warning" role="status"></div>
+        <div>
+          <div className="d-flex justify-content-center">
+            <strong className="sr-only">
+              <h3>Cargando artículos...</h3>
+            </strong>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border text-warning" role="status"></div>
+          </div>
+        </div>
       );
     } else {
       let tempContent = [];
@@ -20,7 +29,11 @@ function EditItemContent(props) {
         .get()
         .then(function (content) {
           if (content.docs.length === 1) {
-            setPageData(<strong> No hay artículos para mostrar.</strong>);
+            setPageData(
+              <strong>
+                <h3>No hay artículos para mostrar.</h3>
+              </strong>
+            );
           } else {
             content.docs.forEach((element) => {
               if (element.id !== "settings") {

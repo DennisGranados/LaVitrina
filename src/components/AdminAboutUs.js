@@ -17,7 +17,7 @@ function AddInformation(props) {
   const handleChange = (e) => {
     setNewInformation({
       ...newInformation,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     });
   };
 
@@ -25,7 +25,7 @@ function AddInformation(props) {
     e.preventDefault();
     informationRef
       .update({
-        email: newInformation.email,
+        email: newInformation.email.toLowerCase(),
       })
       .then(function () {
         props.setPopup(
@@ -57,7 +57,7 @@ function AddInformation(props) {
     e.preventDefault();
     informationRef
       .update({
-        facebook: newInformation.facebook,
+        facebook: newInformation.facebook.toLowerCase(),
       })
       .then(function () {
         props.setPopup(
@@ -73,7 +73,7 @@ function AddInformation(props) {
     e.preventDefault();
     informationRef
       .update({
-        instagram: newInformation.instagram,
+        instagram: newInformation.instagram.toLowerCase(),
       })
       .then(function () {
         props.setPopup(

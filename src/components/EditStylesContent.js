@@ -10,7 +10,16 @@ function EditStylesContent(props) {
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(
-        <div className="spinner-border text-warning" role="status"></div>
+        <div>
+          <div className="d-flex justify-content-center">
+            <strong className="sr-only">
+              <h3>Cargando estilos...</h3>
+            </strong>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border text-warning" role="status"></div>
+          </div>
+        </div>
       );
     } else {
       let tempContent = [];
@@ -19,7 +28,11 @@ function EditStylesContent(props) {
         let styles = content.data()["styles"];
 
         if (styles.length <= 0) {
-          setPageData(<strong> No hay estilos para mostrar.</strong>);
+          setPageData(
+            <strong>
+              <h3>No hay estilos para mostrar.</h3>
+            </strong>
+          );
         } else {
           styles.forEach(function (stylesItem) {
             stylesRef
@@ -57,9 +70,7 @@ function EditStylesContent(props) {
       ) : (
         <h1>Seleccione un estilo</h1>
       )}
-      <div className="orderCards">
-        {pageData}
-      </div>
+      <div className="orderCards">{pageData}</div>
     </div>
   );
 }

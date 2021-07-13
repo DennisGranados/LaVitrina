@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import CatalogStyleCard from "./CatalogStyleCard";
 
@@ -9,13 +9,30 @@ function Catalog(props) {
 
   useEffect(() => {
     if (style.length === 0) {
+      setStyle(
+        <div>
+          <div className="d-flex justify-content-center">
+            <strong className="sr-only">
+              <h3>Cargando estilos...</h3>
+            </strong>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border text-warning" role="status"></div>
+          </div>
+        </div>
+      );
+    } else {
       let tempContent = [];
-      console.log("HOLA");
+
       stylesRef.get().then(function (content) {
         let styleId = content.data()["styles"];
-        console.log(styleId);
+
         if (styleId.length <= 0) {
-          setStyle(<strong> No hay estilos para mostrar.</strong>);
+          setStyle(
+            <strong>
+              <h3>No hay estilos para mostrar.</h3>
+            </strong>
+          );
         } else {
           let counter = 0;
           styleId.forEach(function (stylesItem) {
@@ -25,7 +42,6 @@ function Catalog(props) {
               .get()
               .then((content) => {
                 if (content.data()["visible"] === true) {
-                  console.log(counter);
                   tempContent.push(
                     <CatalogStyleCard
                       id={stylesItem}
@@ -45,14 +61,7 @@ function Catalog(props) {
         }
       });
     }
-  }, [props]);
-
-  const handleChange = (e) => {
-    setStyle({
-      ...style,
-      [e.target.name]: e.target.value,
-    });
-  };
+  }, [style.length]);
 
   return <div className="orderCards">{style}</div>;
 }

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
+import Capitalize from "../Tools";
 
 function EditItem(props) {
   const firestore = useFirestore();
@@ -14,11 +15,10 @@ function EditItem(props) {
     itemSize: [],
     itemBrand: "",
     itemPrice: "",
-    itemStyle: "",
     itemQuantity: "",
-    itemVisible: "false",
+    itemVisible: false,
   });
-  const [newItem, setItem] = useState({
+  const [newItem, setNewItem] = useState({
     itemName: "",
     itemCode: "",
     itemImage: "",
@@ -26,13 +26,12 @@ function EditItem(props) {
     itemSize: [],
     itemBrand: "",
     itemPrice: "",
-    itemStyle: "",
     itemQuantity: "",
-    itemVisible: "false",
+    itemVisible: false,
+    flag: false,
   });
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
-  const [visible, setVisible] = useState([]);
   const [temp, setTemp] = useState([]);
 
   useEffect(() => {
@@ -58,6 +57,24 @@ function EditItem(props) {
       });
   }, [props, temp]);
 
+  function fillNewItem() {
+    if (oldItem.itemName === "") {
+    } else if (!newItem.flag) {
+      setNewItem({
+        itemName: oldItem.itemName,
+        itemCode: oldItem.itemCode,
+        itemImage: oldItem.itemImage,
+        itemColor: oldItem.itemColor,
+        itemSize: oldItem.itemSize,
+        itemBrand: oldItem.itemBrand,
+        itemPrice: oldItem.itemPrice,
+        itemQuantity: oldItem.itemQuantity,
+        itemVisible: oldItem.itemVisible,
+        flag: true,
+      });
+    }
+  }
+
   function generateColors() {
     if (colors.length === 0) {
       colorsRef.get().then((content) => {
@@ -65,18 +82,7 @@ function EditItem(props) {
 
         var temp = [];
         colorsDB.forEach((color) => {
-          temp.push(
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value={color}
-                onChange={handleColor}
-                key={color}
-              />
-              <label className="form-check-label">{color}</label>
-            </div>
-          );
+          temp.push(color);
 
           if (colorsDB.length === temp.length) {
             setColors(temp);
@@ -93,18 +99,7 @@ function EditItem(props) {
 
         var temp = [];
         sizesDB.forEach((size) => {
-          temp.push(
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value={size}
-                onChange={handleSize}
-                key={size}
-              />
-              <label className="form-check-label">{size}</label>
-            </div>
-          );
+          temp.push(size);
 
           if (sizesDB.length === temp.length) {
             setSizes(temp);
@@ -120,7 +115,7 @@ function EditItem(props) {
     if (e.target.checked) {
       tempContent.push(e.target.value);
 
-      setItem({ ...newItem, itemColor: tempContent });
+      setNewItem({ ...newItem, itemColor: tempContent });
     } else {
       for (var i = 0; i < tempContent.length; i++) {
         if (tempContent[i] === e.target.value) {
@@ -128,7 +123,7 @@ function EditItem(props) {
         }
       }
 
-      setItem({ ...newItem, itemColor: tempContent });
+      setNewItem({ ...newItem, itemColor: tempContent });
     }
   };
 
@@ -138,7 +133,7 @@ function EditItem(props) {
     if (e.target.checked) {
       tempContent.push(e.target.value);
 
-      setItem({ ...newItem, itemSize: tempContent });
+      setNewItem({ ...newItem, itemSize: tempContent });
     } else {
       for (var i = 0; i < tempContent.length; i++) {
         if (tempContent[i] === e.target.value) {
@@ -146,92 +141,18 @@ function EditItem(props) {
         }
       }
 
-      setItem({ ...newItem, itemSize: tempContent });
+      setNewItem({ ...newItem, itemSize: tempContent });
     }
   };
-
-  function isVisible() {
-    if (visible.length === 0) {
-      let temp = [];
-
-      if (oldItem.visible === true) {
-        temp.push(
-          <div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="itemVisible"
-                onChange={handleChange}
-                value="true"
-                defaultChecked
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                Si
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="itemVisible"
-                onChange={handleChange}
-                value="false"
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                No
-              </label>
-            </div>
-          </div>
-        );
-        setVisible(temp);
-      } else {
-        temp.push(
-          <div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="itemVisible"
-                onChange={handleChange}
-                value="true"
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                Si
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="itemVisible"
-                onChange={handleChange}
-                value="false"
-                defaultChecked
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                No
-              </label>
-            </div>
-          </div>
-        );
-        setVisible(temp);
-      }
-    }
-  }
 
   const handleCancelEdit = () => {
     props.actionItems(props.styleID, props.styleName);
   };
 
   const handleChange = (e) => {
-    setItem({
+    setNewItem({
       ...newItem,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     });
   };
 
@@ -240,8 +161,8 @@ function EditItem(props) {
       var fReader = new FileReader();
       fReader.readAsDataURL(e.target.files[0]);
       fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result.trim) {
-          setItem({
+        if (imageResult.target.result) {
+          setNewItem({
             ...newItem,
             itemImage: imageResult.target.result,
           });
@@ -256,442 +177,318 @@ function EditItem(props) {
     }
   };
 
-  const updateName = (e) => {
+  const updateItem = (e) => {
     e.preventDefault();
+    let color = false;
+    let size = false;
 
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        name: newItem.itemName,
-      })
-      .then(() => {
-        props.setPopup("Confirmación", "Se ha modificado el nombre con éxito.");
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
+    if (newItem.itemColor.length === 0) {
+      props.setPopup("Error", "Debe de seleccionar al menos un color.");
+      props.openPopup();
+    } else {
+      color = true;
+    }
 
-  const updateCode = (e) => {
-    e.preventDefault();
+    if (newItem.itemSize.length === 0) {
+      props.setPopup("Error", "Debe de seleccionar al menos una talla.");
+      props.openPopup();
+    } else {
+      size = true;
+    }
 
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        code: newItem.itemCode,
-      })
-      .then(() => {
-        props.setPopup("Confirmación", "Se ha modificado el código con éxito.");
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateColor = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        color: newItem.itemColor,
-      })
-      .then(() => {
-        props.setPopup(
-          "Confirmación",
-          "Se han modificado los colores con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateSize = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        size: newItem.itemSize,
-      })
-      .then(() => {
-        props.setPopup(
-          "Confirmación",
-          "Se han modificado las tallas con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateBrand = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        brand: newItem.itemBrand,
-      })
-      .then(() => {
-        props.setPopup("Confirmación", "Se ha modificado la marca con éxito.");
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updatePrice = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        price: parseFloat(newItem.itemPrice),
-      })
-      .then(() => {
-        props.setPopup("Confirmación", "Se ha modificado el precio con éxito.");
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateQuantity = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        quantity: parseInt(newItem.itemQuantity),
-      })
-      .then(() => {
-        props.setPopup(
-          "Confirmación",
-          "Se ha modificado la cantidad de productos disponibles con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateImage = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        image: newItem.itemImage,
-      })
-      .then(() => {
-        props.setPopup("Confirmación", "Se ha modificado la imagen con éxito.");
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateVisible = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.styleID)
-      .doc(props.id)
-      .update({
-        visible: newItem.itemVisible === "true" ? true : false,
-      })
-      .then(() => {
-        props.setPopup(
-          "Confirmación",
-          "Se ha modificado la visibilidad con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
+    console.log(newItem);
+    if (color && size) {
+      stylesRef
+        .collection(props.styleID)
+        .doc(props.id)
+        .update({
+          name: Capitalize(newItem.itemName),
+          image: newItem.itemImage,
+          color: newItem.itemColor,
+          size: newItem.itemSize,
+          code: Capitalize(newItem.itemCode),
+          brand: Capitalize(newItem.itemBrand),
+          price: parseFloat(newItem.itemPrice),
+          quantity: parseInt(newItem.itemQuantity),
+          visible: newItem.itemVisible === "true" ? true : false,
+        })
+        .then(() => {
+          stylesRef
+            .get(Capitalize(newItem.itemName))
+            .then(function (content) {
+              if (content.exists) {
+                props.setPopup(
+                  "Confirmación",
+                  "Se ha agregado el producto con éxito."
+                );
+                props.openPopup();
+                e.target.reset();
+                setTemp([]);
+              }
+            })
+            .catch((error) => {
+              props.setPopup(error.code);
+              props.openPopup();
+            });
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+    }
   };
 
   return (
     <div>
+      {fillNewItem()}
       <div className="col-12 justify-content-center d-flex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
               Editando <strong>{oldItem.itemName}</strong>
             </h4>
-            <div className="col mt-3">
+            <form id="addItem" onSubmit={updateItem}>
               <label className="form-label">Nombre del producto</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateName}
-              >
-                <input
-                  type="text"
-                  name="itemName"
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder={oldItem.itemName}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">Código del producto</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateCode}
-              >
-                <input
-                  type="text"
-                  name="itemCode"
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder={oldItem.itemCode}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">
+              <input
+                type="text"
+                name="itemName"
+                className="form-control"
+                value={newItem.itemName}
+                placeholder={oldItem.itemName}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Código del producto
+              </label>
+              <input
+                type="text"
+                name="itemCode"
+                className="form-control"
+                value={newItem.itemCode}
+                placeholder={oldItem.itemCode}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
                 Colores disponibles del producto (puede seleccionar varios)
-                <br></br>
-                <br></br>
-                Los colores actuales son:{" "}
-                {oldItem.itemColor.map((color) => (
-                  <strong>
-                    <p>{color}</p>
-                  </strong>
-                ))}
               </label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateColor}
-              >
-                {generateColors()}
-                {colors}
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">
+              {generateColors()}
+              {colors.map((color, index) =>
+                oldItem.itemColor.includes(color) ? (
+                  <Fragment key={`${color}~${index}`}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={color}
+                        onChange={handleColor}
+                        checked
+                      />
+                      <label className="form-check-label">{color}</label>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <Fragment key={`${color}~${index}`}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={color}
+                        onChange={handleColor}
+                      />
+                      <label className="form-check-label">{color}</label>
+                    </div>
+                  </Fragment>
+                )
+              )}
+              <label className="form-form-label topMargin">
                 Tallas disponibles del producto (puede seleccionar varias)
-                <br></br>
-                <br></br>
-                Las tallas actuales son:{" "}
-                {oldItem.itemSize.map((size) => (
-                  <strong>
-                    <p>{size}</p>
-                  </strong>
-                ))}
               </label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateSize}
-              >
-                {generateSizes()}
-                {sizes}
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">Marca del producto</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateBrand}
-              >
-                <input
-                  type="text"
-                  name="itemBrand"
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder={oldItem.itemBrand}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">Precio del producto</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updatePrice}
-              >
-                <div className="input-group mb-3">
-                  <span className="input-group-text">₡</span>
-                  <input
-                    type="number"
-                    name="itemPrice"
-                    className="form-control"
-                    min="0"
-                    placeholder={oldItem.itemPrice}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">Cantidad a actualizar </label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateQuantity}
-              >
+              {generateSizes()}
+              {sizes.map((size, index) =>
+                oldItem.itemSize.includes(size) ? (
+                  <Fragment key={`${size}~${index}`}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={size}
+                        onChange={handleColor}
+                        checked
+                      />
+                      <label className="form-check-label">{size}</label>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <Fragment key={`${size}~${index}`}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={size}
+                        onChange={handleColor}
+                      />
+                      <label className="form-check-label">{size}</label>
+                    </div>
+                  </Fragment>
+                )
+              )}
+              <label className="form-label topMargin">Marca del producto</label>
+              <input
+                type="text"
+                name="itemBrand"
+                className="form-control"
+                value={newItem.itemBrand}
+                placeholder={oldItem.itemBrand}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Precio del producto
+              </label>
+              <div className="input-group mb-3">
+                <span className="input-group-text">₡</span>
                 <input
                   type="number"
-                  name="itemQuantity"
+                  name="itemPrice"
                   className="form-control"
-                  min="1"
+                  value={newItem.itemPrice}
+                  placeholder={oldItem.itemPrice}
+                  min="0"
                   onChange={handleChange}
-                  placeholder={oldItem.itemQuantity}
                   required
                 />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">Imagen del producto</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateImage}
-              >
-                <input
-                  type="file"
-                  accept="image/*"
-                  name="itemImage"
-                  className="form-control"
-                  onChange={handleImage}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
+              </div>
+              <label className="form-label topMargin">
+                Cantidad a ingresar
+              </label>
+              <input
+                type="number"
+                name="itemQuantity"
+                className="form-control"
+                value={newItem.itemQuantity}
+                placeholder={oldItem.itemQuantity}
+                min="1"
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Imagen del producto
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                name="itemImage"
+                className="form-control"
+                onChange={handleImage}
+              />
               <div className="text-center my-3">
-                {newItem.itemImage !== "" ? (
+                {newItem.itemImage ? (
                   <img
                     src={newItem.itemImage}
-                    alt="Imagen del producto"
+                    alt="Imagen de la prenda"
                     width="250"
                   />
                 ) : (
                   <img
                     src={oldItem.itemImage}
-                    alt="Imagen del producto"
+                    alt="Imagen de la prenda"
                     width="250"
                   />
                 )}
               </div>
-            </div>
-            <div className="col mt-3">
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateVisible}
-              >
-                <div className="col-9 mb-2 mt-3 d-flex">
-                  <label
-                    htmlFor="InputCategoryImage"
-                    className="form-label me-3"
-                  >
-                    Visible:
-                  </label>
-                  {isVisible()}
-                  {visible}
-                </div>
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="text-center">
-              <button
-                onClick={handleCancelEdit}
-                type="cancel"
-                className="btn btn-warning topMargin mx-2"
-              >
-                Regresar
-              </button>
-            </div>
+              <div className="mb-2 mt-4">
+                <label htmlFor="InputCategoryImage" className="form-label me-3">
+                  Visible:
+                </label>
+                {oldItem.itemVisible ? (
+                  <Fragment>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="true"
+                        defaultChecked
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio1"
+                      >
+                        Si
+                      </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="false"
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio2"
+                      >
+                        No
+                      </label>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="true"
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio1"
+                      >
+                        Si
+                      </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="false"
+                        defaultChecked
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio2"
+                      >
+                        No
+                      </label>
+                    </div>
+                  </Fragment>
+                )}
+              </div>
+              <div className="text-center">
+                <button type="submit" className="btn btnAccept topMargin mx-2">
+                  Aceptar
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  type="cancel"
+                  className="btn btn-warning topMargin mx-2"
+                >
+                  Regresar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

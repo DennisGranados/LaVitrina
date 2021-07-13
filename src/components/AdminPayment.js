@@ -18,7 +18,7 @@ function AdminPayment(props) {
   const handleChange = (e) => {
     setPaymentMethod({
       ...method,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     });
   };
 

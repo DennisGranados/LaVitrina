@@ -13,7 +13,7 @@ function AdminLogin(props) {
   const handleChange = (e) => {
     setUser({
       ...user,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     });
   };
 
@@ -22,10 +22,7 @@ function AdminLogin(props) {
 
     auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
       auth
-        .signInWithEmailAndPassword(
-          user.email.trim().toLowerCase(),
-          user.password
-        )
+        .signInWithEmailAndPassword(user.email.toLowerCase(), user.password)
         .then()
         .catch((error) => {
           props.setPopup(error.code);

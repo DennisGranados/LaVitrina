@@ -13,7 +13,7 @@ import LoadingSite from "./components/Loading";
 
 function Loading() {
   // easily access the Firestore library
-  const catalogRef = useFirestore().collection("webpage").doc("contacs");
+  const catalogRef = useFirestore().collection("webpage").doc("information");
 
   // subscribe to a document for realtime updates. just one line!
   const { status } = useFirestoreDocData(catalogRef);

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useFirestore } from "reactfire";
+import Capitalize from "../Tools";
 
 function AdminColors(props) {
   const firestore = useFirestore();
@@ -12,7 +13,7 @@ function AdminColors(props) {
   const handleChange = (e) => {
     setColors({
       ...colors,
-      [e.target.name]: e.target.value,
+      [e.target.name]: Capitalize(e.target.value),
     });
   };
 

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useFirestore } from "reactfire";
+import Capitalize from "../Tools";
 
 function AddItem(props) {
   const firestore = useFirestore();
@@ -16,12 +17,11 @@ function AddItem(props) {
     itemPrice: "",
     itemStyle: "",
     itemQuantity: "",
-    itemVisible: "false",
+    itemVisible: false,
   });
   const [styles, setStyles] = useState([]);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
-  const flag = false;
 
   function generateStyles() {
     if (styles.length === 0) {
@@ -56,18 +56,7 @@ function AddItem(props) {
 
         var temp = [];
         colorsDB.forEach((color) => {
-          temp.push(
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value={color}
-                onChange={handleColor}
-                key={color}
-              />
-              <label className="form-check-label">{color}</label>
-            </div>
-          );
+          temp.push(color);
 
           if (colorsDB.length === temp.length) {
             setColors(temp);
@@ -84,18 +73,7 @@ function AddItem(props) {
 
         var temp = [];
         sizesDB.forEach((size) => {
-          temp.push(
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value={size}
-                onChange={handleSize}
-                key={size}
-              />
-              <label className="form-check-label">{size}</label>
-            </div>
-          );
+          temp.push(size);
 
           if (sizesDB.length === temp.length) {
             setSizes(temp);
@@ -108,7 +86,7 @@ function AddItem(props) {
   const handleChange = (e) => {
     setItem({
       ...item,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     });
   };
 
@@ -118,9 +96,7 @@ function AddItem(props) {
     if (e.target.checked) {
       tempContent.push(e.target.value);
 
-      if (flag) {
-        setItem({ ...item, itemColor: tempContent });
-      }
+      setItem({ ...item, itemColor: tempContent });
     } else {
       for (var i = 0; i < tempContent.length; i++) {
         if (tempContent[i] === e.target.value) {
@@ -128,9 +104,7 @@ function AddItem(props) {
         }
       }
 
-      if (flag) {
-        setItem({ ...item, itemColor: tempContent });
-      }
+      setItem({ ...item, itemColor: tempContent });
     }
   };
 
@@ -139,9 +113,7 @@ function AddItem(props) {
 
     if (e.target.checked) {
       tempContent.push(e.target.value);
-      if (flag) {
-        setItem({ ...item, itemSize: tempContent });
-      }
+      setItem({ ...item, itemSize: tempContent });
     } else {
       for (var i = 0; i < tempContent.length; i++) {
         if (tempContent[i] === e.target.value) {
@@ -149,9 +121,7 @@ function AddItem(props) {
         }
       }
 
-      if (flag) {
-        setItem({ ...item, itemSize: tempContent });
-      }
+      setItem({ ...item, itemSize: tempContent });
     }
   };
 
@@ -160,7 +130,7 @@ function AddItem(props) {
       var fReader = new FileReader();
       fReader.readAsDataURL(e.target.files[0]);
       fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result.trim) {
+        if (imageResult.target.result) {
           setItem({
             ...item,
             itemImage: imageResult.target.result,
@@ -205,19 +175,19 @@ function AddItem(props) {
         .collection(item.itemStyle)
         .doc()
         .set({
-          name: item.itemName,
+          name: Capitalize(item.itemName),
           image: item.itemImage,
           color: item.itemColor,
           size: item.itemSize,
-          code: item.itemCode,
-          brand: item.itemBrand,
+          code: Capitalize(item.itemCode),
+          brand: Capitalize(item.itemBrand),
           price: parseFloat(item.itemPrice),
           quantity: parseInt(item.itemQuantity),
           visible: item.itemVisible === "true" ? true : false,
         })
         .then(() => {
           stylesRef
-            .get(item.itemName)
+            .get(Capitalize(item.itemName))
             .then(function (content) {
               if (content.exists) {
                 props.setPopup(
@@ -226,7 +196,6 @@ function AddItem(props) {
                 );
                 props.openPopup();
                 e.target.reset();
-                flag = true;
                 setItem({ ...item, itemColor: [], itemSize: [] });
               }
             })
@@ -271,12 +240,36 @@ function AddItem(props) {
                 Colores disponibles del producto (puede seleccionar varios)
               </label>
               {generateColors()}
-              {colors}
+              {colors.map((color, index) => (
+                <Fragment key={`${color}~${index}`}>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={color}
+                      onChange={handleColor}
+                    />
+                    <label className="form-check-label">{color}</label>
+                  </div>
+                </Fragment>
+              ))}
               <label className="form-form-label topMargin">
                 Tallas disponibles del producto (puede seleccionar varias)
               </label>
               {generateSizes()}
-              {sizes}
+              {sizes.map((size, index) => (
+                <Fragment key={`${size}~${index}`}>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={size}
+                      onChange={handleSize}
+                    />
+                    <label className="form-check-label">{size}</label>
+                  </div>
+                </Fragment>
+              ))}
               <label className="form-label topMargin">Marca del producto</label>
               <input
                 type="text"

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useFirestore } from "reactfire";
+import Capitalize from "../Tools";
 
 function AddStyles(props) {
   const firestore = useFirestore();
@@ -7,13 +8,13 @@ function AddStyles(props) {
   const [style, setStyle] = useState({
     styleName: "",
     styleImage: "",
-    styleVisible: "false",
+    styleVisible: false,
   });
 
   const handleChange = (e) => {
     setStyle({
       ...style,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     });
   };
 
@@ -22,7 +23,7 @@ function AddStyles(props) {
       var fReader = new FileReader();
       fReader.readAsDataURL(e.target.files[0]);
       fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result.trim) {
+        if (imageResult.target.result) {
           setStyle({
             ...style,
             styleImage: imageResult.target.result,
@@ -48,7 +49,7 @@ function AddStyles(props) {
 
     let date = new Date();
     const collectionName =
-      style.styleName +
+      Capitalize(style.styleName) +
       "_" +
       date.getDate() +
       "_" +
@@ -60,7 +61,7 @@ function AddStyles(props) {
       .collection(collectionName)
       .doc("settings")
       .set({
-        name: style.styleName,
+        name: Capitalize(style.styleName),
         image: style.styleImage,
         visible: style.styleVisible === "true" ? true : false,
       })

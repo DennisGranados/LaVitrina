@@ -16,7 +16,7 @@ function AdminRegister(props) {
   const handleChange = (e) => {
     setUser({
       ...user,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     });
   };
 
@@ -26,7 +26,7 @@ function AdminRegister(props) {
     if (user.password === user.secondPassword) {
       auth
         .createUserWithEmailAndPassword(
-          user.email.trim().toLowerCase(),
+          user.email.toLowerCase(),
           user.password
         )
         .then(() => {

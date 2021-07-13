@@ -1,4 +1,4 @@
-import logo from "../Logo1.png";
+import logo from "../Logo.png";
 
 function Loading() {
   return (
@@ -8,7 +8,9 @@ function Loading() {
           <img className="col-1 logo" src={logo} alt="Logo" width="100" />
         </div>
         <div className="d-flex justify-content-center">
-          <strong className="sr-only">Cargando...</strong>
+          <strong className="sr-only">
+            <h3>Cargando</h3>
+          </strong>
         </div>
         <div className="d-flex justify-content-center">
           <div className="spinner-grow text-warning" role="status"></div>

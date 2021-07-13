@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 
 function EditStyle(props) {
@@ -7,15 +7,15 @@ function EditStyle(props) {
   const [oldStyle, setOldStyle] = useState({
     styleName: "",
     styleImage: "",
-    styleVisible: "false",
+    styleVisible: false,
   });
   const [newStyle, setNewStyle] = useState({
     styleName: "",
     styleImage: "",
-    styleVisible: "false",
+    styleVisible: false,
+    flag: false,
   });
   const [temp, setTemp] = useState([]);
-  const [visible, setVisible] = useState([]);
 
   useEffect(() => {
     stylesRef
@@ -34,77 +34,15 @@ function EditStyle(props) {
       });
   }, [props, temp]);
 
-  function isVisible() {
-    if (visible.length === 0) {
-      let temp = [];
-
-      if (oldStyle.visible === true) {
-        temp.push(
-          <div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="styleVisible"
-                onChange={handleChange}
-                value="true"
-                defaultChecked
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                Si
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="styleVisible"
-                onChange={handleChange}
-                value="false"
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                No
-              </label>
-            </div>
-          </div>
-        );
-        setVisible(temp);
-      } else {
-        temp.push(
-          <div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="styleVisible"
-                onChange={handleChange}
-                value="true"
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                Si
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="styleVisible"
-                onChange={handleChange}
-                value="false"
-                defaultChecked
-                required
-              />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                No
-              </label>
-            </div>
-          </div>
-        );
-        setVisible(temp);
-      }
+  function fillNewStyle() {
+    if (oldStyle.styleName === "") {
+    } else if (!newStyle.flag) {
+      setNewStyle({
+        styleName: oldStyle.styleName,
+        styleImage: oldStyle.styleImage,
+        styleVisible: oldStyle.styleVisible,
+        flag: true,
+      });
     }
   }
 
@@ -117,6 +55,7 @@ function EditStyle(props) {
       ...newStyle,
       [e.target.name]: e.target.value,
     });
+    console.log(newStyle);
   };
 
   const handleImage = (e) => {
@@ -124,7 +63,7 @@ function EditStyle(props) {
       var fReader = new FileReader();
       fReader.readAsDataURL(e.target.files[0]);
       fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result.trim) {
+        if (imageResult.target.result) {
           setNewStyle({
             ...newStyle,
             styleImage: imageResult.target.result,
@@ -141,61 +80,22 @@ function EditStyle(props) {
     }
   };
 
-  const updateName = (e) => {
+  const updateStyle = (e) => {
     e.preventDefault();
+    console.log(newStyle);
 
     stylesRef
       .collection(props.id)
       .doc("settings")
       .update({
         name: newStyle.styleName,
-      })
-      .then(() => {
-        props.setPopup("Confirmación", "Se ha modificado el nombre con éxito.");
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateImage = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.id)
-      .doc("settings")
-      .update({
         image: newStyle.styleImage,
-      })
-      .then(() => {
-        props.setPopup("Confirmación", "Se ha modificado la imagen con éxito.");
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
-  };
-
-  const updateVisible = (e) => {
-    e.preventDefault();
-
-    stylesRef
-      .collection(props.id)
-      .doc("settings")
-      .update({
         visible: newStyle.styleVisible === "true" ? true : false,
       })
       .then(() => {
         props.setPopup(
           "Confirmación",
-          "Se ha modificado la visibilidad con éxito."
+          "Se ha modificado la categoría con éxito."
         );
         props.openPopup();
         e.target.reset();
@@ -209,100 +109,138 @@ function EditStyle(props) {
 
   return (
     <div>
+      {fillNewStyle()}
       <div className="col-12 justify-content-center d-flex">
         <div className="card col-5" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
               Editando <strong>{oldStyle.styleName}</strong>
             </h4>
-            <div className="col mt-3">
-              <label className="form-label">Nombre del producto</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateName}
-              >
-                <input
-                  type="text"
-                  name="styleName"
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder={oldStyle.styleName}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col mt-3">
-              <label className="form-label">Imagen del producto</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateImage}
-              >
-                <input
-                  type="file"
-                  accept="image/*"
-                  name="styleImage"
-                  className="form-control"
-                  onChange={handleImage}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
+            <form id="addStyle" onSubmit={updateStyle}>
+              <label className="form-label">Nombre del estilo</label>
+              <input
+                type="text"
+                name="styleName"
+                className="form-control"
+                value={newStyle.styleName}
+                placeholder={oldStyle.styleName}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">Imagen del estilo</label>
+              <input
+                type="file"
+                accept="image/*"
+                name="styleImage"
+                className="form-control"
+                onChange={handleImage}
+              />
               <div className="text-center my-3">
-                {newStyle.styleImage !== "" ? (
+                {newStyle.styleImage ? (
                   <img
                     src={newStyle.styleImage}
-                    alt="Imagen del producto"
+                    alt="Imagen de la prenda"
                     width="250"
                   />
                 ) : (
                   <img
                     src={oldStyle.styleImage}
-                    alt="Imagen del producto"
+                    alt="Imagen de la prenda"
                     width="250"
                   />
                 )}
               </div>
-            </div>
-            <div className="col mt-3">
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={updateVisible}
-              >
-                <div className="col-9 mb-2 mt-3 d-flex">
-                  <label
-                    htmlFor="InputCategoryImage"
-                    className="form-label me-3"
-                  >
-                    Visible:
-                  </label>
-                  {isVisible()}
-                  {visible}
-                </div>
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="text-center">
-              <button
-                onClick={handleCancelEdit}
-                type="cancel"
-                className="btn btn-warning topMargin mx-2"
-              >
-                Regresar
-              </button>
-            </div>
+              <div className="mb-3">
+                <label htmlFor="InputCategoryImage" className="form-label me-3">
+                  Visible:
+                </label>
+                {oldStyle.styleVisible ? (
+                  <Fragment>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="true"
+                        defaultChecked
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio1"
+                      >
+                        Si
+                      </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="false"
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio2"
+                      >
+                        No
+                      </label>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="true"
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio1"
+                      >
+                        Si
+                      </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="styleVisible"
+                        onChange={handleChange}
+                        value="false"
+                        defaultChecked
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="inlineRadio2"
+                      >
+                        No
+                      </label>
+                    </div>
+                  </Fragment>
+                )}
+              </div>
+              <div className="text-center">
+                <button type="submit" className="btn btnAccept topMargin mx-2">
+                  Aceptar
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  type="cancel"
+                  className="btn btn-warning topMargin mx-2"
+                >
+                  Regresar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
