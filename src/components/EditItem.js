@@ -196,7 +196,6 @@ function EditItem(props) {
       size = true;
     }
 
-    console.log(newItem);
     if (color && size) {
       stylesRef
         .collection(props.styleID)

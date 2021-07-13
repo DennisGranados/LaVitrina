@@ -12,7 +12,23 @@ function AddInformation(props) {
     phoneNumber: "",
     aboutUs: "",
     extraInfo: "",
+    flag: false,
   });
+
+  function fillNewInformation() {
+    if (information.email === "") {
+    } else if (!newInformation.flag) {
+      setNewInformation({
+        email: information.email,
+        facebook: information.facebook,
+        instagram: information.instagram,
+        phoneNumber: information.phoneNumber,
+        aboutUs: information.aboutUs,
+        extraInfo: information.extraInfo,
+        flag: true,
+      });
+    }
+  }
 
   const handleChange = (e) => {
     setNewInformation({
@@ -21,90 +37,16 @@ function AddInformation(props) {
     });
   };
 
-  const addEmail = (e) => {
+  const updateInformation = (e) => {
     e.preventDefault();
     informationRef
       .update({
         email: newInformation.email.toLowerCase(),
-      })
-      .then(function () {
-        props.setPopup(
-          "Confirmación",
-          "Se ha agregado la información con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-      });
-  };
-
-  const addphoneNumber = (e) => {
-    e.preventDefault();
-    informationRef
-      .update({
         phoneNumber: newInformation.phoneNumber,
-      })
-      .then(function () {
-        props.setPopup(
-          "Confirmación",
-          "Se ha agregado la información con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-      });
-  };
-
-  const addFacebook = (e) => {
-    e.preventDefault();
-    informationRef
-      .update({
+        phoneNumber: newInformation.phoneNumber,
         facebook: newInformation.facebook.toLowerCase(),
-      })
-      .then(function () {
-        props.setPopup(
-          "Confirmación",
-          "Se ha agregado la información con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-      });
-  };
-
-  const addInstagram = (e) => {
-    e.preventDefault();
-    informationRef
-      .update({
         instagram: newInformation.instagram.toLowerCase(),
-      })
-      .then(function () {
-        props.setPopup(
-          "Confirmación",
-          "Se ha agregado la información con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-      });
-  };
-
-  const addAboutUs = (e) => {
-    e.preventDefault();
-    informationRef
-      .update({
         aboutUs: newInformation.aboutUs,
-      })
-      .then(function () {
-        props.setPopup(
-          "Confirmación",
-          "Se ha agregado la información con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-      });
-  };
-
-  const addDetails = (e) => {
-    e.preventDefault();
-    informationRef
-      .update({
         extraInfo: newInformation.extraInfo,
       })
       .then(function () {
@@ -119,140 +61,87 @@ function AddInformation(props) {
 
   return (
     <div className="col-12 d-flex justify-content-center">
+      {fillNewInformation()}
       <div className="card" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Editar información de contacto</h4>
-          <div className="row">
-            <div className="col">
-              <label className="form-label">Correo electrónico</label>
-              <form className="col-12 d-flex" onSubmit={addEmail}>
-                <input
-                  type="email"
-                  name="email"
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder={information.email}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col">
-              <label className="form-label">Número telefónico</label>
-              <form
-                className="col-12 justify-content-center d-flex"
-                onSubmit={addphoneNumber}
-              >
-                <input
-                  type="number"
-                  name="phoneNumber"
-                  min="11111111"
-                  max="99999999"
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder={information.phoneNumber}
-                  required
-                />
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btnAccept ms-2">
-                    Actualizar
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="col mt-3">
-            <label className="form-label">Link de página de Facebook</label>
-            <form
-              className="col-12 justify-content-center d-flex"
-              onSubmit={addFacebook}
-            >
-              <input
-                type="url"
-                name="facebook"
-                className="form-control"
-                onChange={handleChange}
-                placeholder={information.facebook}
-                required
-              />
-              <div className="text-center mt-3">
-                <button type="submit" className="btn btnAccept ms-2">
-                  Actualizar
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="col mt-3">
-            <label className="form-label">Link de página de Instagram</label>
-            <form
-              className="col-12 justify-content-center d-flex"
-              onSubmit={addInstagram}
-            >
-              <input
-                type="url"
-                name="instagram"
-                className="form-control"
-                onChange={handleChange}
-                placeholder={information.instagram}
-                required
-              />
-              <div className="text-center mt-3">
-                <button type="submit" className="btn btnAccept ms-2">
-                  Actualizar
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="col mt-3">
-            <label className="form-label">
+          <form onSubmit={updateInformation}>
+            <label className="form-label">Correo electrónico</label>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              onChange={handleChange}
+              value={newInformation.email}
+              placeholder={information.email}
+              required
+            />
+            <label className="form-label topMargin">Número telefónico</label>
+            <input
+              type="number"
+              name="phoneNumber"
+              min="11111111"
+              max="99999999"
+              className="form-control"
+              onChange={handleChange}
+              value={newInformation.phoneNumber}
+              placeholder={information.phoneNumber}
+              required
+            />
+            <label className="form-label topMargin">
+              Link de página de Facebook
+            </label>
+            <input
+              type="url"
+              name="facebook"
+              className="form-control"
+              onChange={handleChange}
+              value={newInformation.facebook}
+              placeholder={information.facebook}
+              required
+            />
+            <label className="form-label topMargin">
+              Link de página de Instagram
+            </label>
+            <input
+              type="url"
+              name="instagram"
+              className="form-control"
+              onChange={handleChange}
+              value={newInformation.instagram}
+              placeholder={information.instagram}
+              required
+            />
+            <label className="form-label topMargin">
               Ingresar información acerca de la tienda
             </label>
-            <form
-              className="col-12 justify-content-center d-flex"
-              onSubmit={addAboutUs}
-            >
-              <textarea
-                className="form-control"
-                rows="3"
-                name="aboutUs"
-                onChange={handleChange}
-                placeholder={information.aboutUs}
-                required
-              />
-              <div className="text-center mt-3">
-                <button type="submit" className="btn btnAccept ms-2">
-                  Actualizar
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="col mt-3">
-            <label className="form-label">
+            <textarea
+              className="form-control"
+              rows="5"
+              name="aboutUs"
+              onChange={handleChange}
+              value={newInformation.aboutUs}
+              placeholder={information.aboutUs}
+              required
+            />
+            <label className="form-label topMargin">
               Ingresar detalles acerca de la tienda
             </label>
-            <form
-              className="col-12 justify-content-center d-flex"
-              onSubmit={addDetails}
-            >
-              <textarea
-                className="form-control"
-                rows="3"
-                name="extraInfo"
-                onChange={handleChange}
-                placeholder={information.extraInfo}
-                required
-              />
-              <div className="text-center mt-3">
-                <button type="submit" className="btn btnAccept ms-3">
-                  Actualizar
-                </button>
-              </div>
-            </form>
-          </div>
+            <textarea
+              className="form-control"
+              rows="5"
+              name="extraInfo"
+              onChange={handleChange}
+              value={newInformation.extraInfo}
+              placeholder={information.extraInfo}
+              required
+            />
+            <div className="text-center">
+              <button type="submit" className="btn btnAccept topMargin mx-2">
+                Aceptar
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

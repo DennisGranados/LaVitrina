@@ -55,7 +55,6 @@ function EditStyle(props) {
       ...newStyle,
       [e.target.name]: e.target.value,
     });
-    console.log(newStyle);
   };
 
   const handleImage = (e) => {
@@ -82,7 +81,6 @@ function EditStyle(props) {
 
   const updateStyle = (e) => {
     e.preventDefault();
-    console.log(newStyle);
 
     stylesRef
       .collection(props.id)
