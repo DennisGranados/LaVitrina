@@ -31,6 +31,7 @@ import Item from "./components/Item";
 import ShoppingCart from "./components/ShoppingCart";
 import AdminPayment from "./components/AdminPayment";
 import AdminColors from "./components/AdminColors";
+import EmailKey from "./components/EmailKey";
 
 Modal.setAppElement("#root");
 
@@ -197,6 +198,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/EmailKey">
+              <EmailKey />
             </Route>
             <Route exact path="/catalog">
               <Catalog />
