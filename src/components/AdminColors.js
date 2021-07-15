@@ -134,15 +134,15 @@ function AdminColors(props) {
   };
 
   return (
-    <div className="row justify-content-center">
-      <div className="card col-12 me-3" id="card-submit">
+    <div className="col-12 justify-content-center d-flex mt-3">
+      <div className="card col-5" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Colores existentes</h4>
           {generateColors(false)}
           {colors.colorsList}
           <div className="d-flex justify-content-around flex-wrap"></div>
-          <h4 className="text-center mb-4 mt-3">Ingresar color</h4>
-          <form className="col-12" onSubmit={addColor}>
+          <h4 className="text-center mb-4 mt-4">Ingresar color</h4>
+          <form onSubmit={addColor}>
             <div className="mb-3">
               <label className="form-label">Nombre del color</label>
               <input

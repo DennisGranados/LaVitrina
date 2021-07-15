@@ -109,7 +109,7 @@ function EditStyle(props) {
     <div>
       {fillNewStyle()}
       <div className="col-12 justify-content-center d-flex">
-        <div className="card col-5" id="card-submit">
+        <div className="card col-5 mt-3" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
               Editando <strong>{oldStyle.styleName}</strong>
@@ -233,7 +233,7 @@ function EditStyle(props) {
                 <button
                   onClick={handleCancelEdit}
                   type="cancel"
-                  className="btn btn-warning topMargin mx-2"
+                  className="btn btnClear topMargin mx-2"
                 >
                   Regresar
                 </button>

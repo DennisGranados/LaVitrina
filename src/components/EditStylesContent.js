@@ -64,9 +64,9 @@ function EditStylesContent(props) {
   }, [pageData.length]);
 
   return (
-    <div className="text-center">
+    <div className="text-center mt-3">
       {props.type === "style" ? (
-        <h1>Editar estilos</h1>
+        <h1 className="mt-3">Editar estilos</h1>
       ) : (
         <h1>Seleccione un estilo</h1>
       )}

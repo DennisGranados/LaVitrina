@@ -482,7 +482,7 @@ function EditItem(props) {
                 <button
                   onClick={handleCancelEdit}
                   type="cancel"
-                  className="btn btn-warning topMargin mx-2"
+                  className="btn btnClear topMargin mx-2"
                 >
                   Regresar
                 </button>
