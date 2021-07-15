@@ -38,7 +38,7 @@ function Home() {
             </p>
             <div className="mt-5">
               <div className="text-center">
-                <Link to="/shoppingCart" id="home" className="noHype">
+                <Link to="/EmailKey" id="home" className="noHype">
                   <button className="btn btnAccept px-5">Revisar</button>
                 </Link>
               </div>
