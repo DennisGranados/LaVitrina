@@ -62,7 +62,7 @@ function AddInformation(props) {
   return (
     <div className="col-12 d-flex justify-content-center">
       {fillNewInformation()}
-      <div className="card" id="card-submit">
+      <div className="card mt-3" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Editar información de contacto</h4>
           <form onSubmit={updateInformation}>
