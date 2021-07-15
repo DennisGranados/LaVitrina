@@ -39,7 +39,7 @@ function ContactUs() {
               <input className="form-control" type="email" name="user_email" />
             </div>
             <div>
-              <label className="form-label ">Mensaje</label>
+              <label className="form-label mt-3">Mensaje</label>
               <textarea className="form-control" name="message" />
             </div>
             <div className="text-center mt-3">
