@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
+import firebase from "firebase";
 
 function AddItem(props) {
   const firestore = useFirestore();
@@ -190,13 +191,21 @@ function AddItem(props) {
             .get(Capitalize(item.itemName))
             .then(function (content) {
               if (content.exists) {
-                props.setPopup(
-                  "Confirmación",
-                  "Se ha agregado el producto con éxito."
-                );
-                props.openPopup();
-                e.target.reset();
-                setItem({ ...item, itemColor: [], itemSize: [] });
+                stylesRef
+                  .collection(item.itemStyle)
+                  .doc("settings")
+                  .update({
+                    length: firebase.firestore.FieldValue.increment(1),
+                  })
+                  .then(() => {
+                    props.setPopup(
+                      "Confirmación",
+                      "Se ha agregado el producto con éxito."
+                    );
+                    props.openPopup();
+                    e.target.reset();
+                    setItem({ ...item, itemColor: [], itemSize: [] });
+                  });
               }
             })
             .catch((error) => {

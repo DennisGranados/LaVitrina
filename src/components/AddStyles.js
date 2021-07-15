@@ -63,6 +63,7 @@ function AddStyles(props) {
       .set({
         name: Capitalize(style.styleName),
         image: style.styleImage,
+        length: 1,
         visible: style.styleVisible === "true" ? true : false,
       })
       .then(() => {

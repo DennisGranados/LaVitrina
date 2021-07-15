@@ -27,7 +27,6 @@ import EditDashboard from "./components/EditDashboard";
 import Finance from "./components/FinanceAdmin";
 import Orders from "./components/Orders";
 import AdminAboutUs from "./components/AdminAboutUs";
-import Item from "./components/Item";
 import ShoppingCart from "./components/ShoppingCart";
 import AdminPayment from "./components/AdminPayment";
 import AdminColors from "./components/AdminColors";
@@ -207,9 +206,6 @@ function App() {
             </Route>
             <Route exact path="/about-us">
               <AboutUs data={information} />
-            </Route>
-            <Route exact path="/item">
-              <Item />
             </Route>
             <Route exact path="/shoppingCart">
               <ShoppingCart />

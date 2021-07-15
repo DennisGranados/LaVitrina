@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
-import EditItemCard from "./EditItemCard";
+import CatalogItemCard from "./CatalogItemCard";
 
-function EditItemContent(props) {
+function CatalogItemContent(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
   const [pageData, setPageData] = useState([]);
@@ -23,43 +23,59 @@ function EditItemContent(props) {
       );
     } else {
       let tempContent = [];
+      let counter = 1;
+      let flag = false;
 
       stylesRef
         .collection(props.styleID)
         .get()
         .then(function (content) {
-          if (content.docs.length === 1) {
-            setPageData(
-              <strong>
-                <h3>No hay artículos para mostrar</h3>
-              </strong>
-            );
-          } else {
-            content.docs.forEach((element) => {
-              if (element.id !== "settings") {
+          content.docs.forEach((element) => {
+            if (element.id !== "settings") {
+              if (element.data()["visible"] === true) {
+                if (!flag) {
+                  flag = true;
+                }
+
                 tempContent.push(
-                  <EditItemCard
-                    actionEdit={props.actionEdit}
-                    actionDelete={props.actionDelete}
-                    actionItems={props.actionItems}
+                  <CatalogItemCard
+                    actionDetails={props.actionDetails}
                     id={element.id}
                     name={element.data()["name"]}
                     styleName={props.styleName}
                     styleID={props.styleID}
                     code={element.data()["code"]}
                     image={element.data()["image"]}
-                    visible={element.data()["visible"]}
                     quantity={element.data()["quantity"]}
+                    brand={element.data()["brand"]}
+                    color={element.data()["color"]}
+                    price={element.data()["price"]}
+                    size={element.data()["size"]}
                     key={element.id}
                   />
                 );
-
-                if (content.docs.length - 1 === tempContent.length) {
-                  setPageData(tempContent);
-                }
+              } else {
+                counter++;
               }
-            });
-          }
+            } else {
+              counter++;
+            }
+
+            if (content.docs.length - counter === tempContent.length) {
+              if (!flag) {
+                setPageData(
+                  <strong>
+                    <h3>
+                      No hay artículos para mostrar
+                      <br></br>Lamentamos las inconveniencias
+                    </h3>
+                  </strong>
+                );
+              } else {
+                setPageData(tempContent);
+              }
+            }
+          });
         });
     }
   }, [pageData.length]);
@@ -80,15 +96,13 @@ function EditItemContent(props) {
         </div>
         <div className="col-8">
           <h1>
-            Editar artículos pertenecientes a <strong>{props.styleName}</strong>
+            Artículos pertenecientes a <strong>{props.styleName}</strong>
           </h1>
         </div>
       </div>
-      <div className="col-12 d-flex mt-3 justify-content-around text-center">
-        {pageData}
-      </div>
+      <div className="orderCards">{pageData}</div>
     </div>
   );
 }
 
-export default EditItemContent;
+export default CatalogItemContent;

@@ -1,69 +1,77 @@
-import { Fragment, useEffect, useState } from "react";
-import { useFirestore } from "reactfire";
-import CatalogStyleCard from "./CatalogStyleCard";
+import { useState } from "react";
+import CatalogItem from "./CatalogItem";
+import CatalogItemContent from "./CatalogItemContent";
+import CatalogStyleContent from "./CatalogStyleContent";
 
 function Catalog(props) {
-  const firestore = useFirestore();
-  const stylesRef = firestore.collection("catalog").doc("styles");
-  const [style, setStyle] = useState([]);
+  const actionCancel = () => {
+    setMode("content");
 
-  useEffect(() => {
-    if (style.length === 0) {
-      setStyle(
-        <div>
-          <div className="d-flex justify-content-center">
-            <strong className="sr-only">
-              <h3>Cargando estilos...</h3>
-            </strong>
-          </div>
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border text-warning" role="status"></div>
-          </div>
-        </div>
-      );
-    } else {
-      let tempContent = [];
+    setContent({
+      ...content,
+      edit: "",
+      delete: "",
+      items: "",
+    });
+  };
 
-      stylesRef.get().then(function (content) {
-        let styleId = content.data()["styles"];
+  const actionDetails = (id, name, styleName, styleID) => {
+    setMode("delete");
 
-        if (styleId.length <= 0) {
-          setStyle(
-            <strong>
-              <h3>No hay estilos para mostrar.</h3>
-            </strong>
-          );
-        } else {
-          let counter = 0;
-          styleId.forEach(function (stylesItem) {
-            stylesRef
-              .collection(stylesItem)
-              .doc("settings")
-              .get()
-              .then((content) => {
-                if (content.data()["visible"] === true) {
-                  tempContent.push(
-                    <CatalogStyleCard
-                      id={stylesItem}
-                      name={content.data()["name"]}
-                      image={content.data()["image"]}
-                      key={stylesItem}
-                    />
-                  );
-                } else {
-                  counter++;
-                }
-                if (styleId.length - counter === tempContent.length) {
-                  setStyle(tempContent);
-                }
-              });
-          });
-        }
-      });
-    }
-  }, [style.length]);
+    setContent({
+      ...content,
+      edit: "",
+      delete: (
+        <CatalogItem
+          id={id}
+          name={name}
+          styleID={styleID}
+          styleName={styleName}
+          actionItems={actionItems}
+          setPopup={props.setPopup}
+          openPopup={props.openPopup}
+        />
+      ),
+      items: "",
+    });
+  };
 
-  return <div className="orderCards">{style}</div>;
+  const actionItems = (styleID, styleName) => {
+    setMode("items");
+
+    setContent({
+      ...content,
+      delete: "",
+      items: (
+        <CatalogItemContent
+          styleID={styleID}
+          styleName={styleName}
+          actionCancel={actionCancel}
+          actionDetails={actionDetails}
+          actionItems={actionItems}
+          setPopup={props.setPopup}
+          openPopup={props.openPopup}
+        />
+      ),
+      edit: "",
+    });
+  };
+
+  const [mode, setMode] = useState("content");
+  const [content, setContent] = useState({
+    content: (
+      <CatalogStyleContent
+        actionItems={actionItems}
+        actionDetails={actionDetails}
+        setPopup={props.setPopup}
+        openPopup={props.openPopup}
+      />
+    ),
+    edit: "",
+    items: "",
+  });
+
+  return <div>{content[mode]}</div>;
 }
 
 export default Catalog;

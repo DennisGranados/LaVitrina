@@ -32,7 +32,7 @@ function AdminDeleteAccount(props) {
             actualUser.data.email,
             user.password
           );
-          adminRef.set({ counter: actualCounter - 1 }).then(() => {
+          adminRef.update({ counter: actualCounter - 1 }).then(() => {
             auth.currentUser
               .reauthenticateWithCredential(cred)
               .then(() => {

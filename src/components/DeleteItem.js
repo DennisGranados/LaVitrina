@@ -1,5 +1,6 @@
+import firebase from "firebase";
 import React, { useState } from "react";
-import { useFirestore } from "reactfire";
+import { useFirebaseApp, useFirestore } from "reactfire";
 
 function DeleteItem(props) {
   const [discard, setDiscard] = useState(undefined);
@@ -19,12 +20,20 @@ function DeleteItem(props) {
         .doc(props.id)
         .delete()
         .then(() => {
-          props.setPopup(
-            "Confirmación",
-            "Se ha eliminado el producto con éxito."
-          );
-          props.openPopup();
-          props.actionItems(props.styleID, props.styleName);
+          stylesRef
+            .collection(props.styleID)
+            .doc("settings")
+            .update({
+              length: firebase.firestore.FieldValue.increment(-1),
+            })
+            .then(() => {
+              props.setPopup(
+                "Confirmación",
+                "Se ha eliminado el producto con éxito."
+              );
+              props.openPopup();
+              props.actionItems(props.styleID, props.styleName);
+            });
         });
     } else {
       props.setPopup("data/non-identical-names");

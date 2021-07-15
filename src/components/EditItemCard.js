@@ -9,8 +9,7 @@ function EditItemCard(props) {
       <div className="card-body">
         <h4 className="card-title text-center">{props.name}</h4>
         <label>Cantidad disponible: {props.quantity}</label>
-        <br></br>
-        <label>Código: {props.code}</label>
+        <label className="mb-3">Código: {props.code}</label>
         <div className="d-flex justify-content-center my-3 form-check form-switch">
           <input
             className="form-check-input"

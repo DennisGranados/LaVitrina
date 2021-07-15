@@ -8,6 +8,7 @@ function EditStyleCard(props) {
       />
       <div className="card-body">
         <h4 className="card-title text-center">{props.name}</h4>
+        <label className="mb-3">Cantidad de productos: {props.length}</label>
         <div className="d-flex justify-content-center my-3 form-check form-switch">
           <input
             className="form-check-input"

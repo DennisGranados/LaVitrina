@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "firebase/auth";
 import { useFirestore, useAuth } from "reactfire";
+import firebase from "firebase";
 
 function AdminRegister(props) {
   const auth = useAuth();
@@ -25,28 +26,22 @@ function AdminRegister(props) {
 
     if (user.password === user.secondPassword) {
       auth
-        .createUserWithEmailAndPassword(
-          user.email.toLowerCase(),
-          user.password
-        )
+        .createUserWithEmailAndPassword(user.email.toLowerCase(), user.password)
         .then(() => {
-          adminRef.get().then((snapshot) => {
-            let actualCounter = snapshot.data().counter;
-            adminRef
-              .set({ counter: actualCounter + 1 })
-              .then(() => {
-                props.setPopup(
-                  "¡Alerta!",
-                  "El usuario ha sido registrado con éxito."
-                );
-                props.openPopup();
-                e.target.reset();
-              })
-              .catch((error) => {
-                props.setPopup(error.code);
-                props.openPopup();
-              });
-          });
+          adminRef
+            .update({ counter: firebase.firestore.FieldValue.increment(1) })
+            .then(() => {
+              props.setPopup(
+                "¡Alerta!",
+                "El usuario ha sido registrado con éxito."
+              );
+              props.openPopup();
+              e.target.reset();
+            })
+            .catch((error) => {
+              props.setPopup(error.code);
+              props.openPopup();
+            });
         })
         .catch((error) => {
           props.setPopup(error.code);

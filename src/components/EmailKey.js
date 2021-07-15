@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import emailjs, { init } from "emailjs-com";
 
 function ContactUs() {
