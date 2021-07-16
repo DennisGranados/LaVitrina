@@ -39,10 +39,17 @@ function CatalogItemCard(props) {
               type="button"
               onClick={() =>
                 props.actionDetails(
+                  props.styleID,
+                  props.styleName,
                   props.id,
                   props.name,
-                  props.styleName,
-                  props.styleID
+                  props.code,
+                  props.image,
+                  props.quantity,
+                  props.brand,
+                  props.color,
+                  props.price,
+                  props.size
                 )
               }
               className="btn btnAccept"

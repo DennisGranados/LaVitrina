@@ -30,6 +30,7 @@ import AdminAboutUs from "./components/AdminAboutUs";
 import ShoppingCart from "./components/ShoppingCart";
 import AdminPayment from "./components/AdminPayment";
 import AdminColors from "./components/AdminColors";
+import AdminSizes from "./components/AdminSizes";
 import EmailKey from "./components/EmailKey";
 
 Modal.setAppElement("#root");
@@ -323,6 +324,13 @@ function App() {
             <Route exact path="/admin/inventory/adminColors">
               {user ? (
                 <AdminColors openPopup={openPopup} setPopup={setPopup} />
+              ) : (
+                <Login openPopup={openPopup} setPopup={setPopup} />
+              )}
+            </Route>
+            <Route exact path="/admin/inventory/adminSizes">
+              {user ? (
+                <AdminSizes openPopup={openPopup} setPopup={setPopup} />
               ) : (
                 <Login openPopup={openPopup} setPopup={setPopup} />
               )}

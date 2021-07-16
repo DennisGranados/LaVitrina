@@ -79,6 +79,23 @@ function InventoryDashboard() {
           </div>
         </div>
       </div>
+
+      <div className="my-2">
+        <h1 className="text-center">Tallas</h1>
+        <div className="card shadowCards my-4">
+          <div className="card-body">
+            <h5 className="card-title text-center">Gestionar tallas</h5>
+            <p className="card-text text-justify">
+              Añade y elimina las tallas disponibles para las prendas.
+            </p>
+            <div className="text-center">
+              <Link className="btn btnAccept" to="/admin/inventory/adminSizes">
+                Ir a la sección
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

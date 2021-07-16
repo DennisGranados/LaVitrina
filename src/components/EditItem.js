@@ -313,7 +313,7 @@ function EditItem(props) {
                         className="form-check-input"
                         type="checkbox"
                         value={size}
-                        onChange={handleColor}
+                        onChange={handleSize}
                         checked
                       />
                       <label className="form-check-label">{size}</label>
@@ -326,7 +326,7 @@ function EditItem(props) {
                         className="form-check-input"
                         type="checkbox"
                         value={size}
-                        onChange={handleColor}
+                        onChange={handleSize}
                       />
                       <label className="form-check-label">{size}</label>
                     </div>

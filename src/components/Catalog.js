@@ -9,24 +9,42 @@ function Catalog(props) {
 
     setContent({
       ...content,
-      edit: "",
-      delete: "",
+      details: "",
       items: "",
     });
   };
 
-  const actionDetails = (id, name, styleName, styleID) => {
-    setMode("delete");
+  const actionDetails = (
+    styleID,
+    styleName,
+    id,
+    name,
+    code,
+    image,
+    quantity,
+    brand,
+    color,
+    price,
+    size
+  ) => {
+    setMode("details");
 
     setContent({
       ...content,
-      edit: "",
-      delete: (
+      details: (
         <CatalogItem
-          id={id}
-          name={name}
           styleID={styleID}
           styleName={styleName}
+          id={id}
+          name={name}
+          name={name}
+          code={code}
+          image={image}
+          quantity={quantity}
+          brand={brand}
+          color={color}
+          price={price}
+          size={size}
           actionItems={actionItems}
           setPopup={props.setPopup}
           openPopup={props.openPopup}
@@ -41,7 +59,7 @@ function Catalog(props) {
 
     setContent({
       ...content,
-      delete: "",
+      details: "",
       items: (
         <CatalogItemContent
           styleID={styleID}
@@ -53,7 +71,6 @@ function Catalog(props) {
           openPopup={props.openPopup}
         />
       ),
-      edit: "",
     });
   };
 
@@ -67,7 +84,7 @@ function Catalog(props) {
         openPopup={props.openPopup}
       />
     ),
-    edit: "",
+    details: "",
     items: "",
   });
 
