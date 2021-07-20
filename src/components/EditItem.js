@@ -29,10 +29,11 @@ function EditItem(props) {
     itemQuantity: "",
     itemVisible: false,
     flag: false,
+    edited: false,
+    ready: false,
   });
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
-  const [temp, setTemp] = useState([]);
 
   useEffect(() => {
     stylesRef
@@ -55,7 +56,7 @@ function EditItem(props) {
           itemVisible: element.data().visible,
         });
       });
-  }, [props, temp]);
+  }, [props, newItem.ready]);
 
   function fillNewItem() {
     if (oldItem.itemName === "") {
@@ -110,39 +111,31 @@ function EditItem(props) {
   }
 
   const handleColor = (e) => {
-    let tempContent = newItem.itemColor;
+    var colorSet = new Set(newItem.itemColor);
 
     if (e.target.checked) {
-      tempContent.push(e.target.value);
-
-      setNewItem({ ...newItem, itemColor: tempContent });
+      colorSet.add(e.target.value);
     } else {
-      for (var i = 0; i < tempContent.length; i++) {
-        if (tempContent[i] === e.target.value) {
-          tempContent.splice(i, 1);
-        }
-      }
-
-      setNewItem({ ...newItem, itemColor: tempContent });
+      colorSet.delete(e.target.value);
     }
+
+    const arr = [...colorSet];
+
+    setNewItem({ ...newItem, itemColor: arr, edited: true });
   };
 
   const handleSize = (e) => {
-    let tempContent = newItem.itemSize;
+    var sizeSet = new Set(newItem.itemSize);
 
     if (e.target.checked) {
-      tempContent.push(e.target.value);
-
-      setNewItem({ ...newItem, itemSize: tempContent });
+      sizeSet.add(e.target.value);
     } else {
-      for (var i = 0; i < tempContent.length; i++) {
-        if (tempContent[i] === e.target.value) {
-          tempContent.splice(i, 1);
-        }
-      }
-
-      setNewItem({ ...newItem, itemSize: tempContent });
+      sizeSet.delete(e.target.value);
     }
+
+    const arr = [...sizeSet];
+
+    setNewItem({ ...newItem, itemSize: arr, edited: true });
   };
 
   const handleCancelEdit = () => {
@@ -150,10 +143,19 @@ function EditItem(props) {
   };
 
   const handleChange = (e) => {
+    console.log(newItem.itemColor);
     setNewItem({
       ...newItem,
       [e.target.name]: e.target.value.trim(),
+      edited: true,
     });
+  };
+
+  const handleVisible = (e) => {
+    let visible;
+
+    visible = e.target.value === "true" ? true : false;
+    setNewItem({ ...newItem, [e.target.name]: visible, edited: true });
   };
 
   const handleImage = (e) => {
@@ -165,6 +167,7 @@ function EditItem(props) {
           setNewItem({
             ...newItem,
             itemImage: imageResult.target.result,
+            edited: true,
           });
         } else {
           props.setPopup("image-not-found");
@@ -181,6 +184,9 @@ function EditItem(props) {
     e.preventDefault();
     let color = false;
     let size = false;
+    let change = false;
+
+    console.log(newItem);
 
     if (newItem.itemColor.length === 0) {
       props.setPopup("Error", "Debe de seleccionar al menos un color.");
@@ -196,7 +202,14 @@ function EditItem(props) {
       size = true;
     }
 
-    if (color && size) {
+    if (!newItem.edited) {
+      props.setPopup("Error", "Debe de editar al menos un valor del artículo.");
+      props.openPopup();
+    } else {
+      change = true;
+    }
+
+    if (color && size && change) {
       stylesRef
         .collection(props.styleID)
         .doc(props.id)
@@ -209,7 +222,7 @@ function EditItem(props) {
           brand: Capitalize(newItem.itemBrand),
           price: parseFloat(newItem.itemPrice),
           quantity: parseInt(newItem.itemQuantity),
-          visible: newItem.itemVisible === "true" ? true : false,
+          visible: newItem.itemVisible,
         })
         .then(() => {
           stylesRef
@@ -218,11 +231,14 @@ function EditItem(props) {
               if (content.exists) {
                 props.setPopup(
                   "Confirmación",
-                  "Se ha agregado el producto con éxito."
+                  "Se ha modificado el producto con éxito."
                 );
                 props.openPopup();
                 e.target.reset();
-                setTemp([]);
+                setNewItem({
+                  ...newItem,
+                  ready: true,
+                });
               }
             })
             .catch((error) => {
@@ -241,7 +257,7 @@ function EditItem(props) {
     <div>
       {fillNewItem()}
       <div className="col-12 justify-content-center d-flex">
-        <div className="card col-5" id="card-submit">
+        <div className="card col-5 mt-3" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
               Editando <strong>{oldItem.itemName}</strong>
@@ -269,10 +285,10 @@ function EditItem(props) {
                 onChange={handleChange}
                 required
               />
+              {generateColors()}
               <label className="form-label topMargin">
                 Colores disponibles del producto (puede seleccionar varios)
               </label>
-              {generateColors()}
               {colors.map((color, index) =>
                 oldItem.itemColor.includes(color) ? (
                   <Fragment key={`${color}~${index}`}>
@@ -282,7 +298,7 @@ function EditItem(props) {
                         type="checkbox"
                         value={color}
                         onChange={handleColor}
-                        checked
+                        defaultChecked="true"
                       />
                       <label className="form-check-label">{color}</label>
                     </div>
@@ -386,94 +402,53 @@ function EditItem(props) {
                 {newItem.itemImage ? (
                   <img
                     src={newItem.itemImage}
-                    alt="Imagen de la prenda"
+                    alt="Imagen vieja de la prenda"
                     width="250"
                   />
                 ) : (
                   <img
                     src={oldItem.itemImage}
-                    alt="Imagen de la prenda"
+                    alt="Imagen nueva de la prenda"
                     width="250"
                   />
                 )}
               </div>
               <div className="mb-2 mt-4">
                 <label htmlFor="InputCategoryImage" className="form-label me-3">
-                  Visible:
+                  {oldItem.itemVisible ? (
+                    <Fragment>
+                      Visible (<strong>Sí</strong>):
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      Visible (<strong>No</strong>):
+                    </Fragment>
+                  )}
                 </label>
-                {oldItem.itemVisible ? (
-                  <Fragment>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="true"
-                        defaultChecked
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio1"
-                      >
-                        Si
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="false"
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio2"
-                      >
-                        No
-                      </label>
-                    </div>
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="true"
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio1"
-                      >
-                        Si
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="false"
-                        defaultChecked
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio2"
-                      >
-                        No
-                      </label>
-                    </div>
-                  </Fragment>
-                )}
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="itemVisible"
+                    onChange={handleVisible}
+                    value="true"
+                  />
+                  <label className="form-check-label" htmlFor="inlineRadio1">
+                    Si
+                  </label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="itemVisible"
+                    onChange={handleVisible}
+                    value="false"
+                  />
+                  <label className="form-check-label" htmlFor="inlineRadio2">
+                    No
+                  </label>
+                </div>
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btnAccept topMargin mx-2">

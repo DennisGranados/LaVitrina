@@ -14,8 +14,9 @@ function EditStyle(props) {
     styleImage: "",
     styleVisible: false,
     flag: false,
+    edited: false,
+    ready: false,
   });
-  const [temp, setTemp] = useState([]);
 
   useEffect(() => {
     stylesRef
@@ -32,7 +33,7 @@ function EditStyle(props) {
           }
         });
       });
-  }, [props, temp]);
+  }, [props, newStyle.ready]);
 
   function fillNewStyle() {
     if (oldStyle.styleName === "") {
@@ -54,7 +55,15 @@ function EditStyle(props) {
     setNewStyle({
       ...newStyle,
       [e.target.name]: e.target.value,
+      edited: true,
     });
+  };
+
+  const handleVisible = (e) => {
+    let visible;
+
+    visible = e.target.value === "true" ? true : false;
+    setNewStyle({ ...newStyle, [e.target.name]: visible, edited: true });
   };
 
   const handleImage = (e) => {
@@ -66,6 +75,7 @@ function EditStyle(props) {
           setNewStyle({
             ...newStyle,
             styleImage: imageResult.target.result,
+            edited: true,
           });
         } else {
           props.setPopup("image-not-found");
@@ -81,28 +91,43 @@ function EditStyle(props) {
 
   const updateStyle = (e) => {
     e.preventDefault();
+    let edited = false;
 
-    stylesRef
-      .collection(props.id)
-      .doc("settings")
-      .update({
-        name: newStyle.styleName,
-        image: newStyle.styleImage,
-        visible: newStyle.styleVisible === "true" ? true : false,
-      })
-      .then(() => {
-        props.setPopup(
-          "Confirmación",
-          "Se ha modificado la categoría con éxito."
-        );
-        props.openPopup();
-        e.target.reset();
-        setTemp([]);
-      })
-      .catch((error) => {
-        props.setPopup(error.code);
-        props.openPopup();
-      });
+    console.log(newStyle);
+
+    if (!newStyle.edited) {
+      props.setPopup("Error", "Debe de editar al menos un campo del estilo.");
+      props.openPopup();
+    } else {
+      edited = true;
+    }
+
+    if (edited) {
+      stylesRef
+        .collection(props.id)
+        .doc("settings")
+        .update({
+          name: newStyle.styleName,
+          image: newStyle.styleImage,
+          visible: newStyle.styleVisible,
+        })
+        .then(() => {
+          props.setPopup(
+            "Confirmación",
+            "Se ha modificado la categoría con éxito."
+          );
+          props.openPopup();
+          e.target.reset();
+          setNewStyle({
+            ...newStyle,
+            ready: true,
+          });
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+    }
   };
 
   return (
@@ -150,81 +175,40 @@ function EditStyle(props) {
               </div>
               <div className="mb-3">
                 <label htmlFor="InputCategoryImage" className="form-label me-3">
-                  Visible:
+                  {oldStyle.styleVisible ? (
+                    <Fragment>
+                      Visible (<strong>Sí</strong>):
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      Visible (<strong>No</strong>):
+                    </Fragment>
+                  )}
                 </label>
-                {oldStyle.styleVisible ? (
-                  <Fragment>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="true"
-                        defaultChecked
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio1"
-                      >
-                        Si
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="false"
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio2"
-                      >
-                        No
-                      </label>
-                    </div>
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="true"
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio1"
-                      >
-                        Si
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="styleVisible"
-                        onChange={handleChange}
-                        value="false"
-                        defaultChecked
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio2"
-                      >
-                        No
-                      </label>
-                    </div>
-                  </Fragment>
-                )}
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="styleVisible"
+                    onChange={handleVisible}
+                    value="true"
+                  />
+                  <label className="form-check-label" htmlFor="inlineRadio1">
+                    Si
+                  </label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="styleVisible"
+                    onChange={handleVisible}
+                    value="false"
+                  />
+                  <label className="form-check-label" htmlFor="inlineRadio2">
+                    No
+                  </label>
+                </div>
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btnAccept topMargin mx-2">

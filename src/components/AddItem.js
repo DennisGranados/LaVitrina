@@ -91,39 +91,39 @@ function AddItem(props) {
     });
   };
 
+  const handleVisible = (e) => {
+    let visible;
+
+    visible = e.target.value === "true" ? true : false;
+    setItem({ ...item, [e.target.name]: visible });
+  };
+
   const handleColor = (e) => {
-    let tempContent = item.itemColor;
+    var colorSet = new Set(item.itemColor);
 
     if (e.target.checked) {
-      tempContent.push(e.target.value);
-
-      setItem({ ...item, itemColor: tempContent });
+      colorSet.add(e.target.value);
     } else {
-      for (var i = 0; i < tempContent.length; i++) {
-        if (tempContent[i] === e.target.value) {
-          tempContent.splice(i, 1);
-        }
-      }
-
-      setItem({ ...item, itemColor: tempContent });
+      colorSet.delete(e.target.value);
     }
+
+    const arr = [...colorSet];
+
+    setItem({ ...item, itemColor: arr });
   };
 
   const handleSize = (e) => {
-    let tempContent = item.itemSize;
+    var sizeSet = new Set(item.itemSize);
 
     if (e.target.checked) {
-      tempContent.push(e.target.value);
-      setItem({ ...item, itemSize: tempContent });
+      sizeSet.add(e.target.value);
     } else {
-      for (var i = 0; i < tempContent.length; i++) {
-        if (tempContent[i] === e.target.value) {
-          tempContent.splice(i, 1);
-        }
-      }
-
-      setItem({ ...item, itemSize: tempContent });
+      sizeSet.delete(e.target.value);
     }
+
+    const arr = [...sizeSet];
+
+    setItem({ ...item, itemSize: arr });
   };
 
   const handleImage = (e) => {
@@ -184,7 +184,7 @@ function AddItem(props) {
           brand: Capitalize(item.itemBrand),
           price: parseFloat(item.itemPrice),
           quantity: parseInt(item.itemQuantity),
-          visible: item.itemVisible === "true" ? true : false,
+          visible: item.itemVisible,
         })
         .then(() => {
           stylesRef
@@ -356,7 +356,7 @@ function AddItem(props) {
                     className="form-check-input"
                     type="radio"
                     name="itemVisible"
-                    onChange={handleChange}
+                    onChange={handleVisible}
                     value="true"
                     required
                   />
@@ -369,7 +369,7 @@ function AddItem(props) {
                     className="form-check-input"
                     type="radio"
                     name="itemVisible"
-                    onChange={handleChange}
+                    onChange={handleVisible}
                     value="false"
                     defaultChecked
                     required

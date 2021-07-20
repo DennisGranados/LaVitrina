@@ -18,6 +18,13 @@ function AddStyles(props) {
     });
   };
 
+  const handleVisible = (e) => {
+    let visible;
+
+    visible = e.target.value === "true" ? true : false;
+    setStyle({ ...style, [e.target.name]: visible });
+  };
+
   const handleImage = (e) => {
     try {
       var fReader = new FileReader();
@@ -64,7 +71,7 @@ function AddStyles(props) {
         name: Capitalize(style.styleName),
         image: style.styleImage,
         length: 1,
-        visible: style.styleVisible === "true" ? true : false,
+        visible: style.styleVisible,
       })
       .then(() => {
         stylesRef.get(collectionName).then(function (content) {
@@ -132,7 +139,7 @@ function AddStyles(props) {
                     className="form-check-input"
                     type="radio"
                     name="styleVisible"
-                    onChange={handleChange}
+                    onChange={handleVisible}
                     value="true"
                     required
                   />
@@ -145,7 +152,7 @@ function AddStyles(props) {
                     className="form-check-input"
                     type="radio"
                     name="styleVisible"
-                    onChange={handleChange}
+                    onChange={handleVisible}
                     value="false"
                     defaultChecked
                     required

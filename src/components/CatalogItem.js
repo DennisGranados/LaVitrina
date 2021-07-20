@@ -41,7 +41,7 @@ function CatalogItem(props) {
   }, [props]);
 
   function fillOrder() {
-    if (order.itemName === "") {
+    if (item.itemName === "") {
     } else if (!order.flag) {
       setOrder({
         itemName: item.itemName,
@@ -59,39 +59,30 @@ function CatalogItem(props) {
   }
 
   const handleColor = (e) => {
-    let tempContent = order.itemColor;
+    var colorSet = new Set(order.itemColor);
 
     if (e.target.checked) {
-      tempContent.push(e.target.value);
-
-      setOrder({ ...order, itemColor: tempContent });
+      colorSet.add(e.target.value);
     } else {
-      for (var i = 0; i < tempContent.length; i++) {
-        if (tempContent[i] === e.target.value) {
-          tempContent.splice(i, 1);
-        }
-      }
-
-      setOrder({ ...order, itemColor: tempContent });
+      colorSet.delete(e.target.value);
     }
+
+    const arr = [...colorSet];
+
+    setOrder({ ...order, itemColor: arr });
   };
 
   const handleSize = (e) => {
-    let tempContent = order.itemSize;
+    var sizeSet = new Set(order.itemSize);
 
     if (e.target.checked) {
-      tempContent.push(e.target.value);
-
-      setOrder({ ...order, itemSize: tempContent });
+      sizeSet.add(e.target.value);
     } else {
-      for (var i = 0; i < tempContent.length; i++) {
-        if (tempContent[i] === e.target.value) {
-          tempContent.splice(i, 1);
-        }
-      }
-
-      setOrder({ ...order, itemSize: tempContent });
+      sizeSet.delete(e.target.value);
     }
+
+    const arr = [...sizeSet];
+    setOrder({ ...order, itemSize: arr });
   };
 
   const handleCancelEdit = () => {
