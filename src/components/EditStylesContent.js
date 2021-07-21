@@ -42,6 +42,7 @@ function EditStylesContent(props) {
               .then((content) => {
                 tempContent.push(
                   <EditStyleCard
+                    key={content.id}
                     type={props.type}
                     actionItems={props.actionItems}
                     actionEdit={props.actionEdit}

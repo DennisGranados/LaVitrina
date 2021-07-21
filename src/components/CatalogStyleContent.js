@@ -54,6 +54,7 @@ function CatalogStyleContent(props) {
 
                     tempContent.push(
                       <CatalogStyleCard
+                        key={content.id}
                         actionItems={props.actionItems}
                         id={stylesItem}
                         name={content.data()["name"]}

@@ -39,6 +39,7 @@ function EditItemContent(props) {
               if (element.id !== "settings") {
                 tempContent.push(
                   <EditItemCard
+                    key={element.id}
                     actionEdit={props.actionEdit}
                     actionDelete={props.actionDelete}
                     actionItems={props.actionItems}

@@ -40,6 +40,7 @@ function CatalogItemContent(props) {
                 tempContent.push(
                   <CatalogItemCard
                     actionDetails={props.actionDetails}
+                    key={element.id}
                     id={element.id}
                     name={element.data()["name"]}
                     styleName={props.styleName}

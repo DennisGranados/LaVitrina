@@ -35,6 +35,7 @@ function Catalog(props) {
         <CatalogItem
           styleID={styleID}
           styleName={styleName}
+          key={id}
           id={id}
           name={name}
           name={name}
@@ -62,6 +63,7 @@ function Catalog(props) {
       details: "",
       items: (
         <CatalogItemContent
+          key={styleID}
           styleID={styleID}
           styleName={styleName}
           actionCancel={actionCancel}

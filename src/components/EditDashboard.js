@@ -28,6 +28,7 @@ function EditDashboard(props) {
         edit: (
           <EditStyle
             id={id}
+            key={id}
             styleName={name}
             actionCancel={actionCancel}
             setPopup={props.setPopup}
@@ -43,6 +44,7 @@ function EditDashboard(props) {
         edit: (
           <EditItem
             id={id}
+            key={id}
             name={name}
             styleName={styleName}
             styleID={styleID}
@@ -67,6 +69,7 @@ function EditDashboard(props) {
         delete: (
           <DeleteStyle
             id={id}
+            key={id}
             name={name}
             actionCancel={actionCancel}
             setPopup={props.setPopup}
@@ -82,6 +85,7 @@ function EditDashboard(props) {
         delete: (
           <DeleteItem
             id={id}
+            key={id}
             name={name}
             styleID={styleID}
             styleName={styleName}
@@ -103,6 +107,7 @@ function EditDashboard(props) {
       delete: "",
       items: (
         <EditItemContent
+          key={styleID}
           styleID={styleID}
           styleName={styleName}
           actionCancel={actionCancel}

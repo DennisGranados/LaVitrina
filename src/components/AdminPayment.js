@@ -280,7 +280,7 @@ function AdminPayment(props) {
             </div>
             <div className="text-center mt-3">
               <button type="submit" className="btn btnAccept ms-2">
-                Añadir 
+                Añadir
               </button>
             </div>
           </form>

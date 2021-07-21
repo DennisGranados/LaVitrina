@@ -31,7 +31,6 @@ import ShoppingCart from "./components/ShoppingCart";
 import AdminPayment from "./components/AdminPayment";
 import AdminColors from "./components/AdminColors";
 import AdminSizes from "./components/AdminSizes";
-import EmailKey from "./components/EmailKey";
 
 Modal.setAppElement("#root");
 
@@ -199,17 +198,14 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/EmailKey">
-              <EmailKey />
-            </Route>
             <Route exact path="/catalog">
-              <Catalog />
+              <Catalog openPopup={openPopup} setPopup={setPopup} />
             </Route>
             <Route exact path="/about-us">
               <AboutUs data={information} />
             </Route>
             <Route exact path="/shoppingCart">
-              <ShoppingCart />
+              <ShoppingCart openPopup={openPopup} setPopup={setPopup} />
             </Route>
             <Route exact path="/admin">
               {user ? (

@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from "react";
-import { useFirestore } from "reactfire";
+import {
+  addOrder,
+} from "../OrderManager";
 
 function CatalogItem(props) {
-  const firestore = useFirestore();
-  const stylesRef = firestore.collection("catalog").doc("styles");
   const [item, setItem] = useState({
     itemName: "",
     itemCode: "",
@@ -16,9 +16,9 @@ function CatalogItem(props) {
   });
 
   const [order, setOrder] = useState({
+    itemID: "",
     itemName: "",
     itemCode: "",
-    itemImage: "",
     itemColor: [],
     itemSize: [],
     itemBrand: "",
@@ -44,15 +44,14 @@ function CatalogItem(props) {
     if (item.itemName === "") {
     } else if (!order.flag) {
       setOrder({
+        itemID: props.id,
         itemName: item.itemName,
         itemCode: item.itemCode,
-        itemImage: item.itemImage,
-        itemColor: item.itemColor,
-        itemSize: item.itemSize,
+        itemColor: [],
+        itemSize: [],
         itemBrand: item.itemBrand,
         itemPrice: item.itemPrice,
-        itemQuantity: item.itemQuantity,
-        itemVisible: item.itemVisible,
+        itemQuantity: "",
         flag: true,
       });
     }
@@ -98,6 +97,36 @@ function CatalogItem(props) {
 
   const makeOrder = (e) => {
     e.preventDefault();
+
+    let color = false;
+    let size = false;
+
+    if (order.itemColor.length === 0) {
+      props.setPopup("Error", "Debe de seleccionar al menos un color.");
+      props.openPopup();
+    } else {
+      color = true;
+    }
+
+    if (order.itemSize.length === 0) {
+      props.setPopup("Error", "Debe de seleccionar al menos una talla.");
+      props.openPopup();
+    } else {
+      size = true;
+    }
+
+    if (color && size) {
+      let id = order.itemName + Date.now();
+
+      addOrder(id, order);
+
+      props.setPopup(
+        "Confirmación",
+        "Se ha añadido correctamente su pedido al carrito de compras."
+      );
+      props.openPopup();
+      e.target.reset();
+    }
   };
 
   return (
