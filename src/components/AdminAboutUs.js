@@ -1,3 +1,18 @@
+/**
+ * @fileoverview AdminAboutUs page, manage the contact methods that the store has.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AdminAboutUs page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
+
 import React, { useState } from "react";
 import { useFirestore } from "reactfire";
 
@@ -15,6 +30,7 @@ function AddInformation(props) {
     flag: false,
   });
 
+  // This method is responsible to add the information.
   function fillNewInformation() {
     if (information.email === "") {
     } else if (!newInformation.flag) {
@@ -30,6 +46,7 @@ function AddInformation(props) {
     }
   }
 
+  // This method set the information to add.
   const handleChange = (e) => {
     setNewInformation({
       ...newInformation,
@@ -37,6 +54,7 @@ function AddInformation(props) {
     });
   };
 
+  // This method update the contact information of the store.
   const updateInformation = (e) => {
     e.preventDefault();
     informationRef

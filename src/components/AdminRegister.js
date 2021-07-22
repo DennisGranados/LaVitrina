@@ -1,3 +1,18 @@
+/**
+ * @fileoverview AdminRegister page, manage the register of administrative users to the website.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AdminRegister page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
+
 import React, { useState } from "react";
 import "firebase/auth";
 import { useFirestore, useAuth } from "reactfire";
@@ -14,6 +29,7 @@ function AdminRegister(props) {
     actualCounter: "",
   });
 
+  // This method set the user.
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -21,6 +37,7 @@ function AdminRegister(props) {
     });
   };
 
+  // This method is responsible for the register of the user.
   const registerUser = (e) => {
     e.preventDefault();
 

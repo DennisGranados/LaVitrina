@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Home page, this page shows the menu page for regular users and administrators, 
+ * in addition to the different sections they have access to.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of Home page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Link } from "react-router-dom";
 
 function Home() {

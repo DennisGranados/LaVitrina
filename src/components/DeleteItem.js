@@ -1,3 +1,17 @@
+/**
+ * @fileoverview DeleteItem page, allows delete an item from the database.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of DeleteItem page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import firebase from "firebase";
 import React, { useState } from "react";
 import { useFirebaseApp, useFirestore } from "reactfire";
@@ -7,10 +21,12 @@ function DeleteItem(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
 
+  // This method set the item to delete.
   const handleChange = (e) => {
     setDiscard(e.target.value);
   };
 
+  // This method is responsible for delete the item selected.
   const submitDelete = (e) => {
     e.preventDefault();
 

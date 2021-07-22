@@ -1,3 +1,18 @@
+/**
+ * @fileoverview AddItem page, add a item to the database.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AddItem page was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
+
 import { Fragment, useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
@@ -24,6 +39,7 @@ function AddItem(props) {
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
 
+  // This function load the styles existents in the database, to add an item to it.
   function generateStyles() {
     if (styles.length === 0) {
       stylesRef.get().then((content) => {
@@ -50,6 +66,7 @@ function AddItem(props) {
     }
   }
 
+  // This function loads the colors that exist in the database, to select the colors of the item to add.
   function generateColors() {
     if (colors.length === 0) {
       colorsRef.get().then((content) => {
@@ -67,6 +84,7 @@ function AddItem(props) {
     }
   }
 
+  // This function loads the sizes that exist in the database, to select the sizes of the item to add.
   function generateSizes() {
     if (sizes.length === 0) {
       sizesRef.get().then((content) => {
@@ -84,6 +102,7 @@ function AddItem(props) {
     }
   }
 
+  //This method set the item to add.
   const handleChange = (e) => {
     setItem({
       ...item,
@@ -91,6 +110,7 @@ function AddItem(props) {
     });
   };
 
+  // This method handles if item is visible or not.
   const handleVisible = (e) => {
     let visible;
 
@@ -98,6 +118,7 @@ function AddItem(props) {
     setItem({ ...item, [e.target.name]: visible });
   };
 
+  // This method handles the colors selected to add the item.
   const handleColor = (e) => {
     var colorSet = new Set(item.itemColor);
 
@@ -112,6 +133,7 @@ function AddItem(props) {
     setItem({ ...item, itemColor: arr });
   };
 
+  // This method handles the sizes selected to add the item.
   const handleSize = (e) => {
     var sizeSet = new Set(item.itemSize);
 
@@ -126,6 +148,7 @@ function AddItem(props) {
     setItem({ ...item, itemSize: arr });
   };
 
+  // This method handles the image selected to add the item.
   const handleImage = (e) => {
     try {
       var fReader = new FileReader();
@@ -146,12 +169,14 @@ function AddItem(props) {
       props.openPopup();
     }
   };
-
+ 
+  // This method reset the space of the added image in the form.
   const resetImage = (e) => {
     setItem({ ...item, itemImage: "", itemColor: [], itemSize: [] });
     e.target.reset();
   };
 
+  // This method is responsible to add an item.
   const addItem = (e) => {
     e.preventDefault();
     let color = false;

@@ -1,3 +1,17 @@
+/**
+ * @fileoverview FinanceAdmin page, displays options related to store finances.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of FinanceAdmin page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Link } from "react-router-dom";
 
 function FinanceAdmin() {
@@ -30,7 +44,7 @@ function FinanceAdmin() {
                 Ver finanzas de la tienda
               </h5>
               <p className="card-text text-justify">
-                Añade nuevas prendas, correspondientes a un estilo existente.
+                Visualizar gráficos sobre ventas.
               </p>
               <div className="text-center">
                 <Link className="btn btnAccept" to="/admin/inventory/add-item">

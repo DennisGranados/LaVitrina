@@ -1,3 +1,18 @@
+/**
+ * @fileoverview InventoryDashboard page, shows the different options that the administrative user has,
+ * to manage the store's inventory.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of InventoryDashboard page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Link } from "react-router-dom";
 
 function InventoryDashboard() {

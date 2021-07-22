@@ -1,3 +1,17 @@
+/**
+ * @fileoverview DeleteStyle page, allows delete an style from the database.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of DeleteStyle page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import React, { useState } from "react";
 import { useFirestore } from "reactfire";
 
@@ -6,10 +20,12 @@ function DeleteStyle(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
 
+  // This method set the style to delete.
   const handleChange = (e) => {
     setDiscard(e.target.value);
   };
 
+  //This method is responsible for delete the style selected.
   const submitDelete = (e) => {
     e.preventDefault();
 

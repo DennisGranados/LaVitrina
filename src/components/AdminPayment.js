@@ -1,3 +1,17 @@
+/**
+ * @fileoverview AdminPayment page, manage the payment methods that the page has.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AdminPayment page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { useState } from "react";
 import { useFirestore } from "reactfire";
 
@@ -15,6 +29,7 @@ function AdminPayment(props) {
     sinpeList: [],
   });
 
+  // This method set the payment method.
   const handleChange = (e) => {
     setPaymentMethod({
       ...method,
@@ -22,6 +37,7 @@ function AdminPayment(props) {
     });
   };
 
+  // This method is responsible for removing a bank account and updating the available ones.
   const handleDeleteBanking = (key) => {
     paymentMethodRef.get().then((content) => {
       let banking = content.data()["banking"];
@@ -47,6 +63,7 @@ function AdminPayment(props) {
     });
   };
 
+  // This method is responsible for removing a sinpe mobile account and updating the available ones.
   const handleDeleteSinpe = (key) => {
     paymentMethodRef.get().then((content) => {
       let sinpe = content.data()["sinpe"];
@@ -72,6 +89,10 @@ function AdminPayment(props) {
     });
   };
 
+  /**
+   * This method is responsible of load existing bank accounts that can be removed if the administrator desired.
+   * @param {boolean} isUpdated 
+   */
   function generateBanking(isUpdated) {
     if (method.bankingList.length === 0 || isUpdated) {
       paymentMethodRef.get().then((content) => {
@@ -117,6 +138,10 @@ function AdminPayment(props) {
     }
   }
 
+  /**
+   * This method is responsible of load existing sinpe mobile accounts that can be removed if the administrator desired.
+   * @param {boolean} isUpdated 
+   */
   function generateSinpe(isUpdated) {
     if (method.sinpeList.length === 0 || isUpdated) {
       paymentMethodRef.get().then((content) => {
@@ -162,6 +187,7 @@ function AdminPayment(props) {
     }
   }
 
+  // This method is responsible for adding the bank account to the database.
   const addBankingAccount = (e) => {
     e.preventDefault();
 
@@ -203,6 +229,8 @@ function AdminPayment(props) {
       }
     });
   };
+
+  // This method is responsible for adding the sinpe mobile account to the database.
   const addSinpeMobile = (e) => {
     e.preventDefault();
 

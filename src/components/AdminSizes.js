@@ -1,3 +1,17 @@
+/**
+ * @fileoverview AdminSizes page, manage the possible sizes of the items registered in the database.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AdminSizes page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { useState } from "react";
 import { useFirestore } from "reactfire";
 
@@ -9,6 +23,7 @@ function AdminSizes(props) {
     sizesList: [],
   });
 
+  // This method set the sizes to add.
   const handleChange = (e) => {
     setSizes({
       ...sizes,
@@ -16,6 +31,11 @@ function AdminSizes(props) {
     });
   };
 
+  
+  /**
+   * This method is responsible of load existing sizes that can be removed if the administrator desired.
+   * @param {boolean} isUpdated 
+   */
   function generateSizes(isUpdated) {
     if (sizes.sizesList.length === 0 || isUpdated) {
       sizesRef.get().then((content) => {
@@ -59,6 +79,7 @@ function AdminSizes(props) {
     }
   }
 
+  // This method is responsible for adding the sizes to the database.
   const addSize = (e) => {
     e.preventDefault();
 
@@ -102,6 +123,10 @@ function AdminSizes(props) {
     });
   };
 
+  /**
+   * This method is responsible for removing a size and updating the available ones.
+   * @param {string} color 
+   */
   const handleDeleteSizes = (color) => {
     sizesRef.get().then((content) => {
       let sizesDB = content.data()["availableSizes"];

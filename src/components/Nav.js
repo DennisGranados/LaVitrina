@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Nav, component that shows the different navigation options of the user.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of Nav was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth, useUser } from "reactfire";
@@ -8,6 +22,7 @@ function Nav() {
 
   let logged;
 
+  // This method is responsible for closing the user's session.
   const signOut = (e) => {
     auth.signOut();
   };

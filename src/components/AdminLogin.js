@@ -1,3 +1,17 @@
+/**
+ * @fileoverview AdminLogin page, manage the administrative users login.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AdminLogin page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import React, { useState } from "react";
 import firebase from "firebase";
 import "firebase/auth";
@@ -10,6 +24,7 @@ function AdminLogin(props) {
     password: "",
   });
 
+ // This method set the user.
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -17,6 +32,7 @@ function AdminLogin(props) {
     });
   };
 
+  // This method is responsible for the login.
   const loginUser = (e) => {
     e.preventDefault();
 

@@ -1,3 +1,18 @@
+/**
+ * @fileoverview AddStyles page, add a style to the database.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AddStyles page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
+
 import { useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
@@ -11,6 +26,7 @@ function AddStyles(props) {
     styleVisible: false,
   });
 
+  //This method set the style to add.
   const handleChange = (e) => {
     setStyle({
       ...style,
@@ -18,6 +34,7 @@ function AddStyles(props) {
     });
   };
 
+  // This method handles if style is visible or not.
   const handleVisible = (e) => {
     let visible;
 
@@ -25,6 +42,7 @@ function AddStyles(props) {
     setStyle({ ...style, [e.target.name]: visible });
   };
 
+  // This method handles the image selected to add the style.
   const handleImage = (e) => {
     try {
       var fReader = new FileReader();
@@ -46,11 +64,13 @@ function AddStyles(props) {
     }
   };
 
+  // This method reset the space of the added image in the form.
   const resetImage = (e) => {
     setStyle({ ...style, styleImage: "" });
     e.target.reset();
   };
 
+  // This method is responsible to add an item.
   const addStyle = (e) => {
     e.preventDefault();
 

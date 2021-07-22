@@ -1,3 +1,18 @@
+/**
+ * @fileoverview AdminColors page, manage the possible colors of the items registered in the database.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of AdminColors page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
+
 import { useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
@@ -10,6 +25,7 @@ function AdminColors(props) {
     colorsList: [],
   });
 
+  // This method set the colors to add.
   const handleChange = (e) => {
     setColors({
       ...colors,
@@ -17,6 +33,11 @@ function AdminColors(props) {
     });
   };
 
+  /**
+   * This method is responsible of load existing colors that can be removed if the administrator desired.
+   * @param {boolean} isUpdated 
+   */
+  
   function generateColors(isUpdated) {
     if (colors.colorsList.length === 0 || isUpdated) {
       colorsRef.get().then((content) => {
@@ -60,6 +81,7 @@ function AdminColors(props) {
     }
   }
 
+  // This method is responsible for adding the colors to the database.
   const addColor = (e) => {
     e.preventDefault();
 
@@ -103,6 +125,10 @@ function AdminColors(props) {
     });
   };
 
+  /**
+   * This method is responsible for removing a color and updating the available ones.
+   * @param {string} color 
+   */
   const handleDeleteColors = (color) => {
     colorsRef.get().then((content) => {
       let colorsDB = content.data()["availableColors"];
