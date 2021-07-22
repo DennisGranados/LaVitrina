@@ -48,6 +48,7 @@ function AdminDeleteAccount(props) {
           let cred = firebase.auth.EmailAuthProvider.credential(
             actualUser.data.email,
             user.password
+            //mmm
           );
           auth.currentUser
             .reauthenticateWithCredential(cred)
