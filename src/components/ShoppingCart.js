@@ -1,3 +1,17 @@
+/**
+ * @fileoverview ShoppingCart page, manage the shopping cart.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of ShoppingCart page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import React, { useState } from "react";
 import emailjs, { init } from "emailjs-com";
 import { useFirestore } from "reactfire";
@@ -11,17 +25,20 @@ function ShoppingCart() {
 
   init("user_QYgxouEt1fkzj4qdwfIXm");
 
+  // This method is responsible to set the order information.
   const [orderInfo, setOrderInfo] = useState({
     name: "",
     email: "",
     order: "",
   });
 
+  // This method is responsible to set the list of bank accounts and sinpe mobile.
   const [method, setPaymentMethod] = useState({
     bankingList: [],
     sinpeList: [],
   });
 
+  // This method is responsible for displaying the orders corresponding to each user.
   function generateOrder() {
     let temp = getAllOrders();
 
@@ -34,6 +51,7 @@ function ShoppingCart() {
     //console.log(getOrder("Name1626854981138"));
   }
 
+  // This method is responsible of load existing bank accounts for the user to look at them.
   function generateBanking() {
     if (method.bankingList.length === 0) {
       paymentMethodRef.get().then((content) => {
@@ -69,6 +87,7 @@ function ShoppingCart() {
     }
   }
 
+  // This method is responsible of load existing sinpe mobile accounts for the user to look at them.
   function generateSinpe() {
     if (method.sinpeList.length === 0) {
       paymentMethodRef.get().then((content) => {
@@ -104,6 +123,7 @@ function ShoppingCart() {
     }
   }
 
+  // This method is responsible for sending order notifications to both administrators and users.
   function sendEmail(e) {
     e.preventDefault();
 

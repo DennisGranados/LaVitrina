@@ -1,3 +1,17 @@
+/**
+ * @fileoverview OrderManager, this component manage the orders.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of OrderManager page was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 const defaultOrderIndex = "orders";
 
 function getOrder(id) {
@@ -10,6 +24,7 @@ function getOrder(id) {
   }
 }
 
+// This method is responsible for obtaining the orders made by each user.
 function getAllOrders() {
   let temp = new Map();
 
@@ -46,6 +61,7 @@ function addSubscription(province, canton) {
   }
 }
 
+// This method is responsible for adding an order to the local storage.
 function addOrder(id, newOrder) {
   localStorage.setItem(id, JSON.stringify(newOrder));
 }
@@ -65,10 +81,12 @@ function deleteSubscription(province, canton) {
   }
 }
 
+// This method is responsible for delete an order to the local storage.
 function deleteOrder(id) {
   localStorage.removeItem(id);
 }
 
+// This method is responsible for delete all orders to the local storage.
 function deleteAllOrders() {
   localStorage.clear();
 }
