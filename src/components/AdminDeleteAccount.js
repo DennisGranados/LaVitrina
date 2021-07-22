@@ -49,27 +49,27 @@ function AdminDeleteAccount(props) {
             actualUser.data.email,
             user.password
           );
-          adminRef.update({ counter: actualCounter - 1 }).then(() => {
-            auth.currentUser
-              .reauthenticateWithCredential(cred)
-              .then(() => {
-                auth.currentUser
-                  .delete()
-                  .then(() => {
+          auth.currentUser
+            .reauthenticateWithCredential(cred)
+            .then(() => {
+              adminRef
+                .update({ counter: actualCounter - 1 })
+                .then(() => {
+                  auth.currentUser.delete().then(() => {
                     props.setPopup("Información", "Usuario eliminado.");
                     props.openPopup();
-                  })
-                  .catch((error) => {
-                    props.setPopup(error.code);
-                    props.openPopup();
                   });
-              })
-              .catch((error) => {
-                props.setPopup(error.code, error.message);
-                props.openPopup();
-              });
-            e.target.reset();
-          });
+                })
+                .catch((error) => {
+                  props.setPopup(error.code);
+                  props.openPopup();
+                });
+            })
+            .catch((error) => {
+              props.setPopup(error.code);
+              props.openPopup();
+            });
+          e.target.reset();
         } else {
           props.setPopup("auth/only-account");
           props.openPopup();

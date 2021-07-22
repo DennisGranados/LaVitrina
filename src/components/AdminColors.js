@@ -161,7 +161,7 @@ function AdminColors(props) {
 
   return (
     <div className="col-12 justify-content-center d-flex mt-3">
-      <div className="card col-5" id="card-submit">
+      <div className="card" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Colores existentes</h4>
           {generateColors(false)}
