@@ -4,12 +4,12 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
  * ----
- * The first version of AdminDeleteAccount page was written by Carlos Cabezas, Denilson Granados, 
+ * The first version of AdminDeleteAccount page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
 

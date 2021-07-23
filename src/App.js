@@ -11,14 +11,13 @@ import { useFirestore } from "reactfire";
 import { useFirestoreDocData } from "reactfire";
 import Register from "./components/AdminRegister";
 import Login from "./components/AdminLogin";
-import Home from "./components/Home";
+import Home from "./components/Catalog";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import AboutUs from "./components/AboutUs";
 import Modal from "react-modal";
 import Nav from "./components/Nav";
 import Dashboard from "./components/Dashboard";
-import Catalog from "./components/Catalog";
 import DeleteAccount from "./components/AdminDeleteAccount";
 import InventoryDashboard from "./components/InventoryDashboard";
 import AddStyles from "./components/AddStyles";
@@ -170,8 +169,6 @@ function App() {
     }
   }
 
-  //auth/wrong-password
-
   return (
     <div>
       <div className="App row">
@@ -196,10 +193,7 @@ function App() {
           <Nav isLogin={user} />
           <Switch>
             <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/catalog">
-              <Catalog openPopup={openPopup} setPopup={setPopup} />
+              <Home openPopup={openPopup} setPopup={setPopup} />
             </Route>
             <Route exact path="/about-us">
               <AboutUs data={information} />

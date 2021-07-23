@@ -15,6 +15,7 @@ $color-malachite: #00e676;
 $color-cultured: #f2f2f2;
 $btnClear: #e89b43;
 $line-card: #fbbd39;
+$line-cart: rgba(168, 37, 99, 1);
 $gradient: linear-gradient(
   90deg,
   rgba(168, 37, 99, 1) 0%,
@@ -136,6 +137,10 @@ code {
   border-bottom: 2px solid $line-card;
 }
 
+.separator {
+  border-bottom: 2px solid $line-cart;
+}
+
 .noLinks {
   text-decoration: none;
   color: #000000;
@@ -163,6 +168,11 @@ code {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+#cart {
+  align-items: baseline;
+}
+
 .spinner-border {
   width: 3rem;
   height: 3rem;

@@ -4,7 +4,7 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
@@ -19,7 +19,7 @@ function AboutUs(props) {
 
   return (
     <div>
-    <div className="col-12 mb-3 d-flex">
+      <div className="col-12 mb-3 d-flex">
         <div className="col-6 justify-content-center mx-3">
           <h1 className="mt-3">Acerca de La Vitrina</h1>
           <p className="paragraph">{information.aboutUs}</p>

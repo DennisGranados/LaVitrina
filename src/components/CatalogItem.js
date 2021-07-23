@@ -1,9 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import {
-  addOrder,
-} from "../OrderManager";
+import { useFirestore } from "reactfire";
+import { addOrder } from "../OrderManager";
+import firebase from "firebase";
 
 function CatalogItem(props) {
+  const firestore = useFirestore();
+  const stylesRef = firestore.collection("catalog").doc("styles");
   const [item, setItem] = useState({
     itemName: "",
     itemCode: "",
@@ -16,6 +18,8 @@ function CatalogItem(props) {
   });
 
   const [order, setOrder] = useState({
+    styleID: "",
+    styleName: "",
     itemID: "",
     itemName: "",
     itemCode: "",
@@ -42,8 +46,10 @@ function CatalogItem(props) {
 
   function fillOrder() {
     if (item.itemName === "") {
-    } else if (!order.flag) {
+    } else if (!order.flag && order.flag !== undefined) {
       setOrder({
+        styleID: props.styleID,
+        styleName: props.styleName,
         itemID: props.id,
         itemName: item.itemName,
         itemCode: item.itemCode,
@@ -100,6 +106,8 @@ function CatalogItem(props) {
 
     let color = false;
     let size = false;
+    let quantity = false;
+    let flag = false;
 
     if (order.itemColor.length === 0) {
       props.setPopup("Error", "Debe de seleccionar al menos un color.");
@@ -115,17 +123,63 @@ function CatalogItem(props) {
       size = true;
     }
 
-    if (color && size) {
-      let id = order.itemName + Date.now();
+    if (order.itemColor.length > order.itemQuantity) {
+      flag = true;
+    }
 
-      addOrder(id, order);
+    if (order.itemSize.length > order.itemQuantity && !flag) {
+      flag = true;
+    }
 
+    if (flag && color && size) {
       props.setPopup(
-        "Confirmación",
-        "Se ha añadido correctamente su pedido al carrito de compras."
+        "Error",
+        "Si selecciona varios colores y/o tallas, la cantidad solicitada debe de ser suficiente."
       );
       props.openPopup();
-      e.target.reset();
+    } else {
+      quantity = true;
+    }
+
+    if (color && size && quantity) {
+      let newOrder = {
+        styleID: order.styleID,
+        styleName: order.styleName,
+        itemID: order.itemID,
+        itemName: order.itemName,
+        itemCode: order.itemCode,
+        itemColor: order.itemColor,
+        itemSize: order.itemSize,
+        itemBrand: order.itemBrand,
+        itemPrice: order.itemPrice,
+        itemQuantity: order.itemQuantity,
+      };
+
+      let id = newOrder.itemName + Date.now();
+
+      addOrder(id, newOrder);
+
+      stylesRef
+        .collection(newOrder.styleID)
+        .doc(newOrder.itemID)
+        .update({
+          quantity: firebase.firestore.FieldValue.increment(
+            -newOrder.itemQuantity
+          ),
+        })
+        .then(() => {
+          props.setPopup(
+            "Confirmación",
+            "Se ha añadido correctamente su pedido al carrito de compras."
+          );
+          props.openPopup();
+          e.target.reset();
+          handleCancelEdit();
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
     }
   };
 
@@ -139,9 +193,6 @@ function CatalogItem(props) {
               Detalles de <strong>{item.itemName}</strong>
             </h4>
             <form id="addItem" onSubmit={makeOrder}>
-              <label className="form-label topMargin">
-                Imagen del producto:
-              </label>
               <div className="text-center my-3">
                 {
                   <img

@@ -4,15 +4,15 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
  * ----
- * The first version of AdminPayment page was written by Carlos Cabezas, Denilson Granados, 
+ * The first version of AdminPayment page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useFirestore } from "reactfire";
 
 function AdminPayment(props) {
@@ -91,7 +91,7 @@ function AdminPayment(props) {
 
   /**
    * This method is responsible of load existing bank accounts that can be removed if the administrator desired.
-   * @param {boolean} isUpdated 
+   * @param {boolean} isUpdated
    */
   function generateBanking(isUpdated) {
     if (method.bankingList.length === 0 || isUpdated) {
@@ -140,7 +140,7 @@ function AdminPayment(props) {
 
   /**
    * This method is responsible of load existing sinpe mobile accounts that can be removed if the administrator desired.
-   * @param {boolean} isUpdated 
+   * @param {boolean} isUpdated
    */
   function generateSinpe(isUpdated) {
     if (method.sinpeList.length === 0 || isUpdated) {
@@ -275,12 +275,24 @@ function AdminPayment(props) {
 
   return (
     <div className="orderCards">
+      {generateBanking(false)}
+      {generateSinpe(false)}
       <div className="card my-3" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Cuentas bancarias actuales</h4>
           <div className="d-flex justify-content-around flex-wrap">
-            {generateBanking(false)}
-            {method.bankingList}
+            {method.bankingList.length > 0 ? (
+              <Fragment>{method.bankingList}</Fragment>
+            ) : (
+              <Fragment>
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="spinner-border text-warning"
+                    role="status"
+                  ></div>
+                </div>
+              </Fragment>
+            )}
           </div>
           <h4 className="text-center mb-4 mt-3">Ingresar cuenta bancaria</h4>
           <form className="col-12" onSubmit={addBankingAccount}>
@@ -318,8 +330,18 @@ function AdminPayment(props) {
         <div className="card-body">
           <h4 className="text-center mb-4">SINPE móvil actuales</h4>
           <div className="d-flex justify-content-around flex-wrap">
-            {generateSinpe(false)}
-            {method.sinpeList}
+            {method.sinpeList.length > 0 ? (
+              <Fragment>{method.sinpeList}</Fragment>
+            ) : (
+              <Fragment>
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="spinner-border text-warning"
+                    role="status"
+                  ></div>
+                </div>
+              </Fragment>
+            )}
           </div>
           <h4 className="text-center mb-4 mt-3">Ingresar SINPE móvil</h4>
           <form className="col-12" onSubmit={addSinpeMobile}>

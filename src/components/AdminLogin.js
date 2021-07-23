@@ -4,12 +4,12 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
  * ----
- * The first version of AdminLogin page was written by Carlos Cabezas, Denilson Granados, 
+ * The first version of AdminLogin page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
 import React, { useState } from "react";
@@ -24,7 +24,7 @@ function AdminLogin(props) {
     password: "",
   });
 
- // This method set the user.
+  // This method set the user.
   const handleChange = (e) => {
     setUser({
       ...user,

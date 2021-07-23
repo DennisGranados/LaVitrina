@@ -143,7 +143,6 @@ function EditItem(props) {
   };
 
   const handleChange = (e) => {
-    console.log(newItem.itemColor);
     setNewItem({
       ...newItem,
       [e.target.name]: e.target.value.trim(),
@@ -256,6 +255,8 @@ function EditItem(props) {
   return (
     <div>
       {fillNewItem()}
+      {generateColors()}
+      {generateSizes()}
       <div className="col-12 justify-content-center d-flex">
         <div className="card mt-3" id="card-submit">
           <div className="card-body">
@@ -285,7 +286,6 @@ function EditItem(props) {
                 onChange={handleChange}
                 required
               />
-              {generateColors()}
               <label className="form-label topMargin">
                 Colores disponibles del producto (puede seleccionar varios)
               </label>
@@ -320,7 +320,6 @@ function EditItem(props) {
               <label className="form-form-label topMargin">
                 Tallas disponibles del producto (puede seleccionar varias)
               </label>
-              {generateSizes()}
               {sizes.map((size, index) =>
                 oldItem.itemSize.includes(size) ? (
                   <Fragment key={`${size}~${index}`}>

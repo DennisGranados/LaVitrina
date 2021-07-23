@@ -32,7 +32,10 @@ function CatalogItemContent(props) {
         .then(function (content) {
           content.docs.forEach((element) => {
             if (element.id !== "settings") {
-              if (element.data()["visible"] === true) {
+              if (
+                element.data()["visible"] === true &&
+                element.data()["quantity"] > 0
+              ) {
                 if (!flag) {
                   flag = true;
                 }
@@ -52,7 +55,6 @@ function CatalogItemContent(props) {
                     color={element.data()["color"]}
                     price={element.data()["price"]}
                     size={element.data()["size"]}
-                    key={element.id}
                   />
                 );
               } else {

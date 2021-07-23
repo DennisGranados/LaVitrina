@@ -1,57 +1,195 @@
-/**
- * @fileoverview ShoppingCart page, manage the shopping cart.
- * @version 1.0
- * @author Carlos Cabezas Fallas
- * @author Denilson Granados Solano
- * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
- * @author María Ramírez Hernández
- * History
- * v1.0 – Initial Release
- * ----
- * The first version of ShoppingCart page was written by Carlos Cabezas, Denilson Granados, 
- * Jahel Jiménez, Jonathan Orozco, María Ramírez.
- */
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import emailjs, { init } from "emailjs-com";
 import { useFirestore } from "reactfire";
-import { getAllOrders } from "../OrderManager";
+import {
+  addOrder,
+  deleteAllOrders,
+  deleteOrder,
+  getAllOrders,
+  getOrder,
+} from "../OrderManager";
+import firebase from "firebase";
+import Capitalize from "../Tools";
 
-function ShoppingCart() {
+function ShoppingCart(props) {
   const firestore = useFirestore();
+  const stylesRef = firestore.collection("catalog").doc("styles");
+  const ordersRef = firestore.collection("orders");
   const paymentMethodRef = firestore
     .collection("webpage")
     .doc("payment_methods");
 
   init("user_QYgxouEt1fkzj4qdwfIXm");
 
-  // This method is responsible to set the order information.
   const [orderInfo, setOrderInfo] = useState({
     name: "",
     email: "",
-    order: "",
+    message: "",
   });
 
-  // This method is responsible to set the list of bank accounts and sinpe mobile.
   const [method, setPaymentMethod] = useState({
     bankingList: [],
     sinpeList: [],
   });
 
-  // This method is responsible for displaying the orders corresponding to each user.
-  function generateOrder() {
-    let temp = getAllOrders();
+  const [orderDisplay, setOrderDisplay] = useState({
+    ordersList: [],
+    finalPrice: 0,
+  });
 
-    if (temp) {
-      temp.forEach((element) => {
-        let x = JSON.parse(element);
-        console.log(x.itemID);
-      });
+  const orderStatus = "Pendiente";
+
+  function generateOrder(isUpdated) {
+    if (orderDisplay.ordersList.length === 0 || isUpdated) {
+      let orderStorage = getAllOrders();
+      let tempContent = [];
+      let counter = 1;
+      let price = 0;
+
+      if (orderStorage.size >= 1) {
+        orderStorage.forEach((value, key) => {
+          let order = JSON.parse(value);
+          let image;
+          let max;
+
+          stylesRef
+            .collection(order.styleID)
+            .doc(order.itemID)
+            .get()
+            .then((element) => {
+              image = element.data()["image"];
+              max = element.data()["quantity"];
+            })
+            .then(() => {
+              tempContent.push(
+                <Fragment>
+                  <h5 className="text-center">Ítem #{counter}</h5>
+                  <form
+                    key={key}
+                    id={"idForm_" + key}
+                    onSubmit={(e) =>
+                      handleUpdateQuantity(e, key, order.itemID, order.styleID)
+                    }
+                  >
+                    <div className="text-center my-3">
+                      {
+                        <img
+                          src={image}
+                          alt="Imagen de la prenda"
+                          width="300"
+                        />
+                      }
+                    </div>
+                    <label className="form-label topMargin">
+                      <strong>Nombre del producto:</strong> {order.itemName}
+                    </label>
+                    <br></br>
+                    <label className="form-label topMargin">
+                      <strong>Perteneciente al estilo:</strong>{" "}
+                      {order.styleName}
+                    </label>
+                    <br></br>
+                    <label className="form-label topMargin">
+                      <strong>Colores seleccionados:</strong>
+                      {order.itemColor.map((color) => (
+                        <li key={color}>{color}</li>
+                      ))}
+                    </label>
+                    <br></br>
+                    <label className="form-form-label topMargin">
+                      <strong>Tallas seleccionadas:</strong>
+                      {order.itemSize.map((size) => (
+                        <li key={size}>{size}</li>
+                      ))}
+                    </label>
+                    <br></br>
+                    <label className="form-label topMargin">
+                      <strong>Precio unitario del producto:</strong> ₡
+                      {order.itemPrice}
+                    </label>
+                    <br></br>
+                    <label className="form-label topMargin">
+                      <strong>Cantidad a comprar:</strong> {order.itemQuantity}
+                    </label>
+                    <br></br>
+                    <label className="form-label topMargin">
+                      <strong>Subtotal del ítem:</strong> ₡
+                      {order.itemPrice * order.itemQuantity}
+                    </label>
+                    <br></br>
+                    <label className="form-label topMargin">
+                      <strong>Modificar cantidad:</strong>
+                    </label>
+                    <input
+                      key={"quantity" + key}
+                      id={"idQuantity_" + key}
+                      type="number"
+                      name="itemQuantity"
+                      className="form-control"
+                      placeholder={
+                        "Ingrese la nueva cantidad del artículo seleccionado"
+                      }
+                      max={max + order.itemQuantity}
+                      min="1"
+                      required
+                    ></input>
+                    <div className="text-center">
+                      <button
+                        key={"edit" + key}
+                        id={"idUpdate_" + key}
+                        type="submit"
+                        className="btn btnAccept topMargin mx-2"
+                      >
+                        Modificar la cantidad
+                      </button>
+                      <button
+                        key={"delete" + key}
+                        onClick={(e) =>
+                          removeItem(
+                            e,
+                            key,
+                            order.itemID,
+                            order.styleID,
+                            order.itemQuantity
+                          )
+                        }
+                        type="cancel"
+                        className="btn btnClear topMargin mx-2"
+                      >
+                        Borrar elemento
+                      </button>
+                    </div>
+                  </form>
+                  <div className="separator my-3"></div>
+                </Fragment>
+              );
+
+              price += order.itemPrice * order.itemQuantity;
+
+              if (orderStorage.size === tempContent.length) {
+                setOrderDisplay({
+                  ordersList: tempContent,
+                  finalPrice: price,
+                });
+              }
+
+              counter++;
+            });
+        });
+      } else {
+        setOrderDisplay(
+          <strong>
+            <h5 className="text-center">
+              Actualmente no posee pedidos.
+              <br></br>Puede explorar el catálogo y añadir artículos de su
+              agrado.
+            </h5>
+          </strong>
+        );
+      }
     }
-    //console.log(getOrder("Name1626854981138"));
   }
 
-  // This method is responsible of load existing bank accounts for the user to look at them.
   function generateBanking() {
     if (method.bankingList.length === 0) {
       paymentMethodRef.get().then((content) => {
@@ -87,7 +225,6 @@ function ShoppingCart() {
     }
   }
 
-  // This method is responsible of load existing sinpe mobile accounts for the user to look at them.
   function generateSinpe() {
     if (method.sinpeList.length === 0) {
       paymentMethodRef.get().then((content) => {
@@ -123,44 +260,256 @@ function ShoppingCart() {
     }
   }
 
-  // This method is responsible for sending order notifications to both administrators and users.
-  function sendEmail(e) {
+  const handleChange = (e) => {
+    setOrderInfo({
+      ...orderInfo,
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
+  const handleUpdateQuantity = (e, key, itemID, styleID) => {
     e.preventDefault();
 
-    emailjs.sendForm("service_atkl6tj", "template_71mb8x7", e.target).then(
-      (result) => {
-        console.log(result.text);
-      },
-      (error) => {
-        console.log(error.text);
+    let id = e.target.id;
+    id = id.replace("idForm_", "idQuantity_");
+
+    let newQuantity = +document.getElementById(id).value;
+    let order = getOrder(key);
+
+    let orderQuantity = +order.itemQuantity;
+
+    order.itemQuantity = newQuantity;
+
+    if (order.itemQuantity === orderQuantity) {
+      props.setPopup(
+        "Error",
+        "Debe de ingresar una cantidad distinta a la actual."
+      );
+      props.openPopup();
+    }
+
+    let flag = false;
+    let quantity = false;
+
+    if (order.itemColor.length > order.itemQuantity) {
+      flag = true;
+    }
+
+    if (order.itemSize.length > order.itemQuantity && !flag) {
+      flag = true;
+    }
+
+    if (flag) {
+      props.setPopup(
+        "Error",
+        "La cantidad solicitada debe de ser suficiente para los colores y las tallas."
+      );
+      props.openPopup();
+    } else {
+      quantity = true;
+    }
+
+    if (
+      quantity &&
+      order.itemQuantity > orderQuantity &&
+      order.itemQuantity !== orderQuantity
+    ) {
+      addOrder(key, order);
+
+      stylesRef
+        .collection(styleID)
+        .doc(itemID)
+        .update({
+          quantity: firebase.firestore.FieldValue.increment(
+            -(order.itemQuantity - orderQuantity)
+          ),
+        })
+        .then(() => {
+          props.setPopup(
+            "Confirmación",
+            "Se ha aumentado la cantidad del artículo seleccionado correctamente."
+          );
+          props.openPopup();
+          e.target.reset();
+          generateOrder(true);
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+    } else if (
+      quantity &&
+      order.itemQuantity < orderQuantity &&
+      order.itemQuantity !== orderQuantity
+    ) {
+      addOrder(key, order);
+
+      stylesRef
+        .collection(styleID)
+        .doc(itemID)
+        .update({
+          quantity: firebase.firestore.FieldValue.increment(
+            orderQuantity - order.itemQuantity
+          ),
+        })
+        .then(() => {
+          props.setPopup(
+            "Confirmación",
+            "Se ha disminuido la cantidad del artículo seleccionado correctamente."
+          );
+          props.openPopup();
+          e.target.reset();
+          generateOrder(true);
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+    }
+  };
+
+  const removeItem = (e, key, itemID, styleID, quantity) => {
+    e.preventDefault();
+
+    deleteOrder(key);
+
+    stylesRef
+      .collection(styleID)
+      .doc(itemID)
+      .update({
+        quantity: firebase.firestore.FieldValue.increment(quantity),
+      })
+      .then(() => {
+        props.setPopup(
+          "Confirmación",
+          "Se ha eliminado correctamente el ítem de su orden de compra."
+        );
+        props.openPopup();
+        console.log("hi");
+        generateOrder(true);
+      })
+      .catch((error) => {
+        props.setPopup(error.code);
+        props.openPopup();
+      });
+  };
+
+  function sendOrder(e) {
+    e.preventDefault();
+
+    let date = new Date();
+    let finalDate =
+      date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    let message = orderInfo.message;
+    let orderStorage = getAllOrders();
+    let tempContent = [];
+
+    if (orderStorage.size >= 1) {
+      orderStorage.forEach((value) => {
+        let order = JSON.parse(value);
+        tempContent.push(order);
+      });
+
+      if (message === "") {
+        message = "Sin comentario adicional.";
       }
-    );
-    emailjs.sendForm("service_atkl6tj", "template_p5k61e8", e.target).then(
-      (result) => {
-        console.log(result.text);
-      },
-      (error) => {
-        console.log(error.text);
+
+      ordersRef
+        .doc()
+        .set({
+          client: Capitalize(orderInfo.name),
+          email: orderInfo.email,
+          note: message,
+          date: finalDate,
+          status: orderStatus,
+          items: tempContent,
+          price: orderDisplay.finalPrice,
+        })
+        .then(() => {
+          props.setPopup(
+            "Confirmación",
+            "Se ha enviado su pedido con éxito, en breve recibirá un correo de confirmación."
+          );
+          props.openPopup();
+        })
+        .catch((error) => {
+          props.setPopup(error.code);
+          props.openPopup();
+        });
+
+      if (false) {
+        deleteAllOrders();
+
+        emailjs.sendForm("service_atkl6tj", "template_71mb8x7", e.target).then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+
+        emailjs.sendForm("service_atkl6tj", "template_p5k61e8", e.target).then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
       }
-    );
+    } else {
+      props.setPopup(
+        "Error",
+        "Debe de existir un pedido en el carrito de compras."
+      );
+      props.openPopup();
+    }
   }
 
   return (
-    <div className="col-12 justify-content-center d-flex mt-3">
-      <div className="card col-5" id="card-submit">
+    <div className="orderCards" id="cart">
+      {generateOrder(false)}
+      {generateSinpe()}
+      {generateBanking()}
+      <div className="card shadowCards mx-2 my-3" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Orden de compra</h4>
-          <div className="d-flex justify-content-around flex-wrap"></div>
-          <h4 className="text-center mb-4 mt-4">Métodos de pago disponibles</h4>
-          <div className="d-flex justify-content-around flex-wrap">
-            <h5 className="text-center mb-4">SINPE Móvil</h5>
-            {generateSinpe()}
-            {method.sinpeList}
-            <h5 className="text-center mb-4 mt-4">Cuenta bancaria</h5>
-            {generateBanking()}
-            {method.bankingList}
-          </div>
-          <h4 className="text-center mb-4 mt-4">Confirma tu orden de compra</h4>
+          {orderDisplay.ordersList.length > 0 ? (
+            <Fragment>{orderDisplay.ordersList}</Fragment>
+          ) : (
+            <Fragment>
+              <div className="d-flex justify-content-center">
+                <strong className="sr-only">
+                  <h3>Cargando artículos...</h3>
+                </strong>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div
+                  className="spinner-border text-warning"
+                  role="status"
+                ></div>
+              </div>
+            </Fragment>
+          )}
+        </div>
+      </div>
+      <div className="card shadowCards mx-2 my-3" id="card-submit">
+        <div className="card-body">
+          <h4 className="text-center mb-4 ">Confirma tu orden de compra</h4>
+          {orderDisplay.finalPrice > 0 ? (
+            <Fragment>
+              <h5 className="text-center">Detalles del pedido</h5>
+              <p>
+                El total a pagar por este pedido es de{" "}
+                <strong>₡{orderDisplay.finalPrice}</strong>
+              </p>
+              <div className="separator mb-3"></div>
+            </Fragment>
+          ) : (
+            <Fragment></Fragment>
+          )}
+          <h5 className="text-center">Instrucciones de pago</h5>
           <p>
             Para completar la orden, necesitarás rellenar los datos de abajo.
             Una vez hecho, recibirás un correo electrónico a la dirección
@@ -171,13 +520,14 @@ function ShoppingCart() {
             <br></br>Para más información, utiliza los medios de contacto
             mostrados al final de la página.
           </p>
-          <form className="contact-form" onSubmit={sendEmail}>
+          <form className="contact-form" onSubmit={sendOrder}>
             <div>
               <label className="form-label">Nombre</label>
               <input
                 className="form-control"
                 type="text"
-                name="user_name"
+                name="name"
+                onChange={handleChange}
                 required
               />
             </div>
@@ -186,18 +536,55 @@ function ShoppingCart() {
               <input
                 className="form-control"
                 type="email"
-                name="user_email"
+                name="email"
+                onChange={handleChange}
                 required
               />
             </div>
             <div>
               <label className="form-label mt-3">Mensaje (opcional)</label>
-              <textarea className="form-control" name="message" />
+              <textarea
+                className="form-control"
+                name="message"
+                onChange={handleChange}
+              />
             </div>
             <div className="text-center mt-3">
               <input className="btnAccept btn" type="submit" value="Enviar" />
             </div>
           </form>
+        </div>
+      </div>
+      <div className="card shadowCards mx-2 my-3" id="card-submit">
+        <div className="card-body">
+          <h4 className="text-center mb-4 ">Métodos de pago disponibles</h4>
+          {method.sinpeList.length > 0 && method.bankingList.length > 0 ? (
+            <Fragment>
+              <div className="d-flex justify-content-around flex-wrap">
+                <h5 className="text-center mb-4">SINPE Móvil</h5>
+                {method.sinpeList}
+              </div>
+              <div className="separator mt-3"></div>
+              <div className="d-flex justify-content-around flex-wrap">
+                <h5 className="text-center mb-4 mt-4">Cuenta bancaria</h5>
+                {method.bankingList}
+              </div>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <div className="d-flex justify-content-center">
+                <strong className="sr-only">
+                  <h3>Cargando métodos de pago...</h3>
+                </strong>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div
+                  className="spinner-border text-warning"
+                  role="status"
+                ></div>
+              </div>
+            </Fragment>
+          )}
         </div>
       </div>
     </div>

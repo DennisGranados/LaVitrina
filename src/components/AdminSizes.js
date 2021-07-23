@@ -4,15 +4,15 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
  * ----
- * The first version of AdminSizes page was written by Carlos Cabezas, Denilson Granados, 
+ * The first version of AdminSizes page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useFirestore } from "reactfire";
 
 function AdminSizes(props) {
@@ -31,10 +31,9 @@ function AdminSizes(props) {
     });
   };
 
-  
   /**
    * This method is responsible of load existing sizes that can be removed if the administrator desired.
-   * @param {boolean} isUpdated 
+   * @param {boolean} isUpdated
    */
   function generateSizes(isUpdated) {
     if (sizes.sizesList.length === 0 || isUpdated) {
@@ -125,7 +124,7 @@ function AdminSizes(props) {
 
   /**
    * This method is responsible for removing a size and updating the available ones.
-   * @param {string} color 
+   * @param {string} color
    */
   const handleDeleteSizes = (color) => {
     sizesRef.get().then((content) => {
@@ -159,11 +158,27 @@ function AdminSizes(props) {
 
   return (
     <div className="col-12 justify-content-center d-flex mt-3">
+      {generateSizes(false)}
       <div className="card" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Tallas existentes</h4>
-          {generateSizes(false)}
-          {sizes.sizesList}
+          {sizes.sizesList.length > 0 ? (
+            <Fragment>{sizes.sizesList}</Fragment>
+          ) : (
+            <Fragment>
+              <div className="d-flex justify-content-center">
+                <strong className="sr-only">
+                  <h3>Cargando datos...</h3>
+                </strong>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div
+                  className="spinner-border text-warning"
+                  role="status"
+                ></div>
+              </div>
+            </Fragment>
+          )}
           <div className="d-flex justify-content-around flex-wrap"></div>
           <h4 className="text-center mb-4 mt-4">Ingresar talla</h4>
           <form onSubmit={addSize}>

@@ -4,16 +4,16 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
  * ----
- * The first version of AdminColors page was written by Carlos Cabezas, Denilson Granados, 
+ * The first version of AdminColors page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
 
@@ -35,9 +35,9 @@ function AdminColors(props) {
 
   /**
    * This method is responsible of load existing colors that can be removed if the administrator desired.
-   * @param {boolean} isUpdated 
+   * @param {boolean} isUpdated
    */
-  
+
   function generateColors(isUpdated) {
     if (colors.colorsList.length === 0 || isUpdated) {
       colorsRef.get().then((content) => {
@@ -127,7 +127,7 @@ function AdminColors(props) {
 
   /**
    * This method is responsible for removing a color and updating the available ones.
-   * @param {string} color 
+   * @param {string} color
    */
   const handleDeleteColors = (color) => {
     colorsRef.get().then((content) => {
@@ -161,11 +161,27 @@ function AdminColors(props) {
 
   return (
     <div className="col-12 justify-content-center d-flex mt-3">
+      {generateColors(false)}
       <div className="card" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Colores existentes</h4>
-          {generateColors(false)}
-          {colors.colorsList}
+          {colors.colorsList.length > 0 ? (
+            <Fragment>{colors.colorsList}</Fragment>
+          ) : (
+            <Fragment>
+              <div className="d-flex justify-content-center">
+                <strong className="sr-only">
+                  <h3>Cargando datos...</h3>
+                </strong>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div
+                  className="spinner-border text-warning"
+                  role="status"
+                ></div>
+              </div>
+            </Fragment>
+          )}
           <div className="d-flex justify-content-around flex-wrap"></div>
           <h4 className="text-center mb-4 mt-4">Ingresar color</h4>
           <form onSubmit={addColor}>

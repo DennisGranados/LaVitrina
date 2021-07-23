@@ -4,7 +4,7 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
@@ -169,7 +169,7 @@ function AddItem(props) {
       props.openPopup();
     }
   };
- 
+
   // This method reset the space of the added image in the form.
   const resetImage = (e) => {
     setItem({ ...item, itemImage: "", itemColor: [], itemSize: [] });
@@ -247,6 +247,9 @@ function AddItem(props) {
 
   return (
     <div>
+      {generateColors()}
+      {generateSizes()}
+      {generateStyles()}
       <div className="col-12 justify-content-center d-flex mt-3">
         <div className="card" id="card-submit">
           <div className="card-body">
@@ -273,7 +276,6 @@ function AddItem(props) {
               <label className="form-label topMargin">
                 Colores disponibles del producto (puede seleccionar varios)
               </label>
-              {generateColors()}
               {colors.map((color, index) => (
                 <Fragment key={`${color}~${index}`}>
                   <div className="form-check">
@@ -290,7 +292,6 @@ function AddItem(props) {
               <label className="form-form-label topMargin">
                 Tallas disponibles del producto (puede seleccionar varias)
               </label>
-              {generateSizes()}
               {sizes.map((size, index) => (
                 <Fragment key={`${size}~${index}`}>
                   <div className="form-check">
@@ -369,7 +370,6 @@ function AddItem(props) {
                 required
               >
                 <option value="">---Seleccione una opción---</option>
-                {generateStyles()}
                 {styles}
               </select>
               <div className="mb-2 mt-4">

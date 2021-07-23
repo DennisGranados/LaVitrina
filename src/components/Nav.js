@@ -4,12 +4,12 @@
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
  * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez 
+ * @author Jonathan Orozco Pérez
  * @author María Ramírez Hernández
  * History
  * v1.0 – Initial Release
  * ----
- * The first version of Nav was written by Carlos Cabezas, Denilson Granados, 
+ * The first version of Nav was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
 import React from "react";
@@ -60,6 +60,11 @@ function Nav() {
                   Acerca de
                 </Link>
               </li>
+              <li className="btn">
+                <Link to="/shoppingCart" className="btn noHype navHover">
+                  Carrito de compras
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -96,6 +101,11 @@ function Nav() {
               <li className="btn">
                 <Link to="/about-us" className="btn noHype navHover">
                   Acerca de
+                </Link>
+              </li>
+              <li className="btn">
+                <Link to="/shoppingCart" className="btn noHype navHover">
+                  Carrito de compras
                 </Link>
               </li>
               <button className="btn navHover noHype" onClick={signOut}>
