@@ -1,3 +1,17 @@
+/**
+ * @fileoverview index, responsible for loading the website.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez 
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of index was written by Carlos Cabezas, Denilson Granados, 
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles.scss";
