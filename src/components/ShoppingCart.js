@@ -22,8 +22,8 @@ function ShoppingCart(props) {
   init("user_QYgxouEt1fkzj4qdwfIXm");
 
   const [orderInfo, setOrderInfo] = useState({
-    name: "",
-    email: "",
+    user_name: "",
+    user_email: "",
     message: "",
   });
 
@@ -40,7 +40,10 @@ function ShoppingCart(props) {
   const orderStatus = "Pendiente";
 
   function generateOrder(isUpdated) {
-    if (orderDisplay.ordersList.length === 0 || isUpdated) {
+    if (
+      (orderDisplay.ordersList.length === 0 || isUpdated) &&
+      orderDisplay.ordersList === undefined
+    ) {
       let orderStorage = getAllOrders();
       let tempContent = [];
       let counter = 1;
@@ -220,6 +223,13 @@ function ShoppingCart(props) {
             ...method,
             bankingList: temp,
           });
+        } else {
+          temp.push(
+            <strong>
+              <h5>No hay cuentas bancarias disponibles de SINPE Móvil.</h5>
+            </strong>
+          );
+          setPaymentMethod({ ...method, sinpeList: temp });
         }
       });
     }
@@ -255,6 +265,13 @@ function ShoppingCart(props) {
             ...method,
             sinpeList: temp,
           });
+        } else {
+          temp.push(
+            <strong>
+              <h5>No hay cuentas de SINPE Móvil disponibles.</h5>
+            </strong>
+          );
+          setPaymentMethod({ ...method, sinpeList: temp });
         }
       });
     }
@@ -398,7 +415,7 @@ function ShoppingCart(props) {
     e.preventDefault();
 
     let date = new Date();
-    let finalDate =
+    let initialDate =
       date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     let message = orderInfo.message;
     let orderStorage = getAllOrders();
@@ -407,6 +424,7 @@ function ShoppingCart(props) {
     if (orderStorage.size >= 1) {
       orderStorage.forEach((value) => {
         let order = JSON.parse(value);
+
         tempContent.push(order);
       });
 
@@ -417,10 +435,10 @@ function ShoppingCart(props) {
       ordersRef
         .doc()
         .set({
-          client: Capitalize(orderInfo.name),
-          email: orderInfo.email,
+          client: Capitalize(orderInfo.user_name),
+          email: orderInfo.user_email,
           note: message,
-          date: finalDate,
+          initialDate: initialDate,
           status: orderStatus,
           items: tempContent,
           price: orderDisplay.finalPrice,
@@ -437,27 +455,27 @@ function ShoppingCart(props) {
           props.openPopup();
         });
 
-      if (false) {
-        deleteAllOrders();
+      deleteAllOrders();
 
-        emailjs.sendForm("service_atkl6tj", "template_71mb8x7", e.target).then(
-          (result) => {
-            console.log(result.text);
-          },
-          (error) => {
-            console.log(error.text);
-          }
-        );
+      emailjs.sendForm("service_atkl6tj", "template_71mb8x7", e.target).then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
 
-        emailjs.sendForm("service_atkl6tj", "template_p5k61e8", e.target).then(
-          (result) => {
-            console.log(result.text);
-          },
-          (error) => {
-            console.log(error.text);
-          }
-        );
-      }
+      emailjs.sendForm("service_atkl6tj", "template_p5k61e8", e.target).then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+
+      generateOrder(true);
     } else {
       props.setPopup(
         "Error",
@@ -526,7 +544,7 @@ function ShoppingCart(props) {
               <input
                 className="form-control"
                 type="text"
-                name="name"
+                name="user_name"
                 onChange={handleChange}
                 required
               />
@@ -536,7 +554,7 @@ function ShoppingCart(props) {
               <input
                 className="form-control"
                 type="email"
-                name="email"
+                name="user_email"
                 onChange={handleChange}
                 required
               />
@@ -545,10 +563,24 @@ function ShoppingCart(props) {
               <label className="form-label mt-3">Mensaje (opcional)</label>
               <textarea
                 className="form-control"
+                value="Sin comentario adicional."
                 name="message"
                 onChange={handleChange}
               />
             </div>
+            {orderDisplay.finalPrice > 0 ? (
+              <Fragment>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="price"
+                  value={orderDisplay.finalPrice}
+                  hidden
+                />
+              </Fragment>
+            ) : (
+              <Fragment></Fragment>
+            )}
             <div className="text-center mt-3">
               <input className="btnAccept btn" type="submit" value="Enviar" />
             </div>

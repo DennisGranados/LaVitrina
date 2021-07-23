@@ -12,7 +12,6 @@
  * The first version of OrderManager page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
-const defaultOrderIndex = "orders";
 
 function getOrder(id) {
   let orders = localStorage.getItem(id);
@@ -41,44 +40,9 @@ function getAllOrders() {
   return temp;
 }
 
-function addSubscription(province, canton) {
-  let subscriptions = localStorage.getItem("subscriptions");
-  if (subscriptions) {
-    subscriptions = JSON.parse(subscriptions);
-    if (subscriptions[province]) {
-      if (!subscriptions[province].includes(canton)) {
-        subscriptions[province].push(canton);
-      }
-    } else {
-      subscriptions[province] = [canton];
-    }
-    subscriptions = JSON.stringify(subscriptions);
-    localStorage.setItem("subscriptions", subscriptions);
-  } else {
-    subscriptions = { [province]: [canton] };
-    subscriptions = JSON.stringify(subscriptions);
-    localStorage.setItem("subscriptions", subscriptions);
-  }
-}
-
 // This method is responsible for adding an order to the local storage.
 function addOrder(id, newOrder) {
   localStorage.setItem(id, JSON.stringify(newOrder));
-}
-
-function deleteSubscription(province, canton) {
-  let subscriptions = localStorage.getItem("subscriptions");
-  if (subscriptions) {
-    subscriptions = JSON.parse(subscriptions);
-    if (subscriptions[province]) {
-      let index = subscriptions[province].indexOf(canton);
-      if (index > -1) {
-        subscriptions[province].splice(index, 1);
-      }
-      subscriptions = JSON.stringify(subscriptions);
-      localStorage.setItem("subscriptions", subscriptions);
-    }
-  }
 }
 
 // This method is responsible for delete an order to the local storage.

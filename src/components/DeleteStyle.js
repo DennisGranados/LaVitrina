@@ -19,6 +19,7 @@ function DeleteStyle(props) {
   const [discard, setDiscard] = useState(undefined);
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
+  const pendingOrderStatus = "Pendiente";
 
   // This method set the style to delete.
   const handleChange = (e) => {

@@ -8,28 +8,26 @@ function CatalogItemCard(props) {
       />
       <div className="card-body">
         <h4 className="card-title text-center">{props.name}</h4>
-        <label>
-          <strong>Código:</strong> {props.code}
-        </label>
-        <br></br>
-        <label>
-          <strong>Precio:</strong> ₡{props.price}
-        </label>
-        <br></br>
-        <label>
+        <li className="list-group-item">
+          <strong>Código: </strong>
+          {props.code}
+        </li>
+        <li className="list-group-item">
+          <strong>Precio: </strong>₡{props.price}
+        </li>
+        <li className="list-group-item">
           <strong>Colores disponibles:</strong>{" "}
           {props.color.map((color) => (
             <li>{color}</li>
           ))}
-        </label>
-        <br></br>
-        <label className="mb-3">
+        </li>
+        <li className="list-group-item">
           <strong>Tallas disponibles:</strong>{" "}
           {props.size.map((size) => (
             <li>{size}</li>
           ))}
-        </label>
-        <div className="d-flex align-items-center justify-content-around">
+        </li>
+        <div className="d-flex align-items-center justify-content-around mt-3">
           <div
             className="btn-group"
             role="group"

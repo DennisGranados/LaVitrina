@@ -8,7 +8,7 @@ function CatalogStyleCard(props) {
       />
       <div className="card-body">
         <h4 className="card-title text-center">{props.name}</h4>
-        <div className="d-flex align-items-center justify-content-around">
+        <div className="d-flex align-items-center justify-content-around mt-3">
           <div
             className="btn-group"
             role="group"

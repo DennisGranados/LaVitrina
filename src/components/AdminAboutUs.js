@@ -61,7 +61,6 @@ function AddInformation(props) {
       .update({
         email: newInformation.email.toLowerCase(),
         phoneNumber: newInformation.phoneNumber,
-        phoneNumber: newInformation.phoneNumber,
         facebook: newInformation.facebook.toLowerCase(),
         instagram: newInformation.instagram.toLowerCase(),
         aboutUs: newInformation.aboutUs,
@@ -143,7 +142,8 @@ function AddInformation(props) {
               required
             />
             <label className="form-label topMargin">
-              Ingresar detalles acerca de la tienda
+              Ingresar detalles adicionales acerca de la tienda (puede dejarse
+              en blanco)
             </label>
             <textarea
               className="form-control"
@@ -152,7 +152,6 @@ function AddInformation(props) {
               onChange={handleChange}
               value={newInformation.extraInfo}
               placeholder={information.extraInfo}
-              required
             />
             <div className="text-center">
               <button type="submit" className="btn btnAccept topMargin mx-2">

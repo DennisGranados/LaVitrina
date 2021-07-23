@@ -38,7 +38,6 @@ function Catalog(props) {
           key={id}
           id={id}
           name={name}
-          name={name}
           code={code}
           image={image}
           quantity={quantity}

@@ -168,7 +168,7 @@ function AdminSizes(props) {
             <Fragment>
               <div className="d-flex justify-content-center">
                 <strong className="sr-only">
-                  <h3>Cargando datos...</h3>
+                  <h3>Cargando tallas...</h3>
                 </strong>
               </div>
               <div className="d-flex justify-content-center">

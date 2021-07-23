@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import EditItemCard from "./EditItemCard";
 
@@ -10,7 +10,7 @@ function EditItemContent(props) {
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(
-        <div>
+        <Fragment>
           <div className="d-flex justify-content-center">
             <strong className="sr-only">
               <h3>Cargando artículos...</h3>
@@ -19,7 +19,7 @@ function EditItemContent(props) {
           <div className="d-flex justify-content-center">
             <div className="spinner-border text-warning" role="status"></div>
           </div>
-        </div>
+        </Fragment>
       );
     } else {
       let tempContent = [];
@@ -51,7 +51,6 @@ function EditItemContent(props) {
                     image={element.data()["image"]}
                     visible={element.data()["visible"]}
                     quantity={element.data()["quantity"]}
-                    key={element.id}
                   />
                 );
 

@@ -14,12 +14,13 @@
  */
 import firebase from "firebase";
 import React, { useState } from "react";
-import { useFirebaseApp, useFirestore } from "reactfire";
+import { useFirestore } from "reactfire";
 
 function DeleteItem(props) {
   const [discard, setDiscard] = useState(undefined);
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
+  const pendingOrderStatus = "Pendiente";
 
   // This method set the item to delete.
   const handleChange = (e) => {

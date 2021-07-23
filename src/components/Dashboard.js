@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 
 function Dashboard() {
   return (
-    <div className="orderCards">
+    <div className="orderCards" id="dashboard">
       <div className="card shadowCards mx-2 my-3">
         <img
           src="https://image.flaticon.com/icons/png/512/748/748137.png"
@@ -27,7 +27,7 @@ function Dashboard() {
         <div className="card-body">
           <h5 className="card-title text-center">Añadir cuenta de usuario</h5>
           <p className="card-text">Agregar cuentas administrativas.</p>
-          <div className="text-center mt-5">
+          <div className="text-center">
             <Link className="btn btnAccept" to="/admin/register">
               Ir a la sección
             </Link>
@@ -40,7 +40,7 @@ function Dashboard() {
           className="card-img-top"
           alt="Imagen eliminar cuenta de usuario"
         />
-        <div className="card-body justify-content-center">
+        <div className="card-body">
           <h5 className="card-title text-center">Eliminar cuenta de usuario</h5>
           <p className="card-text">Eliminar cuentas administrativas.</p>
           <div className="text-center">
@@ -96,8 +96,8 @@ function Dashboard() {
         <div className="card-body">
           <h5 className="card-title text-center">Información de la página</h5>
           <p className="card-text">
-            Permite gestionar los métodos de contacto, así como información de
-            la página (acerca de nosotras).
+            Permite gestionar los métodos de contacto, así como información
+            básica de la página.
           </p>
           <div className="text-center">
             <Link className="btn btnAccept" to="/admin/about_us">

@@ -59,7 +59,6 @@ function CatalogStyleContent(props) {
                         id={stylesItem}
                         name={content.data()["name"]}
                         image={content.data()["image"]}
-                        key={stylesItem}
                       />
                     );
                   } else {

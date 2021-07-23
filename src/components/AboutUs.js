@@ -12,7 +12,7 @@
  * The first version of AboutUs page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
-import React from "react";
+import React, { Fragment } from "react";
 
 function AboutUs(props) {
   const information = props.data;
@@ -26,13 +26,19 @@ function AboutUs(props) {
         </div>
         <div className="col-6"></div>
       </div>
-      <div className="row-cols-12 mb-3 d-flex">
-        <div className="col-6"></div>
-        <div className="col-6 justify-content-center mx-3">
-          <h1>Detalles</h1>
-          <p>{information.extraInfo}</p>
-        </div>
-      </div>
+      {information.extraInfo.length > 0 ? (
+        <Fragment>
+          <div className="row-cols-12 mb-3 d-flex">
+            <div className="col-6"></div>
+            <div className="col-6 justify-content-center mx-3">
+              <h1>Detalles</h1>
+              <p>{information.extraInfo}</p>
+            </div>
+          </div>
+        </Fragment>
+      ) : (
+        <Fragment></Fragment>
+      )}
     </div>
   );
 }

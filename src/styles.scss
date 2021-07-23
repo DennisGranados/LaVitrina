@@ -68,6 +68,10 @@ code {
   width: 36rem;
 }
 
+#card-submit {
+  width: 36rem;
+}
+
 .backgroundHeader {
   background: $gradient;
 }
@@ -171,6 +175,10 @@ code {
 
 #cart {
   align-items: baseline;
+}
+
+#dashboard {
+  align-items: stretch;
 }
 
 .spinner-border {

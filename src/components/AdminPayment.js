@@ -274,7 +274,7 @@ function AdminPayment(props) {
   };
 
   return (
-    <div className="orderCards">
+    <div className="orderCards" id="cart">
       {generateBanking(false)}
       {generateSinpe(false)}
       <div className="card my-3" id="card-submit">
