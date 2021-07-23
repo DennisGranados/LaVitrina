@@ -87,8 +87,8 @@ function deleteOrder(id) {
 }
 
 // This method is responsible for delete all orders to the local storage.
- function deleteAllOrders() {
+function deleteAllOrders() {
   localStorage.clear();
 }
 
-export { getOrder, addOrder, deleteOrder,deleteAllOrders, getAllOrders };
+export { getOrder, addOrder, deleteOrder, deleteAllOrders, getAllOrders };
