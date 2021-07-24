@@ -51,7 +51,7 @@ function EditStylesContent(props) {
                     name={content.data()["name"]}
                     image={content.data()["image"]}
                     visible={content.data()["visible"]}
-                    length={content.data()["length"] - 1}
+                    length={content.data()["length"]}
                   />
                 );
                 if (stylesDB.length === tempContent.length) {
