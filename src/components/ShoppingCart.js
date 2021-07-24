@@ -458,6 +458,9 @@ function ShoppingCart(props) {
 
       if (message === "") {
         message = "Sin comentario adicional.";
+
+        document.getElementById("message").value = message;
+        console.log(document.getElementById("message").value);
       }
 
       ordersRef
@@ -504,6 +507,7 @@ function ShoppingCart(props) {
       );
 
       generateOrder(true);
+      e.target.reset();
     } else {
       props.setPopup(
         "Error",
@@ -597,6 +601,7 @@ function ShoppingCart(props) {
                 className="form-control"
                 type="email"
                 name="user_email"
+                placeholder="test@gmail.com"
                 onChange={handleChange}
                 required
               />
@@ -605,7 +610,8 @@ function ShoppingCart(props) {
               <label className="form-label mt-3">Mensaje (opcional)</label>
               <textarea
                 className="form-control"
-                value="Sin comentario adicional."
+                placeholder="Ingrese un comentario adicional."
+                id="message"
                 name="message"
                 onChange={handleChange}
               />
