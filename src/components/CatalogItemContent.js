@@ -86,24 +86,24 @@ function CatalogItemContent(props) {
   return (
     <div>
       <div className="orderCards">
-        <div className="col-2">
-          <div className="btn-group" aria-label="Basic mixed styles example">
+        <div className="mx-2 mt-3 mb-3">
             <button
               type="button"
               onClick={() => props.actionCancel()}
               className="btn btnAccept"
             >
-              Regresar a la selección de estilos
+              Regresar a estilos
             </button>
-          </div>
         </div>
-        <div className="col-8">
+        <div className="col-8 mt-3">
           <h1>
             Artículos pertenecientes a <strong>{props.styleName}</strong>
           </h1>
         </div>
       </div>
-      <div className="orderCards">{pageData}</div>
+      <div>
+        <div className="orderCards">{pageData}</div>
+      </div>
     </div>
   );
 }
