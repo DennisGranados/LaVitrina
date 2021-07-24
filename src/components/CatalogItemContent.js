@@ -23,7 +23,7 @@ function CatalogItemContent(props) {
       );
     } else {
       let tempContent = [];
-      let counter = 1;
+      let counter = 0;
       let flag = false;
 
       stylesRef
