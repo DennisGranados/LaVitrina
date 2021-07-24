@@ -40,7 +40,10 @@ function OrdersContent(props) {
           let counter = 0;
 
           content.docs.forEach((element) => {
-            if (element.data().status !== completedOrderStatus) {
+            if (
+              element.data().status !== completedOrderStatus &&
+              element.id !== "settings"
+            ) {
               tempContent.push(
                 <Fragment key={element.id}>
                   <ul className="list-group list-group-flush">
@@ -133,7 +136,10 @@ function OrdersContent(props) {
           let counter = 0;
 
           content.docs.forEach((element) => {
-            if (element.data().status !== pendingOrderStatus) {
+            if (
+              element.data().status !== pendingOrderStatus &&
+              element.id !== "settings"
+            ) {
               tempContent.push(
                 <Fragment key={element.id}>
                   <ul className="list-group list-group-flush">
