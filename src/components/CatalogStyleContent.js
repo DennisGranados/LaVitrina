@@ -1,3 +1,17 @@
+/**
+ * @fileoverview CatalogStyleContent, component that show the styles on the catalog.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of CatalogStyleContent was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import CatalogStyleCard from "./CatalogStyleCard";
@@ -7,6 +21,7 @@ function CatalogStyleContent(props) {
   const stylesRef = firestore.collection("catalog").doc("styles");
   const [style, setStyle] = useState([]);
 
+  // This method load the styles existents.
   useEffect(() => {
     if (style.length === 0) {
       setStyle(

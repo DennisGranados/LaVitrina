@@ -1,3 +1,17 @@
+/**
+ * @fileoverview CatalogItem, component that is responsible for displaying the details of the item.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of CatalogItem was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import { addOrder } from "../OrderManager";
@@ -31,6 +45,7 @@ function CatalogItem(props) {
     flag: false,
   });
 
+  // This method set the item to show their information.
   useEffect(() => {
     setItem({
       itemName: props.name,
@@ -44,6 +59,7 @@ function CatalogItem(props) {
     });
   }, [props]);
 
+  // This method is responsible for saving the information of the order to perform.
   function fillOrder() {
     if (item.itemName === "") {
     } else if (!order.flag && order.flag !== undefined) {
@@ -63,6 +79,7 @@ function CatalogItem(props) {
     }
   }
 
+  // This method is responsible for saving the colors selected when ordering an item.
   const handleColor = (e) => {
     var colorSet = new Set(order.itemColor);
 
@@ -77,6 +94,7 @@ function CatalogItem(props) {
     setOrder({ ...order, itemColor: arr });
   };
 
+  // This method is responsible for saving the sizes selected when ordering an item.
   const handleSize = (e) => {
     var sizeSet = new Set(order.itemSize);
 
@@ -90,10 +108,12 @@ function CatalogItem(props) {
     setOrder({ ...order, itemSize: arr });
   };
 
+  // This method is responsible for canceling the creation of the order and returning to the previous page.
   const handleCancelEdit = () => {
     props.actionItems(props.styleID, props.styleName);
   };
 
+  // This method set the order.
   const handleChange = (e) => {
     setOrder({
       ...order,
@@ -101,6 +121,7 @@ function CatalogItem(props) {
     });
   };
 
+  // This method is responsible for perform the order that the user decides.
   const makeOrder = (e) => {
     e.preventDefault();
 

@@ -13,6 +13,7 @@
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
 
+// This method get the order of the localstorage.
 function getOrder(id) {
   let orders = localStorage.getItem(id);
 

@@ -1,3 +1,17 @@
+/**
+ * @fileoverview CatalogItemContent, component that show the items of the style on the catalog.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of CatalogItemContent was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import React, { useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import CatalogItemCard from "./CatalogItemCard";
@@ -7,6 +21,7 @@ function CatalogItemContent(props) {
   const stylesRef = firestore.collection("catalog").doc("styles");
   const [pageData, setPageData] = useState([]);
 
+  // This method load the items belonging to the style.
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(

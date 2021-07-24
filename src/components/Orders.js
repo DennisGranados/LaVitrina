@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Orders, shows the items added to the user's shopping cart.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of Orders was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { useState } from "react";
 import OrdersContent from "./OrdersContent";
 import OrdersDetails from "./OrdersDetails";
