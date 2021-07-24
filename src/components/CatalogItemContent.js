@@ -40,6 +40,8 @@ function CatalogItemContent(props) {
                   flag = true;
                 }
 
+                console.log(element.id);
+
                 tempContent.push(
                   <CatalogItemCard
                     actionDetails={props.actionDetails}

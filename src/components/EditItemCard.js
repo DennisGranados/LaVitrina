@@ -1,6 +1,6 @@
 function EditItemCard(props) {
   return (
-    <div className="card shadowCards mt-3">
+    <div className="card shadowCards my-3 mx-3">
       <img
         src={props.image}
         className="card-img-top"

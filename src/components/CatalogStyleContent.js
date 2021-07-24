@@ -37,7 +37,7 @@ function CatalogStyleContent(props) {
             </strong>
           );
         } else {
-          let counter = 1;
+          let counter = 0;
           let flag = false;
 
           styleId.forEach(function (stylesItem) {
@@ -54,7 +54,7 @@ function CatalogStyleContent(props) {
 
                     tempContent.push(
                       <CatalogStyleCard
-                        key={content.id}
+                        key={stylesItem + content.data()["length"]}
                         actionItems={props.actionItems}
                         id={stylesItem}
                         name={content.data()["name"]}

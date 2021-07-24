@@ -51,15 +51,19 @@ function OrderCard(props) {
         </li>
         <li className="list-group-item">
           <strong>Colores seleccionados: </strong>
-          {props.itemColor.map((color) => (
-            <li>{color}</li>
-          ))}
+          <ul>
+            {props.itemColor.map((color) => (
+              <li>{color}</li>
+            ))}
+          </ul>
         </li>
         <li className="list-group-item">
           <strong>Tallas seleccionadas: </strong>
-          {props.itemSize.map((size) => (
-            <li>{size}</li>
-          ))}
+          <ul>
+            {props.itemSize.map((size) => (
+              <li>{size}</li>
+            ))}
+          </ul>
         </li>
         <li className="list-group-item">
           <strong>Precio unitario: </strong>

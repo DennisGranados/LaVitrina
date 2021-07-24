@@ -1,6 +1,6 @@
 function CatalogItemCard(props) {
   return (
-    <div className="card shadowCards mt-3">
+    <div className="card shadowCards my-3 mx-3">
       <img
         src={props.image}
         className="card-img-top"
@@ -16,16 +16,20 @@ function CatalogItemCard(props) {
           <strong>Precio: </strong>₡{props.price}
         </li>
         <li className="list-group-item">
-          <strong>Colores disponibles:</strong>{" "}
-          {props.color.map((color) => (
-            <li>{color}</li>
-          ))}
+          <strong>Colores disponibles:</strong>
+          <ul>
+            {props.color.map((color) => (
+              <li key={color}>{color}</li>
+            ))}
+          </ul>
         </li>
         <li className="list-group-item">
-          <strong>Tallas disponibles:</strong>{" "}
-          {props.size.map((size) => (
-            <li>{size}</li>
-          ))}
+          <strong>Tallas disponibles:</strong>
+          <ul>
+            {props.size.map((size) => (
+              <li key={size}>{size}</li>
+            ))}
+          </ul>
         </li>
         <div className="d-flex align-items-center justify-content-around mt-3">
           <div

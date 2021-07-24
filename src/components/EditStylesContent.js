@@ -25,16 +25,16 @@ function EditStylesContent(props) {
       let tempContent = [];
 
       stylesRef.get().then(function (content) {
-        let styles = content.data()["styles"];
+        let stylesDB = content.data()["styles"];
 
-        if (styles.length <= 0) {
+        if (stylesDB.length <= 0) {
           setPageData(
             <strong>
               <h3>No hay estilos para mostrar</h3>
             </strong>
           );
         } else {
-          styles.forEach(function (stylesItem) {
+          stylesDB.forEach(function (stylesItem) {
             stylesRef
               .collection(stylesItem)
               .doc("settings")
@@ -42,7 +42,7 @@ function EditStylesContent(props) {
               .then((content) => {
                 tempContent.push(
                   <EditStyleCard
-                    key={content.id}
+                    key={stylesItem}
                     type={props.type}
                     actionItems={props.actionItems}
                     actionEdit={props.actionEdit}
@@ -54,7 +54,7 @@ function EditStylesContent(props) {
                     length={content.data()["length"] - 1}
                   />
                 );
-                if (styles.length === tempContent.length) {
+                if (stylesDB.length === tempContent.length) {
                   setPageData(tempContent);
                 }
               });
