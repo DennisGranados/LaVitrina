@@ -34,7 +34,8 @@ function ShoppingCart(props) {
     .doc("payment_methods");
 
   init("user_QYgxouEt1fkzj4qdwfIXm");
- 
+
+  // This method set the order info.
   const [orderInfo, setOrderInfo] = useState({
     user_name: "",
     user_email: "",
@@ -56,157 +57,161 @@ function ShoppingCart(props) {
   const orderStatus = "Pendiente";
   // This method is responsible for generating the orders that have been made to display them.
   function generateOrder(isUpdated) {
-    if (
-      (orderDisplay.ordersList.length === 0 || isUpdated) &&
-      orderDisplay.ordersList === undefined
-    ) {
-      let orderStorage = getAllOrders();
-      let tempContent = [];
-      let counter = 1;
-      let price = 0;
+    if (orderDisplay.ordersList !== undefined)
+      if (orderDisplay.ordersList.length === 0 || isUpdated) {
+        let orderStorage = getAllOrders();
+        let tempContent = [];
+        let counter = 1;
+        let price = 0;
 
-      if (orderStorage.size >= 1) {
-        orderStorage.forEach((value, key) => {
-          let order = JSON.parse(value);
-          let image;
-          let max;
+        if (orderStorage.size >= 1) {
+          orderStorage.forEach((value, key) => {
+            let order = JSON.parse(value);
+            let image;
+            let max;
 
-          stylesRef
-            .collection(order.styleID)
-            .doc(order.itemID)
-            .get()
-            .then((element) => {
-              image = element.data()["image"];
-              max = element.data()["quantity"];
-            })
-            .then(() => {
-              tempContent.push(
-                <Fragment>
-                  <h5 className="text-center">Ítem #{counter}</h5>
-                  <form
-                    key={key}
-                    id={"idForm_" + key}
-                    onSubmit={(e) =>
-                      handleUpdateQuantity(e, key, order.itemID, order.styleID)
-                    }
-                  >
-                    <div className="text-center my-3">
-                      {
-                        <img
-                          src={image}
-                          alt="Imagen de la prenda"
-                          width="300"
-                        />
+            stylesRef
+              .collection(order.styleID)
+              .doc(order.itemID)
+              .get()
+              .then((element) => {
+                image = element.data()["image"];
+                max = element.data()["quantity"];
+              })
+              .then(() => {
+                tempContent.push(
+                  <Fragment>
+                    <h5 className="text-center">Ítem #{counter}</h5>
+                    <form
+                      key={key}
+                      id={"idForm_" + key}
+                      onSubmit={(e) =>
+                        handleUpdateQuantity(
+                          e,
+                          key,
+                          order.itemID,
+                          order.styleID
+                        )
                       }
-                    </div>
-                    <label className="form-label topMargin">
-                      <strong>Nombre del producto:</strong> {order.itemName}
-                    </label>
-                    <br></br>
-                    <label className="form-label topMargin">
-                      <strong>Perteneciente al estilo:</strong>{" "}
-                      {order.styleName}
-                    </label>
-                    <br></br>
-                    <label className="form-label topMargin">
-                      <strong>Colores seleccionados:</strong>
-                      {order.itemColor.map((color) => (
-                        <li key={color}>{color}</li>
-                      ))}
-                    </label>
-                    <br></br>
-                    <label className="form-form-label topMargin">
-                      <strong>Tallas seleccionadas:</strong>
-                      {order.itemSize.map((size) => (
-                        <li key={size}>{size}</li>
-                      ))}
-                    </label>
-                    <br></br>
-                    <label className="form-label topMargin">
-                      <strong>Precio unitario del producto:</strong> ₡
-                      {order.itemPrice}
-                    </label>
-                    <br></br>
-                    <label className="form-label topMargin">
-                      <strong>Cantidad a comprar:</strong> {order.itemQuantity}
-                    </label>
-                    <br></br>
-                    <label className="form-label topMargin">
-                      <strong>Subtotal del ítem:</strong> ₡
-                      {order.itemPrice * order.itemQuantity}
-                    </label>
-                    <br></br>
-                    <label className="form-label topMargin">
-                      <strong>Modificar cantidad:</strong>
-                    </label>
-                    <input
-                      key={"quantity" + key}
-                      id={"idQuantity_" + key}
-                      type="number"
-                      name="itemQuantity"
-                      className="form-control"
-                      placeholder={
-                        "Ingrese la nueva cantidad del artículo seleccionado"
-                      }
-                      max={max + order.itemQuantity}
-                      min="1"
-                      required
-                    ></input>
-                    <div className="text-center">
-                      <button
-                        key={"edit" + key}
-                        id={"idUpdate_" + key}
-                        type="submit"
-                        className="btn btnAccept topMargin mx-2"
-                      >
-                        Modificar la cantidad
-                      </button>
-                      <button
-                        key={"delete" + key}
-                        onClick={(e) =>
-                          removeItem(
-                            e,
-                            key,
-                            order.itemID,
-                            order.styleID,
-                            order.itemQuantity
-                          )
+                    >
+                      <div className="text-center my-3">
+                        {
+                          <img
+                            src={image}
+                            alt="Imagen de la prenda"
+                            width="300"
+                          />
                         }
-                        type="cancel"
-                        className="btn btnClear topMargin mx-2"
-                      >
-                        Borrar elemento
-                      </button>
-                    </div>
-                  </form>
-                  <div className="separator my-3"></div>
-                </Fragment>
-              );
+                      </div>
+                      <label className="form-label topMargin">
+                        <strong>Nombre del producto:</strong> {order.itemName}
+                      </label>
+                      <br></br>
+                      <label className="form-label topMargin">
+                        <strong>Perteneciente al estilo:</strong>{" "}
+                        {order.styleName}
+                      </label>
+                      <br></br>
+                      <label className="form-label topMargin">
+                        <strong>Colores seleccionados:</strong>
+                        {order.itemColor.map((color) => (
+                          <li key={color}>{color}</li>
+                        ))}
+                      </label>
+                      <br></br>
+                      <label className="form-form-label topMargin">
+                        <strong>Tallas seleccionadas:</strong>
+                        {order.itemSize.map((size) => (
+                          <li key={size}>{size}</li>
+                        ))}
+                      </label>
+                      <br></br>
+                      <label className="form-label topMargin">
+                        <strong>Precio unitario del producto:</strong> ₡
+                        {order.itemPrice}
+                      </label>
+                      <br></br>
+                      <label className="form-label topMargin">
+                        <strong>Cantidad a comprar:</strong>{" "}
+                        {order.itemQuantity}
+                      </label>
+                      <br></br>
+                      <label className="form-label topMargin">
+                        <strong>Subtotal del ítem:</strong> ₡
+                        {order.itemPrice * order.itemQuantity}
+                      </label>
+                      <br></br>
+                      <label className="form-label topMargin">
+                        <strong>Modificar cantidad:</strong>
+                      </label>
+                      <input
+                        key={"quantity" + key}
+                        id={"idQuantity_" + key}
+                        type="number"
+                        name="itemQuantity"
+                        className="form-control"
+                        placeholder={
+                          "Ingrese la nueva cantidad del artículo seleccionado"
+                        }
+                        max={max + order.itemQuantity}
+                        min="1"
+                        required
+                      ></input>
+                      <div className="text-center">
+                        <button
+                          key={"edit" + key}
+                          id={"idUpdate_" + key}
+                          type="submit"
+                          className="btn btnAccept topMargin mx-2"
+                        >
+                          Modificar la cantidad
+                        </button>
+                        <button
+                          key={"delete" + key}
+                          onClick={(e) =>
+                            removeItem(
+                              e,
+                              key,
+                              order.itemID,
+                              order.styleID,
+                              order.itemQuantity
+                            )
+                          }
+                          type="cancel"
+                          className="btn btnClear topMargin mx-2"
+                        >
+                          Borrar elemento
+                        </button>
+                      </div>
+                    </form>
+                    <div className="separator my-3"></div>
+                  </Fragment>
+                );
 
-              price += order.itemPrice * order.itemQuantity;
+                price += order.itemPrice * order.itemQuantity;
 
-              if (orderStorage.size === tempContent.length) {
-                setOrderDisplay({
-                  ordersList: tempContent,
-                  finalPrice: price,
-                });
-              }
+                if (orderStorage.size === tempContent.length) {
+                  setOrderDisplay({
+                    ordersList: tempContent,
+                    finalPrice: price,
+                  });
+                }
 
-              counter++;
-            });
-        });
-      } else {
-        setOrderDisplay(
-          <strong>
-            <h5 className="text-center">
-              Actualmente no posee pedidos.
-              <br></br>Puede explorar el catálogo y añadir artículos de su
-              agrado.
-            </h5>
-          </strong>
-        );
+                counter++;
+              });
+          });
+        } else {
+          setOrderDisplay(
+            <strong>
+              <h5 className="text-justify">
+                Actualmente no posee pedidos
+                <br></br>Puede explorar el catálogo y añadir artículos de su
+                agrado
+              </h5>
+            </strong>
+          );
+        }
       }
-    }
   }
 
   // This method is responsible of load existing bank accounts.
@@ -516,21 +521,35 @@ function ShoppingCart(props) {
       <div className="card shadowCards mx-2 my-3" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Orden de compra</h4>
-          {orderDisplay.ordersList.length > 0 ? (
-            <Fragment>{orderDisplay.ordersList}</Fragment>
+          {orderDisplay.ordersList !== undefined ? (
+            <Fragment>
+              {orderDisplay.ordersList.length > 0 ? (
+                <Fragment>{orderDisplay.ordersList}</Fragment>
+              ) : (
+                <Fragment>
+                  <div className="d-flex justify-content-center">
+                    <strong className="sr-only">
+                      <h3>Cargando artículos...</h3>
+                    </strong>
+                  </div>
+                  <div className="d-flex justify-content-center">
+                    <div
+                      className="spinner-border text-warning"
+                      role="status"
+                    ></div>
+                  </div>
+                </Fragment>
+              )}
+            </Fragment>
           ) : (
             <Fragment>
-              <div className="d-flex justify-content-center">
-                <strong className="sr-only">
-                  <h3>Cargando artículos...</h3>
-                </strong>
-              </div>
-              <div className="d-flex justify-content-center">
-                <div
-                  className="spinner-border text-warning"
-                  role="status"
-                ></div>
-              </div>
+              <strong>
+                <h5 className="text-justify">
+                  Actualmente no posee pedidos
+                  <br></br>Puede explorar el catálogo y añadir artículos de su
+                  agrado
+                </h5>
+              </strong>
             </Fragment>
           )}
         </div>
