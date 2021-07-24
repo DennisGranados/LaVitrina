@@ -1,3 +1,17 @@
+/**
+ * @fileoverview ShoppingCart, shows the items added to the user's shopping cart.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of ShoppingCart was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import React, { Fragment, useState } from "react";
 import emailjs, { init } from "emailjs-com";
 import { useFirestore } from "reactfire";
@@ -20,25 +34,27 @@ function ShoppingCart(props) {
     .doc("payment_methods");
 
   init("user_QYgxouEt1fkzj4qdwfIXm");
-
+ 
   const [orderInfo, setOrderInfo] = useState({
     user_name: "",
     user_email: "",
     message: "",
   });
 
+  // This method set the lists of bank accounts and sinpe mobile account.
   const [method, setPaymentMethod] = useState({
     bankingList: [],
     sinpeList: [],
   });
 
+  // This methpd display the order made and ther final price.
   const [orderDisplay, setOrderDisplay] = useState({
     ordersList: [],
     finalPrice: 0,
   });
 
   const orderStatus = "Pendiente";
-
+  // This method is responsible for generating the orders that have been made to display them.
   function generateOrder(isUpdated) {
     if (
       (orderDisplay.ordersList.length === 0 || isUpdated) &&
@@ -193,6 +209,7 @@ function ShoppingCart(props) {
     }
   }
 
+  // This method is responsible of load existing bank accounts.
   function generateBanking() {
     if (method.bankingList.length === 0) {
       paymentMethodRef.get().then((content) => {
@@ -235,6 +252,7 @@ function ShoppingCart(props) {
     }
   }
 
+  // This method is responsible of load existing bank accounts.
   function generateSinpe() {
     if (method.sinpeList.length === 0) {
       paymentMethodRef.get().then((content) => {
@@ -277,6 +295,7 @@ function ShoppingCart(props) {
     }
   }
 
+  // This method set the information of the order made.
   const handleChange = (e) => {
     setOrderInfo({
       ...orderInfo,
@@ -284,6 +303,7 @@ function ShoppingCart(props) {
     });
   };
 
+  // This method is responsible for manage the change in the quantity of selected items in an order.
   const handleUpdateQuantity = (e, key, itemID, styleID) => {
     e.preventDefault();
 
@@ -385,6 +405,7 @@ function ShoppingCart(props) {
     }
   };
 
+  // This method is responsible for removing an item from the order in the shopping cart.
   const removeItem = (e, key, itemID, styleID, quantity) => {
     e.preventDefault();
 
@@ -411,6 +432,8 @@ function ShoppingCart(props) {
       });
   };
 
+  /**This method is responsible for sending the information of the completed order and sending the 
+  notification to the user and administrator.*/
   function sendOrder(e) {
     e.preventDefault();
 
