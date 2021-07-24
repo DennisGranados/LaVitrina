@@ -103,11 +103,6 @@ function Nav() {
                   Acerca de
                 </Link>
               </li>
-              <li className="btn">
-                <Link to="/shoppingCart" className="btn noHype navHover">
-                  Carrito de compras
-                </Link>
-              </li>
               <button className="btn navHover noHype" onClick={signOut}>
                 Desconectar
               </button>
