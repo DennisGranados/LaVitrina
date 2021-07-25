@@ -1,3 +1,17 @@
+/**
+ * @fileoverview OrderContent, component that shows the information of the item belonging to the order.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of OrderContent was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import firebase from "firebase";
@@ -12,6 +26,7 @@ function OrdersContent(props) {
   const completedOrderStatus = "Completado";
   const pendingOrderStatus = "Pendiente";
 
+  // This method is responsible for loading pending orders.
   useEffect(() => {
     if (pendingOrders.length === 0) {
       setPendingOrders(
@@ -108,6 +123,7 @@ function OrdersContent(props) {
     }
   }, [pendingOrders.length, restart.flag]);
 
+  // This method is responsible for loading completed orders.
   useEffect(() => {
     if (completedOrders.length === 0) {
       setCompletedOrders(
@@ -196,6 +212,7 @@ function OrdersContent(props) {
     }
   }, [completedOrders.length, restart.flag]);
 
+  // This methos is responsible for completing selected orders that are pending.
   function completeOrder(id) {
     let date = new Date();
     let finalDate =
@@ -218,6 +235,7 @@ function OrdersContent(props) {
       });
   }
 
+  // This method is responsible to cancel the pending orders selected.
   function actionCancelOrder(id) {
     ordersRef
       .doc(id)

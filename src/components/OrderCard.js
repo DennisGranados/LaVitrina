@@ -1,3 +1,17 @@
+/**
+ * @fileoverview OrderCard, component that shows the information of the item belonging to the order.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of OrderCard was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 
@@ -6,6 +20,7 @@ function OrderCard(props) {
   const stylesRef = firestore.collection("catalog").doc("styles");
   const [pageData, setPageData] = useState([]);
 
+  // This methos is responsible to load the image correspondent to the ordered item.
   useEffect(() => {
     if (pageData.length === 0) {
       stylesRef

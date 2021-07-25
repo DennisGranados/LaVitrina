@@ -1,3 +1,17 @@
+/**
+ * @fileoverview OrderDetails, component that displays the details of the selected order.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of OrderDetails was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import OrderCard from "./OrderCard";
@@ -7,6 +21,7 @@ function OrdersDetails(props) {
   const stylesRef = firestore.collection("orders");
   const [pageData, setPageData] = useState([]);
 
+  // This method is responsible for load de details of the selected order.
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(

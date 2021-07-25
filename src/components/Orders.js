@@ -1,5 +1,5 @@
 /**
- * @fileoverview Orders.
+ * @fileoverview Orders page, responsible for displaying the completed and pending orders, and their details.
  * @version 1.0
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
@@ -26,6 +26,7 @@ function Orders(props) {
     });
   };
 
+  // This method is responsible for displaying the details of the orders.
   const actionDetails = (orderID, client, date) => {
     setMode("details");
 
@@ -44,6 +45,7 @@ function Orders(props) {
     });
   };
 
+  // This method is responsible for displaying the completed and pending orders.
   const [mode, setMode] = useState("content");
   const [content, setContent] = useState({
     content: (
