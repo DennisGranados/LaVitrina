@@ -1,3 +1,17 @@
+/**
+ * @fileoverview EditItemContent, component that show the items.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of EditItemContent page was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import EditItemCard from "./EditItemCard";
@@ -7,6 +21,7 @@ function EditItemContent(props) {
   const stylesRef = firestore.collection("catalog").doc("styles");
   const [pageData, setPageData] = useState([]);
 
+  // This method load the items existents to edit.
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(

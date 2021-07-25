@@ -1,3 +1,17 @@
+/**
+ * @fileoverview EditItem, component that allows edit items.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of EditItem page was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
@@ -35,6 +49,7 @@ function EditItem(props) {
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
 
+  // This method is responsible for defining the old values of the item.
   useEffect(() => {
     stylesRef
       .collection(props.styleID)
@@ -58,6 +73,7 @@ function EditItem(props) {
       });
   }, [props, newItem.ready]);
 
+  // This method is responsible for defining the new values of the item.
   function fillNewItem() {
     if (oldItem.itemName === "") {
     } else if (!newItem.flag) {
@@ -76,6 +92,7 @@ function EditItem(props) {
     }
   }
 
+  // This function loads the colors that exist in the database, to select the colors of the item to modify.
   function generateColors() {
     if (colors.length === 0) {
       colorsRef.get().then((content) => {
@@ -107,6 +124,7 @@ function EditItem(props) {
     }
   }
 
+  // This function loads the sizes that exist in the database, to select the sizes of the item to modify.
   function generateSizes() {
     if (sizes.length === 0) {
       sizesRef.get().then((content) => {
@@ -137,6 +155,7 @@ function EditItem(props) {
     }
   }
 
+  // This method set the colors selected by the user.
   const handleColor = (e) => {
     var colorSet = new Set(newItem.itemColor);
 
@@ -151,6 +170,7 @@ function EditItem(props) {
     setNewItem({ ...newItem, itemColor: arr, edited: true });
   };
 
+  // This method set the sizes selected by the user.
   const handleSize = (e) => {
     var sizeSet = new Set(newItem.itemSize);
 
@@ -165,10 +185,12 @@ function EditItem(props) {
     setNewItem({ ...newItem, itemSize: arr, edited: true });
   };
 
+  // This method is responsible for canceling the edition of the item.
   const handleCancelEdit = () => {
     props.actionItems(props.styleID, props.styleName);
   };
 
+  // This method set the new item.
   const handleChange = (e) => {
     setNewItem({
       ...newItem,
@@ -177,6 +199,7 @@ function EditItem(props) {
     });
   };
 
+  // This method is responsible for update if an item is visible or not.
   const handleVisible = (e) => {
     let visible;
 
@@ -184,6 +207,7 @@ function EditItem(props) {
     setNewItem({ ...newItem, [e.target.name]: visible, edited: true });
   };
 
+  // This method is responsible for update the image of the item.
   const handleImage = (e) => {
     try {
       var fReader = new FileReader();
@@ -206,6 +230,7 @@ function EditItem(props) {
     }
   };
 
+  // This method is responsible for update the item selected.
   const updateItem = (e) => {
     e.preventDefault();
     let color = false;

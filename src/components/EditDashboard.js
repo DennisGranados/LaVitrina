@@ -1,3 +1,17 @@
+/**
+ * @fileoverview EditDashboard page, responsible for displaying the styles and the information of these.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of EditDashboard was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { useState } from "react";
 import DeleteStyle from "./DeleteStyle";
 import EditStyle from "./EditStyle";
@@ -18,6 +32,7 @@ function EditDashboard(props) {
     });
   };
 
+  // This method is responsible for displaying the styles to edit them.
   const actionEdit = (id, name, styleName, styleID) => {
     setMode("edit");
 
@@ -59,6 +74,7 @@ function EditDashboard(props) {
     }
   };
 
+  // This method is responsible for displaying the styles to delete them.
   const actionDelete = (id, name, styleName, styleID) => {
     setMode("delete");
 
@@ -99,6 +115,7 @@ function EditDashboard(props) {
     }
   };
 
+  // This method load the items existents to edit.
   const actionItems = (styleID, styleName) => {
     setMode("items");
 
@@ -122,6 +139,7 @@ function EditDashboard(props) {
     });
   };
 
+  // This method load the styles existents to edit.
   const [mode, setMode] = useState("content");
   const [content, setContent] = useState({
     content: (

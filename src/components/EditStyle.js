@@ -1,3 +1,17 @@
+/**
+ * @fileoverview EditStyle, component that allows edit styles.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of EditItem page was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 
@@ -18,6 +32,7 @@ function EditStyle(props) {
     ready: false,
   });
 
+  // This method is responsible for defining the old values of the style.
   useEffect(() => {
     stylesRef
       .collection(props.id)
@@ -35,6 +50,7 @@ function EditStyle(props) {
       });
   }, [props, newStyle.ready]);
 
+  // This method is responsible for defining the new values of the style.
   function fillNewStyle() {
     if (oldStyle.styleName === "") {
     } else if (!newStyle.flag) {
@@ -47,10 +63,12 @@ function EditStyle(props) {
     }
   }
 
+  // This method is responsible for canceling the edition of the style.
   const handleCancelEdit = () => {
     props.actionCancel();
   };
 
+  // This method set the new style.
   const handleChange = (e) => {
     setNewStyle({
       ...newStyle,
@@ -59,6 +77,7 @@ function EditStyle(props) {
     });
   };
 
+  // This method is responsible for update if an style is visible or not.
   const handleVisible = (e) => {
     let visible;
 
@@ -66,6 +85,7 @@ function EditStyle(props) {
     setNewStyle({ ...newStyle, [e.target.name]: visible, edited: true });
   };
 
+  // This method is responsible for update the image of the style.
   const handleImage = (e) => {
     try {
       var fReader = new FileReader();
@@ -89,6 +109,7 @@ function EditStyle(props) {
     }
   };
 
+  // This method is responsible for update the style selected.
   const updateStyle = (e) => {
     e.preventDefault();
     let edited = false;

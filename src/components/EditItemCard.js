@@ -1,3 +1,17 @@
+/**
+ * @fileoverview EditItemCard, component responsible for displaying previous information of the item.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of EditItemCard page was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 function EditItemCard(props) {
   return (
     <div className="card shadowCards my-3 mx-3">

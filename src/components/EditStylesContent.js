@@ -1,3 +1,17 @@
+/**
+ * @fileoverview EditStylesContent, component that show the styles.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of EditStylesContent page was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import EditStyleCard from "./EditStyleCard";
@@ -7,6 +21,7 @@ function EditStylesContent(props) {
   const stylesRef = firestore.collection("catalog").doc("styles");
   const [pageData, setPageData] = useState([]);
 
+  // This method load the styles existents to edit.
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(

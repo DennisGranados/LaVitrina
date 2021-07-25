@@ -1,5 +1,5 @@
 /**
- * @fileoverview Orders, shows the items added to the user's shopping cart.
+ * @fileoverview Orders.
  * @version 1.0
  * @author Carlos Cabezas Fallas
  * @author Denilson Granados Solano
