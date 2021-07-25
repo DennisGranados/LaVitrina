@@ -1,3 +1,18 @@
+
+/**
+ * @fileoverview App, responsible for the configuration of the website.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of App was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import "./styles.scss";
 import React, { useEffect, useState } from "react";
 import {
@@ -64,6 +79,7 @@ function App() {
     extraInfo: "",
   });
 
+  // This method define the store contact information. 
   useEffect(() => {
     if (status === "success") {
       setInformation({
@@ -78,14 +94,21 @@ function App() {
     }
   }, [status, data]);
 
+  // This method allows messages to be displayed.
   function openPopup() {
     setIsOpen(true);
   }
 
+  // This method allows close the messages.
   function closePopup() {
     setIsOpen(false);
   }
 
+  /**
+   * This method is responsible to show the confirmation or error messages.
+   * @param {String} codeOrTitle 
+   * @param {String} message 
+   */
   function setPopup(codeOrTitle, message) {
     if (codeOrTitle !== undefined && message === undefined) {
       switch (codeOrTitle) {
