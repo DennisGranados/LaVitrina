@@ -69,7 +69,7 @@ function DeleteStyle(props) {
   return (
     <div>
       <div className="col-12 justify-content-center d-flex">
-        <div className="card col-5" id="card-submit">
+        <div className="card col-5 mt-3" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
               Borrando estilo <strong>{props.name}</strong>{" "}
@@ -96,11 +96,11 @@ function DeleteStyle(props) {
               <div className="text-center">
                 <button
                   onClick={props.actionCancel}
-                  className="btn btn-danger mx-1"
+                  className="btn btnClear mx-1"
                 >
                   Cancelar
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btnAccept">
                   Confirmar eliminación
                 </button>
               </div>

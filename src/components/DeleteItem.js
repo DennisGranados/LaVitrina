@@ -62,7 +62,7 @@ function DeleteItem(props) {
   return (
     <div>
       <div className="col-12 justify-content-center d-flex">
-        <div className="card col-5" id="card-submit">
+        <div className="card col-5 mt-3" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
               Borrando producto <strong>{props.name}</strong>{" "}
@@ -91,11 +91,11 @@ function DeleteItem(props) {
                   onClick={() =>
                     props.actionItems(props.styleID, props.styleName)
                   }
-                  className="btn btn-danger mx-1"
+                  className="btn btnClear mx-1"
                 >
                   Cancelar
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btnAccept">
                   Confirmar eliminación
                 </button>
               </div>
