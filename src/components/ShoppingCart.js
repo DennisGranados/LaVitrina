@@ -519,7 +519,6 @@ function ShoppingCart(props) {
           "Se ha eliminado correctamente el ítem de su orden de compra."
         );
         props.openPopup();
-        console.log("hi");
         generateOrder(true);
       })
       .catch((error) => {
@@ -535,7 +534,7 @@ function ShoppingCart(props) {
 
     let date = new Date();
     let initialDate =
-      date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+      date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
     let message = orderInfo.message;
     let orderStorage = getAllOrders();
     let tempContent = [];
@@ -558,7 +557,6 @@ function ShoppingCart(props) {
           .doc("orderitemID")
           .get()
           .then((orderDoc) => {
-            console.log(orderDoc.exists);
             if (orderDoc.exists) {
               ordersImagesRef
                 .doc(order.itemID + "_image")

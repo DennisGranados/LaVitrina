@@ -118,8 +118,6 @@ function EditStyle(props) {
     e.preventDefault();
     let edited = false;
 
-    console.log(newStyle);
-
     if (!newStyle.edited) {
       props.setPopup("Error", "Debe de editar al menos un campo del estilo.");
       props.openPopup();

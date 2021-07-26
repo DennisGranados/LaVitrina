@@ -242,8 +242,6 @@ function EditItem(props) {
     let size = false;
     let change = false;
 
-    console.log(newItem);
-
     if (newItem.itemColor.length === 0) {
       props.setPopup("Error", "Debe de seleccionar al menos un color.");
       props.openPopup();

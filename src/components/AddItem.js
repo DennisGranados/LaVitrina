@@ -115,7 +115,6 @@ function AddItem(props) {
       ...item,
       [e.target.name]: e.target.value.trim(),
     });
-    console.log(item);
   };
 
   // This method handles if item is visible or not.

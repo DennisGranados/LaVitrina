@@ -44,7 +44,6 @@ function DeleteStyle(props) {
               itemsDB = order.data()["items"];
 
               itemsDB.forEach((item) => {
-                console.log(item);
                 if (item.styleID === props.id) {
                   counter++;
                 }

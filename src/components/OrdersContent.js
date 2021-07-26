@@ -64,6 +64,14 @@ function OrdersContent(props) {
               element.data().status !== completedOrderStatus &&
               element.id !== "settings"
             ) {
+              let initialDate = new Date(element.data().initialDate);
+              let initialDateFormated =
+                initialDate.getDate() +
+                "/" +
+                (initialDate.getMonth() + 1) +
+                "/" +
+                initialDate.getFullYear();
+
               tempContent.push(
                 <Fragment key={element.id}>
                   <ul className="list-group list-group-flush">
@@ -80,7 +88,7 @@ function OrdersContent(props) {
                     </li>
                     <li className="list-group-item">
                       <strong>Fecha inicial del pedido: </strong>
-                      {element.data().initialDate}
+                      {initialDateFormated}
                     </li>
                     <li className="list-group-item">
                       <strong>Notas: </strong>
@@ -292,6 +300,9 @@ function OrdersContent(props) {
   const filterCompleteOrders = (e) => {
     e.preventDefault();
 
+    console.log(filterInfo);
+    const initialDate = new Date(filterInfo.initialDate);
+    console.log(initialDate);
 
     //e.target.reset();
   };
