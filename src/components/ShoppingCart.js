@@ -40,6 +40,7 @@ function ShoppingCart(props) {
   const [orderInfo, setOrderInfo] = useState({
     user_name: "",
     user_email: "",
+    phone_number: "",
     message: "",
   });
 
@@ -612,6 +613,7 @@ function ShoppingCart(props) {
           .set({
             client: Capitalize(orderInfo.user_name),
             email: orderInfo.user_email,
+            phone_number: orderInfo.phone_number,
             note: message,
             initialDate: initialDate,
             status: orderStatus,
@@ -733,6 +735,17 @@ function ShoppingCart(props) {
                 type="email"
                 name="user_email"
                 placeholder="test@gmail.com"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="form-label mt-3">Número Telefónico</label>
+              <input
+                className="form-control"
+                type="number"
+                name="phone_number"
+                placeholder="88888888"
                 onChange={handleChange}
                 required
               />

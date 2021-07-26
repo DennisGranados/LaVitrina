@@ -1,3 +1,17 @@
+/**
+ * @fileoverview OrdersDetails, component that shows the details of the order.
+ * @version 1.0
+ * @author Carlos Cabezas Fallas
+ * @author Denilson Granados Solano
+ * @author Jahel Jiménez Porras
+ * @author Jonathan Orozco Pérez
+ * @author María Ramírez Hernández
+ * History
+ * v1.0 – Initial Release
+ * ----
+ * The first version of OrdersDetails was written by Carlos Cabezas, Denilson Granados,
+ * Jahel Jiménez, Jonathan Orozco, María Ramírez.
+ */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import OrderCard from "./OrderCard";
@@ -8,6 +22,7 @@ function OrdersDetails(props) {
   const ordersImagesRef = firestore.collection("ordersImages");
   const [pageData, setPageData] = useState([]);
 
+  // This method is responsible to load de details of the articles made by the user.
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(

@@ -84,6 +84,10 @@ function OrdersContent(props) {
                       {element.data().email}
                     </li>
                     <li className="list-group-item">
+                      <strong>Número telefónico: </strong>
+                      {element.data().phone_number}
+                    </li>
+                    <li className="list-group-item">
                       <strong>Costo: </strong>₡{element.data().price}
                     </li>
                     <li className="list-group-item">
