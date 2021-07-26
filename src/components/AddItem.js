@@ -333,7 +333,7 @@ function AddItem(props) {
                   type="number"
                   name="itemPrice"
                   className="form-control"
-                  min="0"
+                  min="1"
                   onChange={handleChange}
                   required
                 />
