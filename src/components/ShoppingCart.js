@@ -745,6 +745,8 @@ function ShoppingCart(props) {
                 className="form-control"
                 type="number"
                 name="phone_number"
+                min="11111111"
+                max="99999999"
                 placeholder="88888888"
                 onChange={handleChange}
                 required
