@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-      <div className="col-12 backgroundHeader orderCards text-center">
+      <div className="col-12 backgroundHeader headerFormat text-center">
         <Link to="/">
           <img src={logo} className="logo" alt="Logo La Vitrina"></img>
         </Link>
