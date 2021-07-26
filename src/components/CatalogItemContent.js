@@ -55,8 +55,6 @@ function CatalogItemContent(props) {
                   flag = true;
                 }
 
-                console.log(element.id);
-
                 tempContent.push(
                   <CatalogItemCard
                     actionDetails={props.actionDetails}
@@ -104,13 +102,13 @@ function CatalogItemContent(props) {
     <div>
       <div className="orderCards">
         <div className="mx-2 mt-3 mb-3">
-            <button
-              type="button"
-              onClick={() => props.actionCancel()}
-              className="btn btnAccept"
-            >
-              Regresar a estilos
-            </button>
+          <button
+            type="button"
+            onClick={() => props.actionCancel()}
+            className="btn btnAccept"
+          >
+            Regresar a estilos
+          </button>
         </div>
         <div className="col-8 mt-3">
           <h1>

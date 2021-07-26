@@ -12,6 +12,7 @@
  * The first version of EditItem page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
+import imageCompression from "browser-image-compression";
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 
@@ -31,6 +32,11 @@ function EditStyle(props) {
     edited: false,
     ready: false,
   });
+  const options = {
+    maxSizeMB: 0.6,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true,
+  };
 
   // This method is responsible for defining the old values of the style.
   useEffect(() => {
@@ -88,21 +94,19 @@ function EditStyle(props) {
   // This method is responsible for update the image of the style.
   const handleImage = (e) => {
     try {
-      var fReader = new FileReader();
-      fReader.readAsDataURL(e.target.files[0]);
-      fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result) {
-          setNewStyle({
-            ...newStyle,
-            styleImage: imageResult.target.result,
-            edited: true,
+      imageCompression(e.target.files[0], options).then(function (
+        compressedFile
+      ) {
+        imageCompression
+          .getDataUrlFromFile(compressedFile)
+          .then(function (image) {
+            setNewStyle({
+              ...newStyle,
+              styleImage: image,
+              edited: true,
+            });
           });
-        } else {
-          props.setPopup("image-not-found");
-          props.openPopup();
-          e.target.reset();
-        }
-      };
+      });
     } catch (error) {
       props.setPopup("image-not-found");
       props.openPopup();
@@ -187,11 +191,22 @@ function EditStyle(props) {
                     width="250"
                   />
                 ) : (
-                  <img
-                    src={oldStyle.styleImage}
-                    alt="Imagen de la prenda"
-                    width="250"
-                  />
+                  <Fragment>
+                    {oldStyle.styleImage ? (
+                      <img
+                        src={oldStyle.styleImage}
+                        alt="Imagen de la prenda"
+                        width="250"
+                      />
+                    ) : (
+                      <div className="d-flex justify-content-center">
+                        <div
+                          className="spinner-border text-warning"
+                          role="status"
+                        ></div>
+                      </div>
+                    )}
+                  </Fragment>
                 )}
               </div>
               <div className="mb-3">

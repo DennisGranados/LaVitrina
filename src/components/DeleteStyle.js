@@ -19,6 +19,7 @@ function DeleteStyle(props) {
   const [discard, setDiscard] = useState(undefined);
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
+  const ordersRef = firestore.collection("orders");
   const pendingOrderStatus = "Pendiente";
 
   // This method set the style to delete.
@@ -31,33 +32,63 @@ function DeleteStyle(props) {
     e.preventDefault();
 
     if (discard === props.name) {
-      stylesRef
-        .collection(props.id)
+      let counter = 0;
+
+      ordersRef
         .get()
         .then((content) => {
-          content.docs.forEach((element) => {
-            stylesRef
-              .collection(props.id)
-              .doc(element.id)
-              .delete()
-              .then(() => {
-                stylesRef.get().then(function (content) {
-                  let styles = content.data()["styles"];
-                  let i = styles.indexOf(props.id);
-                  if (i >= 0) {
-                    styles.splice(i, 1);
-                    stylesRef.update("styles", styles).then(() => {
-                      props.setPopup(
-                        "Confirmación",
-                        "Se ha eliminado la categoría con éxito."
-                      );
-                      props.openPopup();
-                      props.actionCancel();
-                    });
-                  }
-                });
+          content.docs.forEach((order) => {
+            if (order.data()["status"] === pendingOrderStatus) {
+              let itemsDB = [];
+
+              itemsDB = order.data()["items"];
+
+              itemsDB.forEach((item) => {
+                console.log(item);
+                if (item.styleID === props.id) {
+                  counter++;
+                }
               });
+            }
           });
+        })
+        .then(() => {
+            if (counter === 0) {
+              stylesRef
+                .collection(props.id)
+                .get()
+                .then((content) => {
+                  content.docs.forEach((element) => {
+                    stylesRef
+                      .collection(props.id)
+                      .doc(element.id)
+                      .delete()
+                      .then(() => {
+                        stylesRef.get().then(function (content) {
+                          let styles = content.data()["styles"];
+                          let i = styles.indexOf(props.id);
+                          if (i >= 0) {
+                            styles.splice(i, 1);
+                            stylesRef.update("styles", styles).then(() => {
+                              props.setPopup(
+                                "Confirmación",
+                                "Se ha eliminado la categoría con éxito."
+                              );
+                              props.openPopup();
+                              props.actionCancel();
+                            });
+                          }
+                        });
+                      });
+                  });
+                });
+            } else {
+              props.setPopup(
+                "Error",
+                "Existe un pedido pendiente asociado a este estilo."
+              );
+              props.openPopup();
+            }
         });
     } else {
       props.setPopup("data/non-identical-names");
@@ -72,7 +103,7 @@ function DeleteStyle(props) {
         <div className="card col-5 mt-3" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
-              Borrando estilo <strong>{props.name}</strong>{" "}
+              Borrando estilo <strong>{props.name}</strong>
             </h4>
             <h5 className="text-center mb-4">
               Al realizar esta acción, eliminará <strong>TODOS</strong> los

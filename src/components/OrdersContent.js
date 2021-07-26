@@ -25,6 +25,11 @@ function OrdersContent(props) {
   const [restart, setRestart] = useState({ flag: false });
   const completedOrderStatus = "Completado";
   const pendingOrderStatus = "Pendiente";
+  const [filterInfo, setFilterInfo] = useState({
+    filter: "",
+    initialDate: "",
+    finalDate: "",
+  });
 
   // This method is responsible for loading pending orders.
   useEffect(() => {
@@ -45,7 +50,7 @@ function OrdersContent(props) {
       let tempContent = [];
 
       ordersRef.get().then(function (content) {
-        if (content.docs.length === 0) {
+        if (content.docs.length === 1) {
           setPendingOrders(
             <strong>
               <h5 className="text-center">No hay órdenes pendientes</h5>
@@ -94,7 +99,7 @@ function OrdersContent(props) {
                           props.actionDetails(
                             element.id,
                             element.data().client,
-                            element.data().date
+                            element.data().initialDate
                           )
                         }
                       >
@@ -124,7 +129,7 @@ function OrdersContent(props) {
   }, [pendingOrders.length, restart.flag]);
 
   // This method is responsible for loading completed orders.
-  useEffect(() => {
+  /*useEffect(() => {
     if (completedOrders.length === 0) {
       setCompletedOrders(
         <Fragment>
@@ -142,7 +147,7 @@ function OrdersContent(props) {
       let tempContent = [];
 
       ordersRef.get().then(function (content) {
-        if (content.docs.length === 0) {
+        if (content.docs.length === 1) {
           setCompletedOrders(
             <strong>
               <h5 className="text-center">No hay órdenes completadas</h5>
@@ -154,7 +159,8 @@ function OrdersContent(props) {
           content.docs.forEach((element) => {
             if (
               element.data().status !== pendingOrderStatus &&
-              element.id !== "settings"
+              element.id !== "settings" &&
+              !element.id.includes("_image")
             ) {
               tempContent.push(
                 <Fragment key={element.id}>
@@ -189,7 +195,7 @@ function OrdersContent(props) {
                           props.actionDetails(
                             element.id,
                             element.data().client,
-                            element.data().date
+                            element.data().initialDate
                           )
                         }
                       >
@@ -210,7 +216,7 @@ function OrdersContent(props) {
         }
       });
     }
-  }, [completedOrders.length, restart.flag]);
+  }, [completedOrders.length, restart.flag]);*/
 
   // This methos is responsible for completing selected orders that are pending.
   function completeOrder(id) {
@@ -276,6 +282,20 @@ function OrdersContent(props) {
       });
   }
 
+  const handleChange = (e) => {
+    setFilterInfo({
+      ...filterInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const filterCompleteOrders = (e) => {
+    e.preventDefault();
+
+
+    //e.target.reset();
+  };
+
   return (
     <div className="orderCards" id="cart">
       <div className="card shadowCards mx-2 my-3" id="card-submit">
@@ -287,6 +307,47 @@ function OrdersContent(props) {
       <div className="card shadowCards mx-2 my-3" id="card-submit">
         <div className="card-body">
           <h4 className="text-center mb-4">Histórico de órdenes completadas</h4>
+          <h5 className="text-center mb-4">Filtrar órdenes completadas</h5>
+          <form onSubmit={filterCompleteOrders}>
+            <label className="form-label">Tipo de filtrado por fecha: </label>
+            <select
+              className="form-select"
+              name="filter"
+              onChange={handleChange}
+              required
+            >
+              <option value="">---Seleccione una opción---</option>
+              <option value="Fecha inicial">
+                Fecha de solicitud del pedido
+              </option>
+              <option value="Fecha final">Fecha de entrega del pedido</option>
+            </select>
+            <label className="form-label topMargin me-3">Fecha inicial: </label>
+            <input
+              type="date"
+              name="initialDate"
+              min="2000-01-01"
+              max="2100-01-01"
+              onChange={handleChange}
+              required
+            ></input>
+            <br></br>
+            <label className="form-label topMargin me-3">Fecha final: </label>
+            <input
+              type="date"
+              name="finalDate"
+              min="2000-01-01"
+              max="2100-01-01"
+              onChange={handleChange}
+              required
+            ></input>
+            <div className="text-center mt-3">
+              <button type="submit" className="btn btnAccept ms-2">
+                Filtrar
+              </button>
+            </div>
+          </form>
+          <div className="separator my-3"></div>
           {completedOrders}
         </div>
       </div>

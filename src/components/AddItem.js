@@ -17,6 +17,7 @@ import { Fragment, useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
 import firebase from "firebase";
+import imageCompression from "browser-image-compression";
 
 function AddItem(props) {
   const firestore = useFirestore();
@@ -38,6 +39,12 @@ function AddItem(props) {
   const [styles, setStyles] = useState([]);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
+
+  const options = {
+    maxSizeMB: 0.6,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true,
+  };
 
   // This function load the styles existents in the database, to add an item to it.
   function generateStyles() {
@@ -108,6 +115,7 @@ function AddItem(props) {
       ...item,
       [e.target.name]: e.target.value.trim(),
     });
+    console.log(item);
   };
 
   // This method handles if item is visible or not.
@@ -151,19 +159,18 @@ function AddItem(props) {
   // This method handles the image selected to add the item.
   const handleImage = (e) => {
     try {
-      var fReader = new FileReader();
-      fReader.readAsDataURL(e.target.files[0]);
-      fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result) {
-          setItem({
-            ...item,
-            itemImage: imageResult.target.result,
+      imageCompression(e.target.files[0], options).then(function (
+        compressedFile
+      ) {
+        imageCompression
+          .getDataUrlFromFile(compressedFile)
+          .then(function (image) {
+            setItem({
+              ...item,
+              itemImage: image,
+            });
           });
-        } else {
-          props.setPopup("image-not-found");
-          props.openPopup();
-        }
-      };
+      });
     } catch (error) {
       props.setPopup("image-not-found");
       props.openPopup();
@@ -229,7 +236,12 @@ function AddItem(props) {
                     );
                     props.openPopup();
                     e.target.reset();
-                    setItem({ ...item, itemColor: [], itemSize: [] });
+                    setItem({
+                      ...item,
+                      itemImage: "",
+                      itemColor: [],
+                      itemSize: [],
+                    });
                   });
               }
             })

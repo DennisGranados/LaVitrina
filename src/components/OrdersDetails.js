@@ -1,27 +1,13 @@
-/**
- * @fileoverview OrderDetails, component that displays the details of the selected order.
- * @version 1.0
- * @author Carlos Cabezas Fallas
- * @author Denilson Granados Solano
- * @author Jahel Jiménez Porras
- * @author Jonathan Orozco Pérez
- * @author María Ramírez Hernández
- * History
- * v1.0 – Initial Release
- * ----
- * The first version of OrderDetails was written by Carlos Cabezas, Denilson Granados,
- * Jahel Jiménez, Jonathan Orozco, María Ramírez.
- */
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import OrderCard from "./OrderCard";
 
 function OrdersDetails(props) {
   const firestore = useFirestore();
-  const stylesRef = firestore.collection("orders");
+  const ordersRef = firestore.collection("orders");
+  const ordersImagesRef = firestore.collection("ordersImages");
   const [pageData, setPageData] = useState([]);
 
-  // This method is responsible for load de details of the selected order.
   useEffect(() => {
     if (pageData.length === 0) {
       setPageData(
@@ -39,34 +25,42 @@ function OrdersDetails(props) {
     } else {
       let tempContent = [];
 
-      stylesRef
+      ordersRef
         .doc(props.orderID)
         .get()
         .then(function (content) {
           let ordersDB = [];
           ordersDB = content.data()["items"];
+          let image;
 
           ordersDB.forEach((element) => {
-            tempContent.push(
-              <OrderCard
-                key={props.orderID + tempContent.length}
-                itemID={element["itemID"]}
-                styleID={element["styleID"]}
-                styleName={element["styleName"]}
-                itemImage={element["itemImage"]}
-                itemBrand={element["itemBrand"]}
-                itemCode={element["itemCode"]}
-                itemColor={element["itemColor"]}
-                itemName={element["itemName"]}
-                itemPrice={element["itemPrice"]}
-                itemQuantity={element["itemQuantity"]}
-                itemSize={element["itemSize"]}
-              />
-            );
+            ordersImagesRef
+              .doc(element["itemID"] + "_image")
+              .get()
+              .then((orderImage) => {
+                image = orderImage.data()["image"];
 
-            if (ordersDB.length === tempContent.length) {
-              setPageData(tempContent);
-            }
+                tempContent.push(
+                  <OrderCard
+                    key={props.orderID + tempContent.length}
+                    itemID={element["itemID"]}
+                    styleID={element["styleID"]}
+                    styleName={element["styleName"]}
+                    itemImage={image}
+                    itemBrand={element["itemBrand"]}
+                    itemCode={element["itemCode"]}
+                    itemColor={element["itemColor"]}
+                    itemName={element["itemName"]}
+                    itemPrice={element["itemPrice"]}
+                    itemQuantity={element["itemQuantity"]}
+                    itemSize={element["itemSize"]}
+                  />
+                );
+
+                if (ordersDB.length === tempContent.length) {
+                  setPageData(tempContent);
+                }
+              });
           });
         });
     }

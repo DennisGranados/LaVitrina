@@ -16,6 +16,7 @@
 import { useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
+import imageCompression from "browser-image-compression";
 
 function AddStyles(props) {
   const firestore = useFirestore();
@@ -25,6 +26,12 @@ function AddStyles(props) {
     styleImage: "",
     styleVisible: false,
   });
+
+  const options = {
+    maxSizeMB: 0.6,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true,
+  };
 
   //This method set the style to add.
   const handleChange = (e) => {
@@ -45,19 +52,18 @@ function AddStyles(props) {
   // This method handles the image selected to add the style.
   const handleImage = (e) => {
     try {
-      var fReader = new FileReader();
-      fReader.readAsDataURL(e.target.files[0]);
-      fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result) {
-          setStyle({
-            ...style,
-            styleImage: imageResult.target.result,
+      imageCompression(e.target.files[0], options).then(function (
+        compressedFile
+      ) {
+        imageCompression
+          .getDataUrlFromFile(compressedFile)
+          .then(function (image) {
+            setStyle({
+              ...style,
+              styleImage: image,
+            });
           });
-        } else {
-          props.setPopup("image-not-found");
-          props.openPopup();
-        }
-      };
+      });
     } catch (error) {
       props.setPopup("image-not-found");
       props.openPopup();
@@ -90,7 +96,7 @@ function AddStyles(props) {
       .set({
         name: Capitalize(style.styleName),
         image: style.styleImage,
-        length: 1,
+        length: 0,
         visible: style.styleVisible,
       })
       .then(() => {
@@ -106,6 +112,7 @@ function AddStyles(props) {
             );
             props.openPopup();
             e.target.reset();
+            setStyle({ ...style, styleImage: "" });
           }
         });
       })

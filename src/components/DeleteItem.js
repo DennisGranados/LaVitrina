@@ -20,6 +20,7 @@ function DeleteItem(props) {
   const [discard, setDiscard] = useState(undefined);
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
+  const ordersRef = firestore.collection("orders");
   const pendingOrderStatus = "Pendiente";
 
   // This method set the item to delete.
@@ -32,25 +33,54 @@ function DeleteItem(props) {
     e.preventDefault();
 
     if (discard === props.name) {
-      stylesRef
-        .collection(props.styleID)
-        .doc(props.id)
-        .delete()
+      let counter = 0;
+
+      ordersRef
+        .get()
+        .then((content) => {
+          content.docs.forEach((order) => {
+            if (order.data()["status"] === pendingOrderStatus) {
+              let itemsDB = [];
+
+              itemsDB = order.data()["items"];
+
+              itemsDB.forEach((item) => {
+                if (item.itemID === props.id) {
+                  counter++;
+                }
+              });
+            }
+          });
+        })
         .then(() => {
-          stylesRef
-            .collection(props.styleID)
-            .doc("settings")
-            .update({
-              length: firebase.firestore.FieldValue.increment(-1),
-            })
-            .then(() => {
-              props.setPopup(
-                "Confirmación",
-                "Se ha eliminado el producto con éxito."
-              );
-              props.openPopup();
-              props.actionItems(props.styleID, props.styleName);
-            });
+          if (counter === 0) {
+            stylesRef
+              .collection(props.styleID)
+              .doc(props.id)
+              .delete()
+              .then(() => {
+                stylesRef
+                  .collection(props.styleID)
+                  .doc("settings")
+                  .update({
+                    length: firebase.firestore.FieldValue.increment(-1),
+                  })
+                  .then(() => {
+                    props.setPopup(
+                      "Confirmación",
+                      "Se ha eliminado el producto con éxito."
+                    );
+                    props.openPopup();
+                    props.actionItems(props.styleID, props.styleName);
+                  });
+              });
+          } else {
+            props.setPopup(
+              "Error",
+              "Existe un pedido pendiente asociado a este artículo."
+            );
+            props.openPopup();
+          }
         });
     } else {
       props.setPopup("data/non-identical-names");
@@ -65,7 +95,7 @@ function DeleteItem(props) {
         <div className="card col-5 mt-3" id="card-submit">
           <div className="card-body">
             <h4 className="text-center mb-4">
-              Borrando producto <strong>{props.name}</strong>{" "}
+              Borrando producto <strong>{props.name}</strong>
             </h4>
             <h5 className="text-center mb-4">
               Al realizar esta acción, eliminará el producto del estilo al que

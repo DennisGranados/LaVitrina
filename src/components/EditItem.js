@@ -12,6 +12,7 @@
  * The first version of EditItem page was written by Carlos Cabezas, Denilson Granados,
  * Jahel Jiménez, Jonathan Orozco, María Ramírez.
  */
+import imageCompression from "browser-image-compression";
 import { Fragment, useEffect, useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
@@ -48,6 +49,11 @@ function EditItem(props) {
   });
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
+  const options = {
+    maxSizeMB: 0.6,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true,
+  };
 
   // This method is responsible for defining the old values of the item.
   useEffect(() => {
@@ -210,20 +216,19 @@ function EditItem(props) {
   // This method is responsible for update the image of the item.
   const handleImage = (e) => {
     try {
-      var fReader = new FileReader();
-      fReader.readAsDataURL(e.target.files[0]);
-      fReader.onloadend = function (imageResult) {
-        if (imageResult.target.result) {
-          setNewItem({
-            ...newItem,
-            itemImage: imageResult.target.result,
-            edited: true,
+      imageCompression(e.target.files[0], options).then(function (
+        compressedFile
+      ) {
+        imageCompression
+          .getDataUrlFromFile(compressedFile)
+          .then(function (image) {
+            setNewItem({
+              ...newItem,
+              itemImage: image,
+              edited: true,
+            });
           });
-        } else {
-          props.setPopup("image-not-found");
-          props.openPopup();
-        }
-      };
+      });
     } catch (error) {
       props.setPopup("image-not-found");
       props.openPopup();
@@ -306,246 +311,214 @@ function EditItem(props) {
 
   return (
     <div>
+      {fillNewItem()}
+      {generateColors()}
+      {generateSizes()}
       <div className="col-12 justify-content-center d-flex">
         <div className="card mt-3" id="card-submit">
           <div className="card-body">
-            {oldItem.itemName.length > 1 ? (
-              <Fragment>
-                {fillNewItem()}
-                {generateColors()}
-                {generateSizes()}
-                <h4 className="text-center mb-4">
-                  Editando <strong>{oldItem.itemName}</strong>
-                </h4>
-                <form id="addItem" onSubmit={updateItem}>
-                  <label className="form-label">Nombre del producto</label>
-                  <input
-                    type="text"
-                    name="itemName"
-                    className="form-control"
-                    value={newItem.itemName}
-                    placeholder={oldItem.itemName}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label className="form-label topMargin">
-                    Código del producto
-                  </label>
-                  <input
-                    type="text"
-                    name="itemCode"
-                    className="form-control"
-                    value={newItem.itemCode}
-                    placeholder={oldItem.itemCode}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label className="form-label topMargin">
-                    Colores disponibles del producto (puede seleccionar varios)
-                  </label>
-                  {colors.map((color, index) =>
-                    oldItem.itemColor.includes(color) ? (
-                      <Fragment key={`${color}~${index}`}>
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value={color}
-                            onChange={handleColor}
-                            defaultChecked="true"
-                          />
-                          <label className="form-check-label">{color}</label>
-                        </div>
-                      </Fragment>
-                    ) : (
-                      <Fragment key={`${color}~${index}`}>
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value={color}
-                            onChange={handleColor}
-                          />
-                          <label className="form-check-label">{color}</label>
-                        </div>
-                      </Fragment>
-                    )
-                  )}
-                  <label className="form-form-label topMargin">
-                    Tallas disponibles del producto (puede seleccionar varias)
-                  </label>
-                  {sizes.map((size, index) =>
-                    oldItem.itemSize.includes(size) ? (
-                      <Fragment key={`${size}~${index}`}>
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value={size}
-                            onChange={handleSize}
-                            checked
-                          />
-                          <label className="form-check-label">{size}</label>
-                        </div>
-                      </Fragment>
-                    ) : (
-                      <Fragment key={`${size}~${index}`}>
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value={size}
-                            onChange={handleSize}
-                          />
-                          <label className="form-check-label">{size}</label>
-                        </div>
-                      </Fragment>
-                    )
-                  )}
-                  <label className="form-label topMargin">
-                    Marca del producto
-                  </label>
-                  <input
-                    type="text"
-                    name="itemBrand"
-                    className="form-control"
-                    value={newItem.itemBrand}
-                    placeholder={oldItem.itemBrand}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label className="form-label topMargin">
-                    Precio del producto
-                  </label>
-                  <div className="input-group mb-3">
-                    <span className="input-group-text">₡</span>
-                    <input
-                      type="number"
-                      name="itemPrice"
-                      className="form-control"
-                      value={newItem.itemPrice}
-                      placeholder={oldItem.itemPrice}
-                      min="0"
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <label className="form-label topMargin">
-                    Cantidad a ingresar
-                  </label>
-                  <input
-                    type="number"
-                    name="itemQuantity"
-                    className="form-control"
-                    value={newItem.itemQuantity}
-                    placeholder={oldItem.itemQuantity}
-                    min="1"
-                    onChange={handleChange}
-                    required
-                  />
-                  <label className="form-label topMargin">
-                    Imagen del producto
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    name="itemImage"
-                    className="form-control"
-                    onChange={handleImage}
-                  />
-                  <div className="text-center my-3">
-                    {newItem.itemImage ? (
-                      <img
-                        src={newItem.itemImage}
-                        alt="Imagen vieja de la prenda"
-                        width="250"
-                      />
-                    ) : (
-                      <img
-                        src={oldItem.itemImage}
-                        alt="Imagen nueva de la prenda"
-                        width="250"
-                      />
-                    )}
-                  </div>
-                  <div className="mb-2 mt-4">
-                    <label
-                      htmlFor="InputCategoryImage"
-                      className="form-label me-3"
-                    >
-                      {oldItem.itemVisible ? (
-                        <Fragment>
-                          Visible (<strong>Sí</strong>):
-                        </Fragment>
-                      ) : (
-                        <Fragment>
-                          Visible (<strong>No</strong>):
-                        </Fragment>
-                      )}
-                    </label>
-                    <div className="form-check form-check-inline">
+            <h4 className="text-center mb-4">
+              Editando <strong>{oldItem.itemName}</strong>
+            </h4>
+            <form id="addItem" onSubmit={updateItem}>
+              <label className="form-label">Nombre del producto</label>
+              <input
+                type="text"
+                name="itemName"
+                className="form-control"
+                value={newItem.itemName || ""}
+                placeholder={oldItem.itemName}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Código del producto
+              </label>
+              <input
+                type="text"
+                name="itemCode"
+                className="form-control"
+                value={newItem.itemCode}
+                placeholder={oldItem.itemCode}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Colores disponibles del producto (puede seleccionar varios)
+              </label>
+              {colors.map((color, index) =>
+                oldItem.itemColor.includes(color) ? (
+                  <Fragment key={`${color}~${index}`}>
+                    <div className="form-check">
                       <input
                         className="form-check-input"
-                        type="radio"
-                        name="itemVisible"
-                        onChange={handleVisible}
-                        value="true"
+                        type="checkbox"
+                        value={color}
+                        onChange={handleColor}
+                        defaultChecked="true"
                       />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio1"
-                      >
-                        Si
-                      </label>
+                      <label className="form-check-label">{color}</label>
                     </div>
-                    <div className="form-check form-check-inline">
+                  </Fragment>
+                ) : (
+                  <Fragment key={`${color}~${index}`}>
+                    <div className="form-check">
                       <input
                         className="form-check-input"
-                        type="radio"
-                        name="itemVisible"
-                        onChange={handleVisible}
-                        value="false"
+                        type="checkbox"
+                        value={color}
+                        onChange={handleColor}
                       />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio2"
-                      >
-                        No
-                      </label>
+                      <label className="form-check-label">{color}</label>
                     </div>
-                  </div>
-                  <div className="text-center">
-                    <button
-                      type="submit"
-                      className="btn btnAccept topMargin mx-2"
-                    >
-                      Aceptar
-                    </button>
-                    <button
-                      onClick={handleCancelEdit}
-                      type="cancel"
-                      className="btn btnClear topMargin mx-2"
-                    >
-                      Regresar
-                    </button>
-                  </div>
-                </form>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <div className="d-flex justify-content-center">
-                  <strong className="sr-only">
-                    <h3>Cargando datos...</h3>
-                  </strong>
+                  </Fragment>
+                )
+              )}
+              <label className="form-form-label topMargin">
+                Tallas disponibles del producto (puede seleccionar varias)
+              </label>
+              {sizes.map((size, index) =>
+                oldItem.itemSize.includes(size) ? (
+                  <Fragment key={`${size}~${index}`}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={size}
+                        onChange={handleSize}
+                        checked
+                      />
+                      <label className="form-check-label">{size}</label>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <Fragment key={`${size}~${index}`}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={size}
+                        onChange={handleSize}
+                      />
+                      <label className="form-check-label">{size}</label>
+                    </div>
+                  </Fragment>
+                )
+              )}
+              <label className="form-label topMargin">Marca del producto</label>
+              <input
+                type="text"
+                name="itemBrand"
+                className="form-control"
+                value={newItem.itemBrand}
+                placeholder={oldItem.itemBrand}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Precio del producto
+              </label>
+              <div className="input-group mb-3">
+                <span className="input-group-text">₡</span>
+                <input
+                  type="number"
+                  name="itemPrice"
+                  className="form-control"
+                  value={newItem.itemPrice}
+                  placeholder={oldItem.itemPrice}
+                  min="0"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <label className="form-label topMargin">
+                Cantidad a ingresar
+              </label>
+              <input
+                type="number"
+                name="itemQuantity"
+                className="form-control"
+                value={newItem.itemQuantity}
+                placeholder={oldItem.itemQuantity}
+                min="1"
+                onChange={handleChange}
+                required
+              />
+              <label className="form-label topMargin">
+                Imagen del producto
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                name="itemImage"
+                className="form-control"
+                onChange={handleImage}
+              />
+              <div className="text-center my-3">
+                {newItem.itemImage ? (
+                  <img
+                    src={newItem.itemImage}
+                    alt="Imagen vieja de la prenda"
+                    width="250"
+                  />
+                ) : (
+                  <img
+                    src={oldItem.itemImage}
+                    alt="Imagen nueva de la prenda"
+                    width="250"
+                  />
+                )}
+              </div>
+              <div className="mb-2 mt-4">
+                <label htmlFor="InputCategoryImage" className="form-label me-3">
+                  {oldItem.itemVisible ? (
+                    <Fragment>
+                      Visible (<strong>Sí</strong>):
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      Visible (<strong>No</strong>):
+                    </Fragment>
+                  )}
+                </label>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="itemVisible"
+                    onChange={handleVisible}
+                    value="true"
+                  />
+                  <label className="form-check-label" htmlFor="inlineRadio1">
+                    Si
+                  </label>
                 </div>
-                <div className="d-flex justify-content-center">
-                  <div
-                    className="spinner-border text-warning"
-                    role="status"
-                  ></div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="itemVisible"
+                    onChange={handleVisible}
+                    value="false"
+                  />
+                  <label className="form-check-label" htmlFor="inlineRadio2">
+                    No
+                  </label>
                 </div>
-              </Fragment>
-            )}
+              </div>
+              <div className="text-center">
+                <button type="submit" className="btn btnAccept topMargin mx-2">
+                  Aceptar
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  type="cancel"
+                  className="btn btnClear topMargin mx-2"
+                >
+                  Regresar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

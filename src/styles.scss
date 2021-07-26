@@ -177,6 +177,14 @@ code {
   align-items: baseline;
 }
 
+.orderListItem {
+  text-align: left;
+}
+
+.error {
+  color: red;
+}
+
 #dashboard {
   align-items: stretch;
 }
