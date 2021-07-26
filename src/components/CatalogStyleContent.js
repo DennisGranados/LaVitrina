@@ -61,7 +61,7 @@ function CatalogStyleContent(props) {
               .doc("settings")
               .get()
               .then((content) => {
-                if (content.data()["length"] > 1) {
+                if (content.data()["length"] >= 1) {
                   if (content.data()["visible"] === true) {
                     if (!flag) {
                       flag = true;
