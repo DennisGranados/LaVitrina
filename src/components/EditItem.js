@@ -384,7 +384,7 @@ function EditItem(props) {
                         type="checkbox"
                         value={size}
                         onChange={handleSize}
-                        checked
+                        defaultChecked="true"
                       />
                       <label className="form-check-label">{size}</label>
                     </div>
