@@ -18,7 +18,6 @@ function Footer(props) {
   const information = props.data;
 
   return (
-    <div>
       <div className="orderCards backgroundHeader mt-4">
         <div className="card footerContent">
           <h4 className="text-center fw-bold">Redes Sociales</h4>
@@ -77,7 +76,6 @@ function Footer(props) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

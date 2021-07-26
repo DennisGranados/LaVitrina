@@ -19,11 +19,11 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <div className="col-12 backgroundHeader text-center">
-      <Link to="/">
-        <img src={logo} className="logo" alt="Logo La Vitrina"></img>
-      </Link>
-    </div>
+      <div className="col-12 backgroundHeader orderCards text-center">
+        <Link to="/">
+          <img src={logo} className="logo" alt="Logo La Vitrina"></img>
+        </Link>
+      </div>
   );
 }
 
