@@ -307,6 +307,18 @@ function EditItem(props) {
     }
   };
 
+  let oldColors = [];
+  let oldSizes = [];
+  {
+    oldItem.itemColor.forEach((element) => {
+      oldColors.push(<label className="form-control">{element}</label>);
+    });
+
+    oldItem.itemSize.forEach((element) => {
+      oldSizes.push(<label className="form-control">{element}</label>);
+    });
+  }
+
   return (
     <div>
       {fillNewItem()}
@@ -341,68 +353,50 @@ function EditItem(props) {
                 onChange={handleChange}
                 required
               />
+
+              <label className="form-form-label topMargin">
+                Colores anteriores
+              </label>
+              {oldColors}
+
               <label className="form-label topMargin">
                 Colores disponibles del producto (puede seleccionar varios)
               </label>
-              {colors.map((color, index) =>
-                oldItem.itemColor.includes(color) ? (
-                  <Fragment key={`${color}~${index}`}>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={color}
-                        onChange={handleColor}
-                        defaultChecked="true"
-                      />
-                      <label className="form-check-label">{color}</label>
-                    </div>
-                  </Fragment>
-                ) : (
-                  <Fragment key={`${color}~${index}`}>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={color}
-                        onChange={handleColor}
-                      />
-                      <label className="form-check-label">{color}</label>
-                    </div>
-                  </Fragment>
-                )
-              )}
+              {colors.map((color, index) => (
+                <Fragment key={`${color}~${index}`}>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={color}
+                      onChange={handleColor}
+                    />
+                    <label className="form-check-label">{color}</label>
+                  </div>
+                </Fragment>
+              ))}
+
+              <label className="form-form-label topMargin">
+                Tallas anteriores
+              </label>
+              {oldSizes}
+
               <label className="form-form-label topMargin">
                 Tallas disponibles del producto (puede seleccionar varias)
               </label>
-              {sizes.map((size, index) =>
-                oldItem.itemSize.includes(size) ? (
-                  <Fragment key={`${size}~${index}`}>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={size}
-                        onChange={handleSize}
-                        defaultChecked="true"
-                      />
-                      <label className="form-check-label">{size}</label>
-                    </div>
-                  </Fragment>
-                ) : (
-                  <Fragment key={`${size}~${index}`}>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={size}
-                        onChange={handleSize}
-                      />
-                      <label className="form-check-label">{size}</label>
-                    </div>
-                  </Fragment>
-                )
-              )}
+              {sizes.map((size, index) => (
+                <Fragment key={`${size}~${index}`}>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={size}
+                      onChange={handleSize}
+                    />
+                    <label className="form-check-label">{size}</label>
+                  </div>
+                </Fragment>
+              ))}
               <label className="form-label topMargin">Marca del producto</label>
               <input
                 type="text"
