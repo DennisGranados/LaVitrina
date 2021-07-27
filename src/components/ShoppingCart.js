@@ -555,7 +555,7 @@ function ShoppingCart(props) {
 
         stylesRef
           .collection(order.styleID)
-          .doc("orderitemID")
+          .doc(order.itemID)
           .get()
           .then((orderDoc) => {
             if (orderDoc.exists) {
