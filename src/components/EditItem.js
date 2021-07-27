@@ -307,7 +307,7 @@ function EditItem(props) {
     }
   };
 
-  {/*
+
   let oldColors = [];
   let oldSizes = [];
   {
@@ -319,8 +319,8 @@ function EditItem(props) {
       oldSizes.push(<label className="form-control">{element}</label>);
     });
   }
-  */
-}
+
+
   return (
     <div>
       {fillNewItem()}
@@ -356,13 +356,12 @@ function EditItem(props) {
                 required
               />
 
-              {/*
+
               <label className="form-form-label topMargin">
                 Colores anteriores
               </label>
               {oldColors}
-              */
-              }
+
 
               <label className="form-label topMargin">
                 Colores disponibles del producto (puede seleccionar varios)
@@ -381,12 +380,12 @@ function EditItem(props) {
                 </Fragment>
               ))}
 
-             {/** 
+
               <label className="form-form-label topMargin">
                 Tallas anteriores
               </label>
               {oldSizes}
-              */}
+
               <label className="form-form-label topMargin">
                 Tallas disponibles del producto (puede seleccionar varias)
               </label>
