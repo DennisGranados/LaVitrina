@@ -160,33 +160,60 @@ function OrdersContent(props) {
           </strong>
         );
       } else {
-        let counter = 1;
-
         content.docs.forEach((element) => {
           if (
             element.data().status !== pendingOrderStatus &&
             element.id !== "settings"
           ) {
             let actualDate = new Date();
+
             let initialDate = new Date(element.data().initialDate);
             let finalDate = new Date(element.data().finalDate);
+
             let orderInitialDate = new Date(filterInfo.initialDate);
             let orderFinalDate = new Date(filterInfo.finalDate);
-            let orderDateI = new Date(orderInitialDate.getFullYear(), orderInitialDate.getMonth(), orderInitialDate.getDate() + 1);
-            let orderDateF = new Date(orderFinalDate.getFullYear(), orderFinalDate.getMonth(), orderFinalDate.getDate() + 1);
-            let initialDateFormated = initialDate.getDate() + "/" + (initialDate.getMonth() + 1) + "/"
-              + initialDate.getFullYear();
-            let finalDateFormated = finalDate.getDate() + "/" + (finalDate.getMonth() + 1) + "/"
-              + finalDate.getFullYear();
-            if (orderDateI.getTime() === orderDateF.getTime() || orderDateI > orderDateF
-              || orderDateF < orderDateI) {
-              props.setPopup("Error", "Debe seleccionar un rango de fechas válido.");
+            let orderDateI = new Date(
+              orderInitialDate.getFullYear(),
+              orderInitialDate.getMonth(),
+              orderInitialDate.getDate() + 1
+            );
+            let orderDateF = new Date(
+              orderFinalDate.getFullYear(),
+              orderFinalDate.getMonth(),
+              orderFinalDate.getDate() + 1
+            );
+
+            let initialDateFormated =
+              initialDate.getDate() +
+              "/" +
+              (initialDate.getMonth() + 1) +
+              "/" +
+              initialDate.getFullYear();
+            let finalDateFormated =
+              finalDate.getDate() +
+              "/" +
+              (finalDate.getMonth() + 1) +
+              "/" +
+              finalDate.getFullYear();
+
+            let flag = false;
+
+            if (
+              orderDateI.getTime() === orderDateF.getTime() ||
+              orderDateI > orderDateF ||
+              orderDateI > actualDate.setHours(0, 0, 0)
+            ) {
+              props.setPopup(
+                "Error",
+                "Debe seleccionar un rango de fechas válido."
+              );
               props.openPopup();
-            } else {
+              flag = true;
+            }
+
+            if (!flag) {
               if (filterInfo.filter === "Fecha inicial") {
                 if (initialDate >= orderDateI && initialDate <= orderDateF) {
-                  console.log(tempContent);
-                  console.log(actualDate);
                   tempContent.push(
                     <Fragment key={element.id}>
                       <ul className="list-group list-group-flush">
@@ -231,16 +258,13 @@ function OrdersContent(props) {
                       <div className="separator my-3"></div>
                     </Fragment>
                   );
-                } else {
-                  setCompletedOrders(
-                    <strong>
-                      <h5 className="text-center">No hay órdenes completadas en ese periodo</h5>
-                    </strong>
-                  );
                 }
               } else {
                 if (filterInfo.filter === "Fecha final") {
-                  if (finalDate >= orderInitialDate && finalDate <= orderFinalDate) {
+                  if (
+                    finalDate >= orderInitialDate &&
+                    finalDate <= orderFinalDate
+                  ) {
                     tempContent.push(
                       <Fragment key={element.id}>
                         <ul className="list-group list-group-flush">
@@ -285,24 +309,26 @@ function OrdersContent(props) {
                         <div className="separator my-3"></div>
                       </Fragment>
                     );
-                  } else {
-                    setCompletedOrders(
-                      <strong>
-                        <h5 className="text-center">No hay órdenes completadas en ese periodo</h5>
-                      </strong>
-                    );
                   }
                 }
               }
             }
-          } else {
-            counter++;
           }
         });
+        if (tempContent.length === 0) {
+          setCompletedOrders(
+            <strong>
+              <h5 className="text-center">
+                No hay órdenes completadas en ese período
+              </h5>
+            </strong>
+          );
+        } else {
+          setCompletedOrders(tempContent);
+        }
       }
     });
   }
-
 
   // This methos is responsible for completing selected orders that are pending.
   function completeOrder(id) {
