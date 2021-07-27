@@ -167,26 +167,80 @@ function OrdersContent(props) {
             element.data().status !== pendingOrderStatus &&
             element.id !== "settings"
           ) {
-            let nowDate = new Date();
+            let actualDate = new Date();
             let initialDate = new Date(element.data().initialDate);
             let finalDate = new Date(element.data().finalDate);
             let orderInitialDate = new Date(filterInfo.initialDate);
             let orderFinalDate = new Date(filterInfo.finalDate);
+            let orderDateI = new Date(orderInitialDate.getFullYear(), orderInitialDate.getMonth(), orderInitialDate.getDate() + 1);
+            let orderDateF = new Date(orderFinalDate.getFullYear(), orderFinalDate.getMonth(), orderFinalDate.getDate() + 1);
             let initialDateFormated = initialDate.getDate() + "/" + (initialDate.getMonth() + 1) + "/"
               + initialDate.getFullYear();
             let finalDateFormated = finalDate.getDate() + "/" + (finalDate.getMonth() + 1) + "/"
               + finalDate.getFullYear();
-            if (orderInitialDate.getTime() === orderFinalDate.getTime() || orderInitialDate > orderFinalDate
-              || orderFinalDate < orderInitialDate) {
+            if (orderDateI.getTime() === orderDateF.getTime() || orderDateI > orderDateF
+              || orderDateF < orderDateI) {
               props.setPopup("Error", "Debe seleccionar un rango de fechas válido.");
               props.openPopup();
             } else {
-              if (orderInitialDate > nowDate) {
-                props.setPopup("Error", "La fecha inicial no puede ser mayor a la fecha actual.");
-                props.openPopup();
+              if (filterInfo.filter === "Fecha inicial") {
+                if (initialDate >= orderDateI && initialDate <= orderDateF) {
+                  console.log(tempContent);
+                  console.log(actualDate);
+                  tempContent.push(
+                    <Fragment key={element.id}>
+                      <ul className="list-group list-group-flush">
+                        <li className="list-group-item">
+                          <strong>Cliente: </strong>
+                          {element.data().client}
+                        </li>
+                        <li className="list-group-item">
+                          <strong>Correo electrónico: </strong>
+                          {element.data().email}
+                        </li>
+                        <li className="list-group-item">
+                          <strong>Costo: </strong>₡{element.data().price}
+                        </li>
+                        <li className="list-group-item">
+                          <strong>Fecha inicial del pedido: </strong>
+                          {initialDateFormated}
+                        </li>
+                        <li className="list-group-item">
+                          <strong>Fecha final del pedido: </strong>
+                          {finalDateFormated}
+                        </li>
+                        <li className="list-group-item">
+                          <strong>Notas: </strong>
+                          {element.data().note}
+                        </li>
+                        <div className="text-center">
+                          <button
+                            className="btn btnAccept mt-2 mx-2"
+                            onClick={() =>
+                              props.actionDetails(
+                                element.id,
+                                element.data().client,
+                                element.data().initialDate
+                              )
+                            }
+                          >
+                            Detalles
+                          </button>
+                        </div>
+                      </ul>
+                      <div className="separator my-3"></div>
+                    </Fragment>
+                  );
+                } else {
+                  setCompletedOrders(
+                    <strong>
+                      <h5 className="text-center">No hay órdenes completadas en ese periodo</h5>
+                    </strong>
+                  );
+                }
               } else {
-                if (filterInfo.filter === "Fecha inicial") {
-                  if (initialDate >= orderInitialDate && initialDate <= orderFinalDate) {
+                if (filterInfo.filter === "Fecha final") {
+                  if (finalDate >= orderInitialDate && finalDate <= orderFinalDate) {
                     tempContent.push(
                       <Fragment key={element.id}>
                         <ul className="list-group list-group-flush">
@@ -237,62 +291,6 @@ function OrdersContent(props) {
                         <h5 className="text-center">No hay órdenes completadas en ese periodo</h5>
                       </strong>
                     );
-                  }
-                } else {
-                  if (filterInfo.filter === "Fecha final") {
-                    if (finalDate >= orderInitialDate && finalDate <= orderFinalDate) {
-                      tempContent.push(
-                        <Fragment key={element.id}>
-                          <ul className="list-group list-group-flush">
-                            <li className="list-group-item">
-                              <strong>Cliente: </strong>
-                              {element.data().client}
-                            </li>
-                            <li className="list-group-item">
-                              <strong>Correo electrónico: </strong>
-                              {element.data().email}
-                            </li>
-                            <li className="list-group-item">
-                              <strong>Costo: </strong>₡{element.data().price}
-                            </li>
-                            <li className="list-group-item">
-                              <strong>Fecha inicial del pedido: </strong>
-                              {initialDateFormated}
-                            </li>
-                            <li className="list-group-item">
-                              <strong>Fecha final del pedido: </strong>
-                              {finalDateFormated}
-                            </li>
-                            <li className="list-group-item">
-                              <strong>Notas: </strong>
-                              {element.data().note}
-                            </li>
-                            <div className="text-center">
-                              <button
-                                className="btn btnAccept mt-2 mx-2"
-                                onClick={() =>
-                                  props.actionDetails(
-                                    element.id,
-                                    element.data().client,
-                                    element.data().initialDate
-                                  )
-                                }
-                              >
-                                Detalles
-                              </button>
-                            </div>
-                          </ul>
-                          <div className="separator my-3"></div>
-                        </Fragment>
-                      );
-                    }
-                    else {
-                      setCompletedOrders(
-                        <strong>
-                          <h5 className="text-center">No hay órdenes completadas en ese periodo</h5>
-                        </strong>
-                      );
-                    }
                   }
                 }
               }
