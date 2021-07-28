@@ -34,7 +34,7 @@ function ShoppingCart(props) {
     .collection("webpage")
     .doc("payment_methods");
 
-  init("user_QYgxouEt1fkzj4qdwfIXm");
+  init("user_gqlOe7Xkcxc9InW02jyT9");
 
   // This method set the order info.
   const [orderInfo, setOrderInfo] = useState({
@@ -590,7 +590,7 @@ function ShoppingCart(props) {
       if (!invalidItem) {
         deleteAllOrders();
 
-        emailjs.sendForm("service_atkl6tj", "template_71mb8x7", e.target).then(
+        emailjs.sendForm("service_v6ksuvf", "template_jnu16ap", e.target).then(
           (result) => {
             console.log(result.text);
           },
@@ -599,7 +599,7 @@ function ShoppingCart(props) {
           }
         );
 
-        emailjs.sendForm("service_atkl6tj", "template_p5k61e8", e.target).then(
+        emailjs.sendForm("service_v6ksuvf", "template_9j36x2f", e.target).then(
           (result) => {
             console.log(result.text);
           },

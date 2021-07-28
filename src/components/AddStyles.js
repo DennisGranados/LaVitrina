@@ -17,7 +17,6 @@ import { useState } from "react";
 import { useFirestore } from "reactfire";
 import Capitalize from "../Tools";
 import imageCompression from "browser-image-compression";
-
 function AddStyles(props) {
   const firestore = useFirestore();
   const stylesRef = firestore.collection("catalog").doc("styles");
